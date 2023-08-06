@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuRqUpdateArgs {
-    private String phoneNumber;
-    private String address;
+public class BaseResponse {
+    private String message;
 }

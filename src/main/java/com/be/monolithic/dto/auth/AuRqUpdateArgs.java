@@ -1,4 +1,4 @@
-package com.be.monolithic.dto;
+package com.be.monolithic.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuRqForgotPwdArgs {
+public class AuRqUpdateArgs {
     private String phoneNumber;
+    private String address;
 }

@@ -1,17 +1,29 @@
 package com.be.monolithic.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-public class BaseException extends RuntimeException{
-    private final HttpStatus status;
+import java.util.HashMap;
+import java.util.Map;
 
-    public BaseException(String message, HttpStatus status) {
+public class BaseException extends RuntimeException {
+    @Getter
+    private HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+    BaseException(String message) {
         super(message);
+    }
+
+    public BaseException setStatus(HttpStatus status) {
         this.status = status;
+        return this;
     }
 
-    public HttpStatus getStatus() {
-        return status;
+    protected Map<String, Object> getBody() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("exception", this.getClass().getSimpleName());
+        result.put("status", this.getStatus().value());
+        result.put("message", this.getMessage());
+        return result;
     }
-
 }

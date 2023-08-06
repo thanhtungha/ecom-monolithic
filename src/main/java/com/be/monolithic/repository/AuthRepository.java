@@ -1,13 +1,13 @@
 package com.be.monolithic.repository;
 
-import com.be.monolithic.model.UserModel;
+import com.be.monolithic.model.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface AuthRepository extends JpaRepository<UserModel, Integer> {
-    Optional<UserModel> findByUUID(UUID uuid);
-    Optional<UserModel> findByUserName(String userName);
+public interface AuthRepository extends JpaRepository<UserInfo, Integer> {
+    Optional<UserInfo> findById(UUID uuid);
+    Optional<UserInfo> findByUserName(String userName);
 }
 

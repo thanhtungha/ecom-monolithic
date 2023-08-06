@@ -1,10 +1,12 @@
 package com.be.monolithic.service;
 
-import com.be.monolithic.dto.*;
+import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.mappers.AuthMapper;
+import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -41,5 +43,10 @@ public class AuthService {
 
     public void delete(AuRqDeleteArgs deleteArgs) {
         throw new UnsupportedOperationException("Not supported yet");
+    }
+
+    public UserInfo getUser(String userName) {
+        return authRepository.findByUserName(userName)
+                .orElseThrow(() -> new UsernameNotFoundException("Unknown user"));
     }
 }
