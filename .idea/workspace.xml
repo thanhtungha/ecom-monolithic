@@ -5,24 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="359836cb-e4ae-43dc-ba71-b3b34389fae0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/ProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/BaseResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/exception/BaseExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/exception/RestExceptions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/BaseModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/security/AuthenticationProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/security/AuthorizationTokenFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/security/CustomAuthenticationEntryPoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/exception/BaseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/exception/BaseException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/mappers/AuthMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/mappers/AuthMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/UserModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/UserInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/AuthRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/AuthRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/ProductController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
