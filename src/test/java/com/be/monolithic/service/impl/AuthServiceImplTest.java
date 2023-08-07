@@ -61,14 +61,16 @@ class AuthServiceImplTest {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     void logout() {
         AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
-        UserInfo userInfo = authService.login(loginArgs);
-        boolean result = authService.logout(userInfo.getUserName());
+        authService.login(loginArgs);
+
+        String accessToken = getAccessToken();
+        boolean result = authService.logout(accessToken);
         if (result) {
             Optional<UserInfo> createdUser =
-                    authRepository.findByAccessToken(userInfo.getAccessToken());
+                    authRepository.findByAccessToken(accessToken);
             if (createdUser.isPresent()) {
                 fail("test case failed!");
             }
@@ -80,14 +82,21 @@ class AuthServiceImplTest {
     @Test
     @Order(2)
     void changePassword() {
-        UserInfo userInfo = authService.changePassword("userName",
-                "newPassword");
-        if (userInfo != null) {
-            assertEquals("newPassword", userInfo.getUserPassword());
-            authService.changePassword("userName", "userPassword");
-        } else {
-            fail("test case failed!");
+        AuRqChangePasswordArgs changePasswordArgs =
+                new AuRqChangePasswordArgs("userPassword", "newPassword");
+        boolean result = authService.changePassword(getAccessToken(),
+                changePasswordArgs);
+        if (result) {
+            Optional<UserInfo> createdUser = authRepository.findByUserName(
+                    "userName");
+            createdUser.ifPresent(info -> assertEquals("newPassword",
+                    info.getUserPassword()));
+
+            changePasswordArgs.setNewPassword("userPassword");
+            authService.changePassword(getAccessToken(), changePasswordArgs);
+            return;
         }
+        fail("test case failed!");
     }
 
     @Test
@@ -95,7 +104,7 @@ class AuthServiceImplTest {
     void update() {
         AuRqUpdateArgs updateArgs = new AuRqUpdateArgs("0987654321",
                 "new " + "address");
-        UserInfo userInfo = authService.update("userName", updateArgs);
+        UserInfo userInfo = authService.update(getAccessToken(), updateArgs);
         if (userInfo != null) {
             assertEquals(updateArgs.getPhoneNumber(),
                     userInfo.getPhoneNumber());
@@ -112,9 +121,12 @@ class AuthServiceImplTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void delete() {
-        boolean result = authService.delete("userName");
+        AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
+        authService.login(loginArgs);
+
+        boolean result = authService.delete(getAccessToken());
         if (result) {
             Optional<UserInfo> createdUser = authRepository.findByUserName(
                     "userName");
@@ -124,5 +136,14 @@ class AuthServiceImplTest {
             return;
         }
         fail("test case failed!");
+    }
+
+    String getAccessToken() {
+        Optional<UserInfo> createdUser = authRepository.findByUserName(
+                "userName");
+        if (createdUser.isEmpty()) {
+            fail("test case failed!");
+        }
+        return createdUser.get().getAccessToken();
     }
 }

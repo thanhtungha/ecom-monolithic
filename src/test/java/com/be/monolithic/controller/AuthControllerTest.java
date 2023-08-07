@@ -1,22 +1,35 @@
 package com.be.monolithic.controller;
 
+import com.be.monolithic.dto.auth.AuRqChangePasswordArgs;
+import com.be.monolithic.dto.auth.AuRqLoginArgs;
+import com.be.monolithic.dto.auth.AuRqRegisterArgs;
+import com.be.monolithic.dto.auth.AuRqUpdateArgs;
+import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.AuthRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.shaded.org.apache.commons.lang3.NotImplementedException;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AuthControllerTest extends AbstractContainerBaseTest {
-
-    private static final Logger logger =
-            LoggerFactory.getLogger(AuthControllerTest.class);
 
     @Autowired
     private MockMvc mockMvc;
@@ -25,38 +38,119 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     @Autowired
     private AuthRepository authRepository;
 
+    private static String BASE_API = "/api/auth";
+
     @Test
-    void register() {
-        throw new NotImplementedException();
+    @Order(0)
+    void register() throws Exception {
+        AuRqRegisterArgs registerArgs = new AuRqRegisterArgs("userName",
+                "userPassword", "1234567890");
+        String reqString = objectMapper.writeValueAsString(registerArgs);
+        RequestBuilder requestBuilder =
+                MockMvcRequestBuilders.post(BASE_API + "/register").contentType(MediaType.APPLICATION_JSON).content(reqString);
+        mockMvc.perform(requestBuilder).andExpect(status().isCreated());
     }
 
     @Test
-    void login() {
-        throw new NotImplementedException();
+    @Order(1)
+    void login() throws Exception {
+        AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
+        String reqString = objectMapper.writeValueAsString(loginArgs);
+        RequestBuilder requestBuilder =
+                MockMvcRequestBuilders.post(BASE_API + "/login").contentType(MediaType.APPLICATION_JSON).content(reqString);
+        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
     }
 
     @Test
-    void logout() {
-        throw new NotImplementedException();
+    @Order(3)
+    void logout() throws Exception {
+        RequestBuilder requestBuilder =
+                MockMvcRequestBuilders.post(BASE_API + "/logout").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken());
+        mockMvc.perform(requestBuilder).andExpect(status().isOk());
+
+        //check result
+        Optional<UserInfo> createdUser = authRepository.findByUserName(
+                "userName");
+        if (createdUser.isPresent()) {
+            if (createdUser.get().getAccessToken().isEmpty()) {
+                return;
+            }
+        }
+        fail("test case failed!");
     }
 
     @Test
-    void changePassword() {
-        throw new NotImplementedException();
+    @Order(2)
+    void changePassword() throws Exception {
+        AuRqChangePasswordArgs changePasswordArgs =
+                new AuRqChangePasswordArgs("userPassword", "newPassword");
+        String reqString = objectMapper.writeValueAsString(changePasswordArgs);
+
+        RequestBuilder requestBuilder =
+                MockMvcRequestBuilders.post(BASE_API + "/change-password").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()).content(reqString);
+        mockMvc.perform(requestBuilder).andExpect(status().isOk());
+
+        //check result
+        Optional<UserInfo> createdUser = authRepository.findByUserName(
+                "userName");
+        if (createdUser.isPresent()) {
+            assertEquals(createdUser.get().getUserPassword(),
+                    changePasswordArgs.getNewPassword());
+            return;
+        }
+        fail("test case failed!");
     }
 
     @Test
-    void update() {
-        throw new NotImplementedException();
+    @Order(2)
+    void update() throws Exception {
+        AuRqUpdateArgs updateArgs = new AuRqUpdateArgs("0987654321",
+                "new " + "Address");
+        String reqString = objectMapper.writeValueAsString(updateArgs);
+
+        RequestBuilder requestBuilder =
+                MockMvcRequestBuilders.post(BASE_API + "/update").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()).content(reqString);
+        mockMvc.perform(requestBuilder).andExpect(status().isOk());
+
+        //check result
+        Optional<UserInfo> createdUser = authRepository.findByUserName(
+                "userName");
+        if (createdUser.isPresent()) {
+            assertEquals(createdUser.get().getPhoneNumber(),
+                    updateArgs.getPhoneNumber());
+            assertEquals(createdUser.get().getAddress(),
+                    updateArgs.getAddress());
+            return;
+        }
+        fail("test case failed!");
     }
 
     @Test
     void forgotPassword() {
-        throw new NotImplementedException();
+        //TODO: Do not implement in phase 1
     }
 
     @Test
-    void delete() {
-        throw new NotImplementedException();
+    @Order(4)
+    void delete() throws Exception {
+        RequestBuilder requestBuilder =
+                MockMvcRequestBuilders.post(BASE_API + "/delete-account").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken());
+        mockMvc.perform(requestBuilder).andExpect(status().isOk());
+
+        //check result
+        Optional<UserInfo> createdUser = authRepository.findByUserName(
+                "userName");
+        if (createdUser.isPresent()) {
+            fail("test case failed!");
+        }
+    }
+
+    String getAccessToken() {
+        Optional<UserInfo> createdUser = authRepository.findByUserName(
+                "userName");
+        if (createdUser.isEmpty()) {
+            fail("test case failed!");
+        }
+        return createdUser.get().getAccessToken();
     }
 }

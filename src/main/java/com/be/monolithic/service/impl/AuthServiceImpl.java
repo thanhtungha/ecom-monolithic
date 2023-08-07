@@ -56,9 +56,9 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public boolean logout(String userName) {
+    public boolean logout(String accessToken) {
         Optional<UserInfo> storedModel =
-                authRepository.findByUserName(userName);
+                authRepository.findByAccessToken(accessToken);
         if (storedModel.isPresent()) {
             UserInfo userInfo = storedModel.get();
             userInfo.setAccessToken("");
@@ -71,24 +71,27 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public UserInfo changePassword(String userName, String password) {
+    public boolean changePassword(String accessToken, AuRqChangePasswordArgs changePasswordArgs) {
         Optional<UserInfo> storedModel =
-                authRepository.findByUserName(userName);
+                authRepository.findByAccessToken(accessToken);
         if (storedModel.isPresent()) {
             UserInfo userInfo = storedModel.get();
-            userInfo.setUserPassword(password);
+            if(userInfo.getUserPassword().equals(changePasswordArgs.getNewPassword())) {
+                throw new RestExceptions.BadRequest("New password cannot be the same as the old password.");
+            }
+            userInfo.setUserPassword(changePasswordArgs.getNewPassword());
             userInfo.setUpdateDate(new Date());
             authRepository.save(userInfo);
-            return userInfo;
+            return true;
         } else {
             throw new RestExceptions.InternalServerError("Unknown user!");
         }
     }
 
     @Override
-    public UserInfo update(String userName, AuRqUpdateArgs updateArgs) {
+    public UserInfo update(String accessToken, AuRqUpdateArgs updateArgs) {
         Optional<UserInfo> storedModel =
-                authRepository.findByUserName(userName);
+                authRepository.findByAccessToken(accessToken);
         if (storedModel.isPresent()) {
             UserInfo userInfo = storedModel.get();
             userInfo.setAddress(updateArgs.getAddress());
@@ -102,14 +105,14 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public ResponseEntity<?> forgotPassword(String userName) {
+    public ResponseEntity<?> forgotPassword(String accessToken) {
         return null;
     }
 
     @Override
-    public boolean delete(String userName) {
+    public boolean delete(String accessToken) {
         Optional<UserInfo> storedModel =
-                authRepository.findByUserName(userName);
+                authRepository.findByAccessToken(accessToken);
         if (storedModel.isPresent()) {
             authRepository.delete(storedModel.get());
             return true;

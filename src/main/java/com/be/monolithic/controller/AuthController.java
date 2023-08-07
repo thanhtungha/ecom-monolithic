@@ -3,7 +3,10 @@ package com.be.monolithic.controller;
 import com.be.monolithic.dto.BaseResponse;
 import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.exception.RestExceptions;
+import com.be.monolithic.mappers.AuthMapper;
+import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.service.IAuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,20 +22,22 @@ public class AuthController {
             LoggerFactory.getLogger(AuthController.class);
 
     private final IAuthService authService;
+    private final AuthMapper authMapper;
 
     @PostMapping(path = "/greeting")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> greeting() {
         logger.info("greeting");
-        return ResponseEntity.ok(new BaseResponse("Hello! This is Auth Service."));
+        return ResponseEntity.ok(new BaseResponse("Hello! This is Auth " +
+                "Service."));
     }
 
     @PostMapping(path = "/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody AuRqRegisterArgs registerArgs) {
+    public ResponseEntity<?> register(@Valid @RequestBody AuRqRegisterArgs registerArgs) {
         try {
-            //TODO: Implement here
-            throw new RestExceptions.NotImplemented();
+            UserInfo userInfo = authService.register(registerArgs);
+            return new ResponseEntity<>(authMapper.UserInfoToResponse(userInfo), HttpStatus.CREATED);
         } catch (Exception ex) {
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
@@ -40,10 +45,10 @@ public class AuthController {
 
     @PostMapping(path = "/login")
     @ResponseStatus(HttpStatus.OK)
-    public void login(@RequestBody AuRqLoginArgs loginArgs) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuRqLoginArgs loginArgs) {
         try {
-            //TODO: Implement here
-            throw new RestExceptions.NotImplemented();
+            UserInfo userInfo = authService.login(loginArgs);
+            return new ResponseEntity<>(authMapper.UserInfoToResponse(userInfo), HttpStatus.OK);
         } catch (Exception ex) {
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
@@ -51,10 +56,10 @@ public class AuthController {
 
     @PostMapping(path = "/logout")
     @ResponseStatus(HttpStatus.OK)
-    public void logout() {
+    public void logout(@RequestHeader("Authorization") String authorizationHeader) {
         try {
-            //TODO: Implement here
-            throw new RestExceptions.NotImplemented();
+            String accessToken = extractAccessToken(authorizationHeader);
+            authService.logout(accessToken);
         } catch (Exception ex) {
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
@@ -62,10 +67,10 @@ public class AuthController {
 
     @PostMapping(path = "/change-password")
     @ResponseStatus(HttpStatus.OK)
-    public void changePassword(@RequestBody AuRqChangePasswordArgs changePasswordArgs) {
+    public void changePassword(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody AuRqChangePasswordArgs changePasswordArgs) {
         try {
-            //TODO: Implement here
-            throw new RestExceptions.NotImplemented();
+            String accessToken = extractAccessToken(authorizationHeader);
+            authService.changePassword(accessToken, changePasswordArgs);
         } catch (Exception ex) {
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
@@ -73,10 +78,11 @@ public class AuthController {
 
     @PostMapping(path = "/update")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@RequestBody AuRqUpdateArgs updateArgs) {
+    public ResponseEntity<?> update(@RequestHeader("Authorization") String authorizationHeader, @RequestBody AuRqUpdateArgs updateArgs) {
         try {
-            //TODO: Implement here
-            throw new RestExceptions.NotImplemented();
+            String accessToken = extractAccessToken(authorizationHeader);
+            UserInfo userInfo = authService.update(accessToken, updateArgs);
+            return new ResponseEntity<>(authMapper.UserInfoToResponse(userInfo), HttpStatus.OK);
         } catch (Exception ex) {
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
@@ -84,23 +90,33 @@ public class AuthController {
 
     @PostMapping(path = "/forgot-password")
     @ResponseStatus(HttpStatus.OK)
-    public void forgotPassword(@RequestBody AuRqForgotPwdArgs forgotPwdArgs) {
+    public void forgotPassword(@RequestBody AuRqForgotPwdArgs forgotPwdArgs) {            //TODO: Implement here
+        //TODO: Do not implement in phase 1
+
+        //        try {
+        //            throw new RestExceptions.NotImplemented();
+        //        } catch (Exception ex) {
+        //            throw new RestExceptions.InternalServerError(ex
+        //            .getMessage());
+        //        }
+    }
+
+    @PostMapping(path = "/delete-account")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@RequestHeader("Authorization") String authorizationHeader) {
         try {
-            //TODO: Implement here
-            throw new RestExceptions.NotImplemented();
+            String accessToken = extractAccessToken(authorizationHeader);
+            authService.delete(accessToken);
         } catch (Exception ex) {
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
 
-    @PostMapping(path = "/delete-account")
-    @ResponseStatus(HttpStatus.OK)
-    public void delete() {
-        try {
-            //TODO: Implement here
-            throw new RestExceptions.NotImplemented();
-        } catch (Exception ex) {
-            throw new RestExceptions.InternalServerError(ex.getMessage());
+    private String extractAccessToken(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith(
+                "Bearer ")) {
+            return authorizationHeader.substring(7);
         }
+        throw new RestExceptions.BadRequest("Invalid accessToken!");
     }
 }

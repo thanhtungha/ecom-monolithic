@@ -1,5 +1,6 @@
 package com.be.monolithic.config;
 
+import com.be.monolithic.security.AuthenticationProvider;
 import com.be.monolithic.security.AuthorizationTokenFilter;
 import com.be.monolithic.security.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +26,14 @@ import java.util.Arrays;
 public class SecurityConfig {
     private static final Long MAX_AGE = 3600L;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()
-                .addFilterBefore(new AuthorizationTokenFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new AuthorizationTokenFilter(authenticationProvider), BasicAuthenticationFilter.class)
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

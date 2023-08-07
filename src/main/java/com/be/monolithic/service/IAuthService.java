@@ -9,13 +9,13 @@ public interface IAuthService {
 
     UserInfo login(AuRqLoginArgs loginArgs);
 
-    boolean logout(String userName);
+    boolean logout(String accessToken);
 
-    UserInfo changePassword(String userName, String password);
+    boolean changePassword(String accessToken, AuRqChangePasswordArgs changePasswordArgs);
 
-    UserInfo update(String userName, AuRqUpdateArgs updateArgs);
+    UserInfo update(String accessToken, AuRqUpdateArgs updateArgs);
 
-    ResponseEntity<?> forgotPassword(String userName);
+    ResponseEntity<?> forgotPassword(String accessToken);
 
-    boolean delete(String userName);
+    boolean delete(String accessToken);
 }
