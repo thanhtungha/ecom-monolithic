@@ -83,7 +83,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     @Order(2)
     void changePassword() throws Exception {
         AuRqChangePasswordArgs changePasswordArgs =
-                new AuRqChangePasswordArgs("userPassword", "newPassword");
+                new AuRqChangePasswordArgs("newPassword");
         String reqString = objectMapper.writeValueAsString(changePasswordArgs);
 
         RequestBuilder requestBuilder =

@@ -12,7 +12,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AuRqChangePasswordArgs {
     @NotNull
-    private String userPassword;
-    @NotNull
     private String newPassword;
 }

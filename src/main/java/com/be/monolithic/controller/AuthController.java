@@ -2,6 +2,7 @@ package com.be.monolithic.controller;
 
 import com.be.monolithic.dto.BaseResponse;
 import com.be.monolithic.dto.auth.*;
+import com.be.monolithic.exception.BaseException;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.AuthMapper;
 import com.be.monolithic.model.UserInfo;
@@ -39,6 +40,9 @@ public class AuthController {
             UserInfo userInfo = authService.register(registerArgs);
             return new ResponseEntity<>(authMapper.UserInfoToResponse(userInfo), HttpStatus.CREATED);
         } catch (Exception ex) {
+            if (ex instanceof BaseException) {
+                throw ex;
+            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
@@ -50,6 +54,9 @@ public class AuthController {
             UserInfo userInfo = authService.login(loginArgs);
             return new ResponseEntity<>(authMapper.UserInfoToResponse(userInfo), HttpStatus.OK);
         } catch (Exception ex) {
+            if (ex instanceof BaseException) {
+                throw ex;
+            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
@@ -61,6 +68,9 @@ public class AuthController {
             String accessToken = extractAccessToken(authorizationHeader);
             authService.logout(accessToken);
         } catch (Exception ex) {
+            if (ex instanceof BaseException) {
+                throw ex;
+            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
@@ -72,6 +82,9 @@ public class AuthController {
             String accessToken = extractAccessToken(authorizationHeader);
             authService.changePassword(accessToken, changePasswordArgs);
         } catch (Exception ex) {
+            if (ex instanceof BaseException) {
+                throw ex;
+            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
@@ -84,6 +97,9 @@ public class AuthController {
             UserInfo userInfo = authService.update(accessToken, updateArgs);
             return new ResponseEntity<>(authMapper.UserInfoToResponse(userInfo), HttpStatus.OK);
         } catch (Exception ex) {
+            if (ex instanceof BaseException) {
+                throw ex;
+            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
@@ -108,6 +124,9 @@ public class AuthController {
             String accessToken = extractAccessToken(authorizationHeader);
             authService.delete(accessToken);
         } catch (Exception ex) {
+            if (ex instanceof BaseException) {
+                throw ex;
+            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }

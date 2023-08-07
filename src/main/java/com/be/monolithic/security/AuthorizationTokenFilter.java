@@ -1,5 +1,6 @@
 package com.be.monolithic.security;
 
+import com.be.monolithic.exception.BaseException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
             try {
                 SecurityContextHolder.getContext().setAuthentication(
                         authenticationProvider.validateToken(jwt));
-            } catch (RuntimeException e) {
+            } catch (BaseException e) {
                 logger.error("Could not set user authentication in security context", e);
                 SecurityContextHolder.clearContext();
                 throw e;

@@ -25,7 +25,7 @@ public class RestExceptions {
 
     public static class UserExisted extends BaseException {
         public UserExisted() {
-            super("Username existed");
+            super("User existed!");
             setStatus(HttpStatus.CONFLICT);
         }
     }

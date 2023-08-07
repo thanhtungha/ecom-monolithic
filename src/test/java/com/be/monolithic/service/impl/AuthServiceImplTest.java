@@ -83,7 +83,7 @@ class AuthServiceImplTest {
     @Order(2)
     void changePassword() {
         AuRqChangePasswordArgs changePasswordArgs =
-                new AuRqChangePasswordArgs("userPassword", "newPassword");
+                new AuRqChangePasswordArgs("newPassword");
         boolean result = authService.changePassword(getAccessToken(),
                 changePasswordArgs);
         if (result) {
