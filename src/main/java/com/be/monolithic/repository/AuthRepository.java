@@ -9,5 +9,6 @@ import java.util.UUID;
 public interface AuthRepository extends JpaRepository<UserInfo, Integer> {
     Optional<UserInfo> findById(UUID uuid);
     Optional<UserInfo> findByUserName(String userName);
+    Optional<UserInfo> findByAccessToken(String accessToken);
 }
 

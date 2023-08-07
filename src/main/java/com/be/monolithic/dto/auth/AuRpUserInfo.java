@@ -1,18 +1,21 @@
-package com.be.monolithic.model;
+package com.be.monolithic.dto.auth;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.util.Date;
+import java.util.UUID;
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_info")
-public class UserInfo extends BaseModel {
-    private String userName;
-    private String userPassword;
+@NoArgsConstructor
+@Builder
+public class AuRpUserInfo {
+    private UUID id;
+    private Date createDate;
+    private Date updateDate;
     private String phoneNumber;
     private String address;
     private String accessToken;

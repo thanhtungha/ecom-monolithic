@@ -13,7 +13,7 @@ import org.testcontainers.shaded.org.apache.commons.lang3.NotImplementedExceptio
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AuthControllerTest extends AbstractContainerBaseTest{
+class AuthControllerTest extends AbstractContainerBaseTest {
 
     private static final Logger logger =
             LoggerFactory.getLogger(AuthControllerTest.class);

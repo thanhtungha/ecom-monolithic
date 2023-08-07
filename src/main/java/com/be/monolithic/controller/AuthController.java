@@ -95,7 +95,7 @@ public class AuthController {
 
     @PostMapping(path = "/delete-account")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestBody AuRqDeleteArgs deleteArgs) {
+    public void delete() {
         try {
             //TODO: Implement here
             throw new RestExceptions.NotImplemented();

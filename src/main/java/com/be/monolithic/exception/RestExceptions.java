@@ -22,4 +22,25 @@ public class RestExceptions {
             setStatus(HttpStatus.NOT_IMPLEMENTED);
         }
     }
+
+    public static class UserExisted extends BaseException {
+        public UserExisted() {
+            super("Username existed");
+            setStatus(HttpStatus.CONFLICT);
+        }
+    }
+
+    public static class NotFound extends BaseException {
+        public NotFound(String msgKey) {
+            super(msgKey);
+            setStatus(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public static class Unauthorized extends BaseException {
+        public Unauthorized(String msgKey) {
+            super(msgKey);
+            setStatus(HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

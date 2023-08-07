@@ -5,19 +5,17 @@ import com.be.monolithic.model.UserInfo;
 import org.springframework.http.ResponseEntity;
 
 public interface IAuthService {
-    ResponseEntity<?> register(AuRqRegisterArgs registerArgs);
+    UserInfo register(AuRqRegisterArgs registerArgs);
 
-    ResponseEntity<?> login(AuRqLoginArgs loginArgs);
+    UserInfo login(AuRqLoginArgs loginArgs);
 
-    ResponseEntity<?> logout();
+    boolean logout(String userName);
 
-    ResponseEntity<?> changePassword(AuRqChangePasswordArgs changePasswordArgs);
+    UserInfo changePassword(String userName, String password);
 
-    ResponseEntity<?> update(AuRqUpdateArgs updateArgs);
+    UserInfo update(String userName, AuRqUpdateArgs updateArgs);
 
-    ResponseEntity<?> forgotPassword(AuRqForgotPwdArgs forgotPwdArgs);
+    ResponseEntity<?> forgotPassword(String userName);
 
-    ResponseEntity<?> delete(AuRqDeleteArgs deleteArgs);
-
-    UserInfo getUser(String userName);
+    boolean delete(String userName);
 }
