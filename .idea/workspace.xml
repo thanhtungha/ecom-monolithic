@@ -5,10 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="359836cb-e4ae-43dc-ba71-b3b34389fae0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/InventoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/cart/CtRqAddProductArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/cart/CtRqGetCartArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/cart/CtRqRemoveProductArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/inventory/IvRqAddProductArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/inventory/IvRqGetInventoryArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/inventory/IvRqRemoveProductArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/inventory/IvRqUpdateQuantityArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/order/OrRqCancelOrderArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/order/OrRqCheckOutArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/order/OrRqCreateOrderArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/order/OrRqGetOrderArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/order/OrRqUpdateOrderArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqAddReviewArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqGetProductArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqRateArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqRegisterArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqRemoveArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqUpdateArgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IAuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/ICartService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IInventoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IOrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/AuthServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/CartServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/IInventoryServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/IOrderServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/IProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/AuthServiceImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/exception/RestExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/exception/RestExceptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/security/AuthenticationProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/security/AuthenticationProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/AuthService.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +50,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -53,6 +86,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.be.monolithic.service" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/com/be/monolithic/exception" />
       <recent name="$PROJECT_DIR$/src/main/java/com/be/monolithic/utils" />
@@ -67,17 +103,20 @@
       <recent name="com.be.monolithic.controller" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.be.monolithic.service.impl" />
+      <recent name="com.be.monolithic.service" />
       <recent name="com.be.monolithic.controller" />
       <recent name="com.be.monolithic" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.be.monolithic.controller" />
-      <recent name="com.be.monolithic.security" />
-      <recent name="com.be.monolithic.dto" />
-      <recent name="com.be.monolithic" />
+      <recent name="com.be.monolithic.dto.product" />
+      <recent name="com.be.monolithic.dto.order" />
+      <recent name="com.be.monolithic.dto.inventory" />
+      <recent name="com.be.monolithic.dto.cart" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.impl in monolithic">
     <configuration name="MonolithicApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.be.monolithic.MonolithicApplication" />
       <module name="monolithic" />
@@ -91,8 +130,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="impl in monolithic" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="monolithic" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.impl in monolithic" />
         <item itemvalue="Application.MonolithicApplication" />
       </list>
     </recent_temporary>
