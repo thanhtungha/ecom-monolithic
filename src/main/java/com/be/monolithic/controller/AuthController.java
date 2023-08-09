@@ -65,8 +65,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public void logout(@RequestHeader("Authorization") String authorizationHeader) {
         try {
-            String accessToken = extractAccessToken(authorizationHeader);
-            authService.logout(accessToken);
+            authService.logout(authorizationHeader);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;
@@ -79,8 +78,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public void changePassword(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody AuRqChangePasswordArgs changePasswordArgs) {
         try {
-            String accessToken = extractAccessToken(authorizationHeader);
-            authService.changePassword(accessToken, changePasswordArgs);
+            authService.changePassword(authorizationHeader, changePasswordArgs);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;
@@ -93,8 +91,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> update(@RequestHeader("Authorization") String authorizationHeader, @RequestBody AuRqUpdateArgs updateArgs) {
         try {
-            String accessToken = extractAccessToken(authorizationHeader);
-            UserInfo userInfo = authService.update(accessToken, updateArgs);
+            UserInfo userInfo = authService.update(authorizationHeader, updateArgs);
             return new ResponseEntity<>(authMapper.UserInfoToResponse(userInfo), HttpStatus.OK);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
@@ -121,21 +118,12 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestHeader("Authorization") String authorizationHeader) {
         try {
-            String accessToken = extractAccessToken(authorizationHeader);
-            authService.delete(accessToken);
+            authService.delete(authorizationHeader);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;
             }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
-    }
-
-    private String extractAccessToken(String authorizationHeader) {
-        if (authorizationHeader != null && authorizationHeader.startsWith(
-                "Bearer ")) {
-            return authorizationHeader.substring(7);
-        }
-        throw new RestExceptions.BadRequest("Invalid accessToken!");
     }
 }

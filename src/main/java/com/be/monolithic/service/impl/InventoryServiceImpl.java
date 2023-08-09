@@ -7,7 +7,7 @@ import com.be.monolithic.dto.inventory.IvRqUpdateQuantityArgs;
 import com.be.monolithic.service.IInventoryService;
 import org.springframework.http.ResponseEntity;
 
-public class IInventoryServiceImpl implements IInventoryService {
+public class InventoryServiceImpl implements IInventoryService {
     @Override
     public ResponseEntity<?> addProduct(IvRqAddProductArgs addProductArgs) {
         return null;

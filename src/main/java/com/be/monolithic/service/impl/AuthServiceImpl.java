@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -28,7 +29,7 @@ public class AuthServiceImpl implements IAuthService {
         Optional<UserInfo> storedModel =
                 authRepository.findByUserName(registerArgs.getUserName());
         if (storedModel.isPresent()) {
-            throw new RestExceptions.UserExisted();
+            throw new RestExceptions.Conflict("User existed");
         }
 
         UserInfo userInfo = authMapper.RegisterArgsToUserInfo(registerArgs);
@@ -56,68 +57,77 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public boolean logout(String accessToken) {
-        Optional<UserInfo> storedModel =
-                authRepository.findByAccessToken(accessToken);
-        if (storedModel.isPresent()) {
-            UserInfo userInfo = storedModel.get();
-            userInfo.setAccessToken("");
-            userInfo.setUpdateDate(new Date());
-            authRepository.save(userInfo);
-            return true;
-        } else {
-            throw new RestExceptions.InternalServerError("Unknown user!");
-        }
+    public boolean logout(String authorizationHeader) {
+        UserInfo userInfo = getUserInfo(authorizationHeader);
+        userInfo.setAccessToken("");
+        userInfo.setUpdateDate(new Date());
+        authRepository.save(userInfo);
+        return true;
     }
 
     @Override
-    public boolean changePassword(String accessToken, AuRqChangePasswordArgs changePasswordArgs) {
-        Optional<UserInfo> storedModel =
-                authRepository.findByAccessToken(accessToken);
-        if (storedModel.isPresent()) {
-            UserInfo userInfo = storedModel.get();
-            if(userInfo.getUserPassword().equals(changePasswordArgs.getNewPassword())) {
-                throw new RestExceptions.BadRequest("New password cannot be the same as the old password.");
-            }
-            userInfo.setUserPassword(changePasswordArgs.getNewPassword());
-            userInfo.setUpdateDate(new Date());
-            authRepository.save(userInfo);
-            return true;
-        } else {
-            throw new RestExceptions.InternalServerError("Unknown user!");
+    public boolean changePassword(String authorizationHeader,
+                                  AuRqChangePasswordArgs changePasswordArgs) {
+        UserInfo userInfo = getUserInfo(authorizationHeader);
+        if (userInfo.getUserPassword().equals(changePasswordArgs.getNewPassword())) {
+            throw new RestExceptions.BadRequest("New password cannot be " +
+                    "the same as the old password.");
         }
+        userInfo.setUserPassword(changePasswordArgs.getNewPassword());
+        userInfo.setUpdateDate(new Date());
+        authRepository.save(userInfo);
+        return true;
     }
 
     @Override
-    public UserInfo update(String accessToken, AuRqUpdateArgs updateArgs) {
-        Optional<UserInfo> storedModel =
-                authRepository.findByAccessToken(accessToken);
-        if (storedModel.isPresent()) {
-            UserInfo userInfo = storedModel.get();
-            userInfo.setAddress(updateArgs.getAddress());
-            userInfo.setPhoneNumber(updateArgs.getPhoneNumber());
-            userInfo.setUpdateDate(new Date());
-            authRepository.save(userInfo);
-            return userInfo;
-        } else {
-            throw new RestExceptions.InternalServerError("Unknown user!");
-        }
+    public UserInfo update(String authorizationHeader,
+                           AuRqUpdateArgs updateArgs) {
+        UserInfo userInfo = getUserInfo(authorizationHeader);
+        userInfo.setAddress(updateArgs.getAddress());
+        userInfo.setPhoneNumber(updateArgs.getPhoneNumber());
+        userInfo.setUpdateDate(new Date());
+        authRepository.save(userInfo);
+        return userInfo;
     }
 
     @Override
-    public ResponseEntity<?> forgotPassword(String accessToken) {
+    public ResponseEntity<?> forgotPassword(String authorizationHeader) {
         return null;
     }
 
     @Override
-    public boolean delete(String accessToken) {
+    public boolean delete(String authorizationHeader) {
+        UserInfo userInfo = getUserInfo(authorizationHeader);
+        authRepository.delete(userInfo);
+        return true;
+    }
+
+    @Override
+    public UserInfo getUserInfo(String authorizationHeader) {
         Optional<UserInfo> storedModel =
-                authRepository.findByAccessToken(accessToken);
+                authRepository.findByAccessToken(extractAccessToken(authorizationHeader));
         if (storedModel.isPresent()) {
-            authRepository.delete(storedModel.get());
-            return true;
+            return storedModel.get();
         } else {
-            throw new RestExceptions.InternalServerError("Unknown user!");
+            throw new RestExceptions.Forbidden("Invalid accessToken!");
         }
+    }
+
+    @Override
+    public UserInfo getUserInfo(UUID id) {
+        Optional<UserInfo> storedModel = authRepository.findById(id);
+        if (storedModel.isPresent()) {
+            return storedModel.get();
+        } else {
+            throw new RestExceptions.NotFound("UserId not found!");
+        }
+    }
+
+    private String extractAccessToken(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith(
+                "Bearer ")) {
+            return authorizationHeader.substring(7);
+        }
+        throw new RestExceptions.Forbidden("Invalid accessToken!");
     }
 }

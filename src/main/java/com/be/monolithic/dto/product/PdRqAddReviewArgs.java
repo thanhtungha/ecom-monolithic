@@ -10,5 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PdRqAddReviewArgs {
-    private String temp;
+    private String buyerId;
+    private String productId;
+    private int rating;
+    private String review;
 }

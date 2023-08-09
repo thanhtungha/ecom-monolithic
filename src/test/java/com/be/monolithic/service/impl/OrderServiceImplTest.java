@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class IProductServiceImplTest {
+class OrderServiceImplTest {
 
     @Test
-    void register() {
+    void create() {
         fail("This feature is not implemented yet.");
 
     }
@@ -19,25 +19,19 @@ class IProductServiceImplTest {
     }
 
     @Test
-    void remove() {
+    void cancel() {
         fail("This feature is not implemented yet.");
 
     }
 
     @Test
-    void getProduct() {
+    void getOrder() {
         fail("This feature is not implemented yet.");
 
     }
 
     @Test
-    void rate() {
-        fail("This feature is not implemented yet.");
-
-    }
-
-    @Test
-    void addReview() {
+    void checkout() {
         fail("This feature is not implemented yet.");
 
     }

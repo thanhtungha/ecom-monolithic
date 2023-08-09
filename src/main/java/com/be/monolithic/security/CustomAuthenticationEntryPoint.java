@@ -1,7 +1,6 @@
 package com.be.monolithic.security;
 
 import com.be.monolithic.dto.BaseResponse;
-import com.be.monolithic.exception.BaseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

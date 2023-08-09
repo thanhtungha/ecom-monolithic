@@ -37,7 +37,6 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     private ObjectMapper objectMapper;
     @Autowired
     private AuthRepository authRepository;
-
     private static String BASE_API = "/api/auth";
 
     @Test
@@ -133,8 +132,14 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     @Test
     @Order(4)
     void delete() throws Exception {
+        AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "newPassword");
+        String reqString = objectMapper.writeValueAsString(loginArgs);
         RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(BASE_API + "/delete-account").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken());
+                MockMvcRequestBuilders.post(BASE_API + "/login").contentType(MediaType.APPLICATION_JSON).content(reqString);
+        mockMvc.perform(requestBuilder);
+
+        requestBuilder = MockMvcRequestBuilders.post(BASE_API + "/delete" +
+                "-account").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken());
         mockMvc.perform(requestBuilder).andExpect(status().isOk());
 
         //check result

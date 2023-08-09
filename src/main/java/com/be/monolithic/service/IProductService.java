@@ -1,14 +1,12 @@
 package com.be.monolithic.service;
 
 import com.be.monolithic.dto.product.*;
-import org.springframework.http.ResponseEntity;
+import com.be.monolithic.model.ProductModel;
 
 public interface IProductService {
-    ResponseEntity<?> register(PdRqRegisterArgs registerArgs);
-    ResponseEntity<?> update(PdRqUpdateArgs updateArgs);
-    ResponseEntity<?> remove(PdRqRemoveArgs removeArgs);
-    ResponseEntity<?> getProduct(PdRqGetProductArgs getProductArgs);
-    ResponseEntity<?> rate(PdRqRateArgs rateArgs);
-    ResponseEntity<?> addReview(PdRqAddReviewArgs addReviewArgs);
-
+    ProductModel register(String authorizationHeader, PdRqRegisterArgs registerArgs);
+    ProductModel update(PdRqUpdateArgs updateArgs);
+    boolean remove(String productId);
+    ProductModel getProduct(String productId);
+    ProductModel addReview(PdRqAddReviewArgs addReviewArgs);
 }

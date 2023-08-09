@@ -23,9 +23,9 @@ public class RestExceptions {
         }
     }
 
-    public static class UserExisted extends BaseException {
-        public UserExisted() {
-            super("User existed!");
+    public static class Conflict extends BaseException {
+        public Conflict(String msgKey) {
+            super(msgKey);
             setStatus(HttpStatus.CONFLICT);
         }
     }
@@ -41,6 +41,13 @@ public class RestExceptions {
         public Unauthorized(String msgKey) {
             super(msgKey);
             setStatus(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    public static class Forbidden extends BaseException {
+        public Forbidden(String msgKey) {
+            super(msgKey);
+            setStatus(HttpStatus.FORBIDDEN);
         }
     }
 }

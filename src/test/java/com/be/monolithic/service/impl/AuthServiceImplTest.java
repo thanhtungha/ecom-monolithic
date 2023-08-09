@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
@@ -17,7 +16,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AuthServiceImplTest {
 
@@ -66,11 +64,11 @@ class AuthServiceImplTest {
         AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
         authService.login(loginArgs);
 
-        String accessToken = getAccessToken();
-        boolean result = authService.logout(accessToken);
+        String bearerToken = getAuthorizationHeader();
+        boolean result = authService.logout(bearerToken);
         if (result) {
             Optional<UserInfo> createdUser =
-                    authRepository.findByAccessToken(accessToken);
+                    authRepository.findByAccessToken(bearerToken);
             if (createdUser.isPresent()) {
                 fail("test case failed!");
             }
@@ -84,7 +82,7 @@ class AuthServiceImplTest {
     void changePassword() {
         AuRqChangePasswordArgs changePasswordArgs =
                 new AuRqChangePasswordArgs("newPassword");
-        boolean result = authService.changePassword(getAccessToken(),
+        boolean result = authService.changePassword(getAuthorizationHeader(),
                 changePasswordArgs);
         if (result) {
             Optional<UserInfo> createdUser = authRepository.findByUserName(
@@ -93,7 +91,8 @@ class AuthServiceImplTest {
                     info.getUserPassword()));
 
             changePasswordArgs.setNewPassword("userPassword");
-            authService.changePassword(getAccessToken(), changePasswordArgs);
+            authService.changePassword(getAuthorizationHeader(),
+                    changePasswordArgs);
             return;
         }
         fail("test case failed!");
@@ -104,7 +103,8 @@ class AuthServiceImplTest {
     void update() {
         AuRqUpdateArgs updateArgs = new AuRqUpdateArgs("0987654321",
                 "new " + "address");
-        UserInfo userInfo = authService.update(getAccessToken(), updateArgs);
+        UserInfo userInfo = authService.update(getAuthorizationHeader(),
+                updateArgs);
         if (userInfo != null) {
             assertEquals(updateArgs.getPhoneNumber(),
                     userInfo.getPhoneNumber());
@@ -126,7 +126,7 @@ class AuthServiceImplTest {
         AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
         authService.login(loginArgs);
 
-        boolean result = authService.delete(getAccessToken());
+        boolean result = authService.delete(getAuthorizationHeader());
         if (result) {
             Optional<UserInfo> createdUser = authRepository.findByUserName(
                     "userName");
@@ -138,12 +138,12 @@ class AuthServiceImplTest {
         fail("test case failed!");
     }
 
-    String getAccessToken() {
+    String getAuthorizationHeader() {
         Optional<UserInfo> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isEmpty()) {
             fail("test case failed!");
         }
-        return createdUser.get().getAccessToken();
+        return "Bearer " + createdUser.get().getAccessToken();
     }
 }

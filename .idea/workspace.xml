@@ -5,15 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="359836cb-e4ae-43dc-ba71-b3b34389fae0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRpProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/mappers/ProductMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ProductModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ReviewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/ProductControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/ProductServiceImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/auth/AuRqChangePasswordArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/auth/AuRqChangePasswordArgs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqAddReviewArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqAddReviewArgs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqGetProductArgs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqRateArgs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqRegisterArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqRegisterArgs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqRemoveArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqProductArgs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqUpdateArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqUpdateArgs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/exception/RestExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/exception/RestExceptions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/security/AuthorizationTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/security/AuthorizationTokenFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/security/CustomAuthenticationEntryPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/security/CustomAuthenticationEntryPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IAuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IAuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/IInventoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/InventoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/IOrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/IProductServiceImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/AuthControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/AuthControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/AuthServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/AuthServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/IInventoryServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/InventoryServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/IOrderServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/OrderServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/IProductServiceImplTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,33 +99,20 @@
       <recent name="com.be.monolithic.controller" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.be.monolithic.controller" />
       <recent name="com.be.monolithic.service.impl" />
       <recent name="com.be.monolithic.service" />
-      <recent name="com.be.monolithic.controller" />
       <recent name="com.be.monolithic" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.be.monolithic.dto.auth" />
-      <recent name="com.be.monolithic.controller" />
       <recent name="com.be.monolithic.dto.product" />
-      <recent name="com.be.monolithic.dto.order" />
-      <recent name="com.be.monolithic.dto.inventory" />
+      <recent name="com.be.monolithic.model" />
+      <recent name="com.be.monolithic.mappers" />
+      <recent name="com.be.monolithic.repository" />
+      <recent name="com.be.monolithic.dto.auth" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MonolithicApplication">
-    <configuration name="MonolithicApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.MonolithicApplication" />
-      <module name="monolithic" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.be.monolithic.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.AuthControllerTest">
     <configuration name="AuthControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="monolithic" />
       <extension name="coverage">
@@ -115,6 +124,22 @@
       <option name="PACKAGE_NAME" value="com.be.monolithic.controller" />
       <option name="MAIN_CLASS_NAME" value="com.be.monolithic.controller.AuthControllerTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthControllerTest.delete" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="monolithic" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.be.monolithic.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.be.monolithic.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.controller.AuthControllerTest" />
+      <option name="METHOD_NAME" value="delete" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -134,23 +159,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AuthServiceImplTest.login" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProductControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="monolithic" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.be.monolithic.service.impl.*" />
+          <option name="PATTERN" value="com.be.monolithic.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.be.monolithic.service.impl" />
-      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.service.impl.AuthServiceImplTest" />
-      <option name="METHOD_NAME" value="login" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="com.be.monolithic.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.controller.ProductControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AuthServiceImplTest.register" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProductServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="monolithic" />
       <extension name="coverage">
         <pattern>
@@ -159,20 +183,19 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.be.monolithic.service.impl" />
-      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.service.impl.AuthServiceImplTest" />
-      <option name="METHOD_NAME" value="register" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.service.impl.ProductServiceImplTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MonolithicApplication" />
         <item itemvalue="JUnit.AuthControllerTest" />
+        <item itemvalue="JUnit.ProductControllerTest" />
+        <item itemvalue="JUnit.IProductServiceImplTest" />
         <item itemvalue="JUnit.AuthServiceImplTest" />
-        <item itemvalue="JUnit.AuthServiceImplTest.login" />
-        <item itemvalue="JUnit.AuthServiceImplTest.register" />
+        <item itemvalue="JUnit.AuthControllerTest.delete" />
       </list>
     </recent_temporary>
   </component>
@@ -186,6 +209,13 @@
       <updated>1691101474411</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="java.util.LinkedHashMap$Entry" memberName="key" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PdRqRateArgs {
-    private String temp;
+public class PdRqProductArgs {
+    private String id;
 }

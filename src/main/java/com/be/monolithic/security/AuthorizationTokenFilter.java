@@ -35,7 +35,6 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
             } catch (BaseException e) {
                 logger.error("Could not set user authentication in security context", e);
                 SecurityContextHolder.clearContext();
-                throw e;
             }
         }
 

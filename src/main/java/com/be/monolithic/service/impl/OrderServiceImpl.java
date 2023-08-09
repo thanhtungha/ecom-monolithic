@@ -4,7 +4,7 @@ import com.be.monolithic.dto.order.*;
 import com.be.monolithic.service.IOrderService;
 import org.springframework.http.ResponseEntity;
 
-public class IOrderServiceImpl implements IOrderService {
+public class OrderServiceImpl implements IOrderService {
     @Override
     public ResponseEntity<?> create(OrRqCreateOrderArgs createOrderArgs) {
         return null;
