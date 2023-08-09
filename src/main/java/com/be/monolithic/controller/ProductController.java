@@ -1,8 +1,6 @@
 package com.be.monolithic.controller;
 
 import com.be.monolithic.dto.BaseResponse;
-import com.be.monolithic.dto.auth.AuRqLoginArgs;
-import com.be.monolithic.dto.auth.AuRqUpdateArgs;
 import com.be.monolithic.dto.product.PdRqAddReviewArgs;
 import com.be.monolithic.dto.product.PdRqProductArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
@@ -12,6 +10,7 @@ import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.ProductMapper;
 import com.be.monolithic.model.ProductModel;
 import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.service.IAuthService;
 import com.be.monolithic.service.IProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +27,7 @@ public class ProductController {
     private static final Logger logger =
             LoggerFactory.getLogger(ProductController.class);
     private final IProductService productService;
+    private final IAuthService authService;
     private final ProductMapper productMapper;
 
     @PostMapping(path = "/greeting")
@@ -40,8 +40,9 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> register(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody PdRqRegisterArgs registerArgs) {
         try {
-            ProductModel productModel =
-                    productService.register(authorizationHeader, registerArgs);
+            UserInfo userInfo = authService.getUserInfo(authorizationHeader);
+            ProductModel productModel = productService.register(userInfo,
+                    registerArgs);
             return new ResponseEntity<>(productMapper.ProductModelToResponse(productModel), HttpStatus.CREATED);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
@@ -95,9 +96,10 @@ public class ProductController {
 
     @PostMapping(path = "/add-review")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> addReview(@RequestBody PdRqAddReviewArgs reviewArgs) {
+    public ResponseEntity<?> addReview(@RequestHeader("Authorization") String authorizationHeader, @RequestBody PdRqAddReviewArgs reviewArgs) {
         try {
-            ProductModel productModel = productService.addReview(reviewArgs);
+            UserInfo buyer = authService.getUserInfo(authorizationHeader);
+            ProductModel productModel = productService.addReview(buyer, reviewArgs);
             return new ResponseEntity<>(productMapper.ProductModelToResponse(productModel), HttpStatus.OK);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {

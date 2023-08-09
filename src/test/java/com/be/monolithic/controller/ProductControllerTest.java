@@ -135,7 +135,7 @@ class ProductControllerTest extends AbstractContainerBaseTest {
     @Test
     @Order(2)
     void addReview() throws Exception {
-        PdRqAddReviewArgs reviewArgs = new PdRqAddReviewArgs(userInfo.getId().toString(), productId, 5, "review text");
+        PdRqAddReviewArgs reviewArgs = new PdRqAddReviewArgs(productId, 5, "review text");
         String reqString = objectMapper.writeValueAsString(reviewArgs);
         RequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post(BASE_API + "/add-review").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);

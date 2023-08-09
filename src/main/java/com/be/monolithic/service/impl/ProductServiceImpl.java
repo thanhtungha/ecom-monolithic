@@ -7,7 +7,6 @@ import com.be.monolithic.model.ProductModel;
 import com.be.monolithic.model.ReviewModel;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.ProductRepository;
-import com.be.monolithic.service.IAuthService;
 import com.be.monolithic.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,12 +18,11 @@ import java.util.*;
 @Service
 @Slf4j
 public class ProductServiceImpl implements IProductService {
-    private final IAuthService authService;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
     @Override
-    public ProductModel register(String authorizationHeader,
+    public ProductModel register(UserInfo seller,
                                  PdRqRegisterArgs registerArgs) {
         Optional<ProductModel> storedModel =
                 productRepository.findByName(registerArgs.getName());
@@ -32,7 +30,6 @@ public class ProductServiceImpl implements IProductService {
             throw new RestExceptions.Conflict("Product existed");
         }
 
-        UserInfo seller = authService.getUserInfo(authorizationHeader);
         ProductModel productModel =
                 productMapper.RegisterArgsToProductModel(registerArgs);
         productModel.setCreateDate(new Date());
@@ -83,14 +80,13 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ProductModel addReview(PdRqAddReviewArgs addReviewArgs) {
+    public ProductModel addReview(UserInfo buyer,
+                                  PdRqAddReviewArgs addReviewArgs) {
         Optional<ProductModel> storedModel =
                 productRepository.findById(UUID.fromString(addReviewArgs.getProductId()));
         if (storedModel.isEmpty()) {
             throw new RestExceptions.NotFound("Product does not existed!");
         }
-
-        UserInfo buyer = authService.getUserInfo(UUID.fromString(addReviewArgs.getBuyerId()));
 
         int rating = addReviewArgs.getRating();
         String review = addReviewArgs.getReview();

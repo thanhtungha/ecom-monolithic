@@ -19,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,11 +53,10 @@ class ProductServiceImplTest {
     @Test
     @Order(0)
     void register() {
-        String bearer = "Bearer " + user.getAccessToken();
         PdRqRegisterArgs registerArgs = new PdRqRegisterArgs("productName",
                 300);
-        ProductModel responseProduct =
-                productService.register(bearer, registerArgs);
+        ProductModel responseProduct = productService.register(user,
+                registerArgs);
         Optional<ProductModel> createdProduct = productRepository.findByName(
                 "productName");
 
@@ -140,25 +138,24 @@ class ProductServiceImplTest {
     @Test
     @Order(1)
     void addReview() {
-        PdRqAddReviewArgs rateArgs =
-                new PdRqAddReviewArgs(user.getId().toString(), getProductId()
-                        , 5, "review text");
+        PdRqAddReviewArgs rateArgs = new PdRqAddReviewArgs(getProductId(), 5,
+                "review text");
 
-        ProductModel responseProduct = productService.addReview(rateArgs);
+        ProductModel responseProduct = productService.addReview(user, rateArgs);
         List<ReviewModel> reviews = responseProduct.getReviews();
         //response test
         if (!reviews.isEmpty()) {
             ReviewModel reviewModel = reviews.get(0);
             assertEquals(rateArgs.getRating(), reviewModel.getRate());
             assertEquals(rateArgs.getReview(), reviewModel.getReview());
-            assertEquals(UUID.fromString(rateArgs.getBuyerId()),
-                    reviewModel.getBuyerId());
+            assertEquals(user.getId(), reviewModel.getBuyerId());
         } else {
             fail("test case failed!");
         }
 
         //DB test
-        Optional<ProductModel> createdProduct = productRepository.findByName("productName");
+        Optional<ProductModel> createdProduct = productRepository.findByName(
+                "productName");
         if (createdProduct.isPresent()) {
             ProductModel dbProduct = createdProduct.get();
             reviews = new ArrayList<>(dbProduct.getReviews());
@@ -166,8 +163,7 @@ class ProductServiceImplTest {
                 ReviewModel reviewModel = reviews.get(0);
                 assertEquals(rateArgs.getRating(), reviewModel.getRate());
                 assertEquals(rateArgs.getReview(), reviewModel.getReview());
-                assertEquals(UUID.fromString(rateArgs.getBuyerId()),
-                        reviewModel.getBuyerId());
+                assertEquals(user.getId(), reviewModel.getBuyerId());
                 return;
             }
         }
