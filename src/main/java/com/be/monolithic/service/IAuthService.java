@@ -1,14 +1,13 @@
 package com.be.monolithic.service;
 
 import com.be.monolithic.dto.auth.*;
-import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.UserInfo;
 import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;
 
 public interface IAuthService extends IBaseService {
-    UserInfo register(AuRqRegisterArgs registerArgs, Inventory inventory);
+    UserInfo register(AuRqRegisterArgs registerArgs);
 
     UserInfo login(AuRqLoginArgs loginArgs);
 

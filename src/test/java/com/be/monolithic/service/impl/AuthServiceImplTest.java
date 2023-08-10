@@ -35,7 +35,7 @@ class AuthServiceImplTest {
         Inventory inventory = new Inventory();
         inventory.setCreateDate(new Date());
         inventory.setUpdateDate(new Date());
-        authService.register(registerArgs, inventory);
+        authService.register(registerArgs);
         Optional<UserInfo> createdUser =
                 authRepository.findByUserName(registerArgs.getUserName());
         if (createdUser.isPresent()) {

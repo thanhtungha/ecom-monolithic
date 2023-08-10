@@ -9,7 +9,7 @@ import com.be.monolithic.model.UserInfo;
 import org.springframework.http.ResponseEntity;
 
 public interface IInventoryService extends IBaseService {
-    void saveInventoryToDB(Inventory inventory);
+    void createInventory(UserInfo userInfo);
     ResponseEntity<?> addProduct(IvRqAddProductArgs addProductArgs);
     ResponseEntity<?> removeProduct(IvRqRemoveProductArgs removeProductArgs);
     ResponseEntity<?> updateQuantity(IvRqUpdateQuantityArgs updateQuantityArgs);

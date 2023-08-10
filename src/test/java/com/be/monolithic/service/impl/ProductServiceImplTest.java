@@ -5,7 +5,6 @@ import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqAddReviewArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqUpdateArgs;
-import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.ProductModel;
 import com.be.monolithic.model.ReviewModel;
 import com.be.monolithic.model.UserInfo;
@@ -43,7 +42,7 @@ class ProductServiceImplTest {
         AuRqRegisterArgs registerArgs = new AuRqRegisterArgs("userName",
                 "userPassword", "0123456789");
         try {
-            authService.register(registerArgs, new Inventory());
+            authService.register(registerArgs);
         } catch (Exception e) {
             //do nothing
         }

@@ -4,9 +4,7 @@ import com.be.monolithic.dto.inventory.IvRqAddProductArgs;
 import com.be.monolithic.dto.inventory.IvRqGetInventoryArgs;
 import com.be.monolithic.dto.inventory.IvRqRemoveProductArgs;
 import com.be.monolithic.dto.inventory.IvRqUpdateQuantityArgs;
-import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.model.Inventory;
-import com.be.monolithic.model.ProductModel;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.InventoryRepository;
 import com.be.monolithic.service.IInventoryService;
@@ -15,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -24,8 +24,15 @@ public class InventoryServiceImpl implements IInventoryService {
     private final InventoryRepository inventoryRepository;
 
     @Override
-    public void saveInventoryToDB(Inventory inventory) {
-        inventoryRepository.save(inventory);
+    public void createInventory(UserInfo userInfo) {
+        Optional<Inventory> created = inventoryRepository.findBySeller(userInfo);
+        if(created.isEmpty()) {
+            Inventory inventory = new Inventory();
+            inventory.setSeller(userInfo);
+            inventory.setCreateDate(new Date());
+            inventory.setUpdateDate(new Date());
+            inventoryRepository.save(inventory);
+        }
     }
 
     @Override

@@ -5,11 +5,8 @@ import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.exception.BaseException;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.AuthMapper;
-import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.UserInfo;
-import com.be.monolithic.service.IAuthService;
-import com.be.monolithic.service.IInventoryService;
-import com.be.monolithic.service.IProductService;
+import com.be.monolithic.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -17,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,7 +24,9 @@ public class AuthController {
 
     private final IAuthService authService;
     private final IInventoryService inventoryService;
+    private final ICartService cartService;
     private final IProductService productService;
+    private final IOrderService orderService;
     private final AuthMapper authMapper;
 
     @PostMapping(path = "/greeting")
@@ -44,13 +41,9 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> register(@Valid @RequestBody AuRqRegisterArgs registerArgs) {
         try {
-            Inventory inventory = new Inventory();
-            inventory.setCreateDate(new Date());
-            inventory.setUpdateDate(new Date());
-            UserInfo userInfo = authService.register(registerArgs, inventory);
-            inventory.setSeller(userInfo);
-            inventoryService.saveInventoryToDB(inventory);
-
+            UserInfo userInfo = authService.register(registerArgs);
+            inventoryService.createInventory(userInfo);
+            cartService.createCart(userInfo);
             return new ResponseEntity<>(authMapper.UserInfoToResponse(userInfo), HttpStatus.CREATED);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
@@ -104,7 +97,8 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> update(@RequestHeader("Authorization") String authorizationHeader, @RequestBody AuRqUpdateArgs updateArgs) {
         try {
-            UserInfo userInfo = authService.update(authorizationHeader, updateArgs);
+            UserInfo userInfo = authService.update(authorizationHeader,
+                    updateArgs);
             return new ResponseEntity<>(authMapper.UserInfoToResponse(userInfo), HttpStatus.OK);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
@@ -134,6 +128,8 @@ public class AuthController {
             UserInfo userInfo = authService.getUserInfo(authorizationHeader);
             productService.deleteUserData(userInfo);
             inventoryService.deleteUserData(userInfo);
+            cartService.deleteUserData(userInfo);
+            orderService.deleteUserData(userInfo);
             authService.deleteUserData(userInfo);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {

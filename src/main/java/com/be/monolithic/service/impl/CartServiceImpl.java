@@ -9,6 +9,11 @@ import org.springframework.http.ResponseEntity;
 
 public class CartServiceImpl implements ICartService {
     @Override
+    public void createCart(UserInfo buyer) {
+
+    }
+
+    @Override
     public ResponseEntity<?> addProduct(CtRqAddProductArgs addProductArgs) {
         return null;
     }

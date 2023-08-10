@@ -5,25 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="359836cb-e4ae-43dc-ba71-b3b34389fae0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/Inventory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/InventoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IBaseService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ProductModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ProductModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ReviewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ReviewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/UserInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/ProductRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IAuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IAuthService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/ICartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/ICartService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IInventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IInventoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IOrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IOrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/AuthServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/CartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/CartServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/InventoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/InventoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/ProductControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/ProductControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/AuthServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/AuthServiceImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/ProductServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/ProductServiceImplTest.java" afterDir="false" />
     </list>

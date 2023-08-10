@@ -22,4 +22,5 @@ public class UserInfo extends BaseModel {
     private String address;
     private String accessToken;
     private String refreshToken;
+    private boolean isActive = false;
 }

@@ -26,8 +26,7 @@ public class AuthServiceImpl implements IAuthService {
     private final AuthMapper authMapper;
 
     @Override
-    public UserInfo register(AuRqRegisterArgs registerArgs,
-                             Inventory inventory) {
+    public UserInfo register(AuRqRegisterArgs registerArgs) {
         Optional<UserInfo> storedModel =
                 authRepository.findByUserName(registerArgs.getUserName());
         if (storedModel.isPresent()) {
