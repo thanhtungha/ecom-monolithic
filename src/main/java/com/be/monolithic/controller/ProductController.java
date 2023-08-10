@@ -8,7 +8,7 @@ import com.be.monolithic.dto.product.PdRqUpdateArgs;
 import com.be.monolithic.exception.BaseException;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.ProductMapper;
-import com.be.monolithic.model.ProductModel;
+import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.service.IAuthService;
 import com.be.monolithic.service.IProductService;
@@ -41,9 +41,9 @@ public class ProductController {
     public ResponseEntity<?> register(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody PdRqRegisterArgs registerArgs) {
         try {
             UserInfo userInfo = authService.getUserInfo(authorizationHeader);
-            ProductModel productModel = productService.register(userInfo,
+            Product product = productService.register(userInfo,
                     registerArgs);
-            return new ResponseEntity<>(productMapper.ProductModelToResponse(productModel), HttpStatus.CREATED);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.CREATED);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;
@@ -56,8 +56,8 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> update(@RequestBody PdRqUpdateArgs updateArgs) {
         try {
-            ProductModel productModel = productService.update(updateArgs);
-            return new ResponseEntity<>(productMapper.ProductModelToResponse(productModel), HttpStatus.OK);
+            Product product = productService.update(updateArgs);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.OK);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;
@@ -83,9 +83,9 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getProduct(@Valid @RequestBody PdRqProductArgs productArgs) {
         try {
-            ProductModel productModel =
+            Product product =
                     productService.getProduct(productArgs.getId());
-            return new ResponseEntity<>(productMapper.ProductModelToResponse(productModel), HttpStatus.OK);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.OK);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;
@@ -99,8 +99,8 @@ public class ProductController {
     public ResponseEntity<?> addReview(@RequestHeader("Authorization") String authorizationHeader, @RequestBody PdRqAddReviewArgs reviewArgs) {
         try {
             UserInfo buyer = authService.getUserInfo(authorizationHeader);
-            ProductModel productModel = productService.addReview(buyer, reviewArgs);
-            return new ResponseEntity<>(productMapper.ProductModelToResponse(productModel), HttpStatus.OK);
+            Product product = productService.addReview(buyer, reviewArgs);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.OK);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;

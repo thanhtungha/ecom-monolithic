@@ -1,15 +1,12 @@
 package com.be.monolithic.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -23,5 +20,5 @@ public class Inventory extends BaseModel {
 
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, fetch =
             FetchType.EAGER, orphanRemoval = true)
-    private List<ProductModel> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 }

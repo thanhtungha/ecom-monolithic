@@ -5,10 +5,9 @@ import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqAddReviewArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqUpdateArgs;
-import com.be.monolithic.model.ProductModel;
+import com.be.monolithic.model.Product;
 import com.be.monolithic.model.ReviewModel;
 import com.be.monolithic.model.UserInfo;
-import com.be.monolithic.repository.AuthRepository;
 import com.be.monolithic.repository.ProductRepository;
 import com.be.monolithic.service.IAuthService;
 import com.be.monolithic.service.IProductService;
@@ -32,22 +31,21 @@ class ProductServiceImplTest {
     private IProductService productService;
 
     @Autowired
-    private AuthRepository authRepository;
-    @Autowired
     private IAuthService authService;
     private static UserInfo user;
 
     @BeforeEach
     void setUp() {
-        AuRqRegisterArgs registerArgs = new AuRqRegisterArgs("userName",
-                "userPassword", "0123456789");
-        try {
-            authService.register(registerArgs);
-        } catch (Exception e) {
-            //do nothing
+        if(user == null) {
+            AuRqRegisterArgs registerArgs = new AuRqRegisterArgs("userName", "userPassword", "0123456789");
+            try {
+                authService.register(registerArgs);
+            } catch (Exception e) {
+                //do nothing
+            }
+            AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
+            user = authService.login(loginArgs);
         }
-        AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
-        user = authService.login(loginArgs);
     }
 
     @Test
@@ -55,13 +53,13 @@ class ProductServiceImplTest {
     void register() {
         PdRqRegisterArgs registerArgs = new PdRqRegisterArgs("productName",
                 300);
-        ProductModel responseProduct = productService.register(user,
+        Product responseProduct = productService.register(user,
                 registerArgs);
-        Optional<ProductModel> createdProduct = productRepository.findByName(
+        Optional<Product> createdProduct = productRepository.findByName(
                 "productName");
 
         if (createdProduct.isPresent()) {
-            ProductModel dbProduct = createdProduct.get();
+            Product dbProduct = createdProduct.get();
             assertEquals(registerArgs.getName(), dbProduct.getName());
             assertEquals(registerArgs.getPrice(), dbProduct.getPrice());
             assertEquals(user.getId(), dbProduct.getSellerUUID());
@@ -79,12 +77,12 @@ class ProductServiceImplTest {
     void update() {
         PdRqUpdateArgs updateArgs = new PdRqUpdateArgs(getProductId(),
                 "updatedName", 300, 10);
-        ProductModel responseProduct = productService.update(updateArgs);
-        Optional<ProductModel> createdProduct = productRepository.findByName(
+        Product responseProduct = productService.update(updateArgs);
+        Optional<Product> createdProduct = productRepository.findByName(
                 "updatedName");
 
         if (createdProduct.isPresent()) {
-            ProductModel dbProduct = createdProduct.get();
+            Product dbProduct = createdProduct.get();
             assertEquals(updateArgs.getName(), dbProduct.getName());
             assertEquals(updateArgs.getQuantity(), dbProduct.getQuantity());
             assertEquals(updateArgs.getPrice(), dbProduct.getPrice());
@@ -107,7 +105,7 @@ class ProductServiceImplTest {
     @Order(2)
     void remove() {
         boolean result = productService.remove(getProductId());
-        Optional<ProductModel> removedProduct = productRepository.findByName(
+        Optional<Product> removedProduct = productRepository.findByName(
                 "productName");
 
         if (removedProduct.isPresent() || !result) {
@@ -118,13 +116,13 @@ class ProductServiceImplTest {
     @Test
     @Order(1)
     void getProduct() {
-        ProductModel responseProduct =
+        Product responseProduct =
                 productService.getProduct(getProductId());
-        Optional<ProductModel> createdProduct = productRepository.findByName(
+        Optional<Product> createdProduct = productRepository.findByName(
                 "productName");
 
         if (createdProduct.isPresent()) {
-            ProductModel dbProduct = createdProduct.get();
+            Product dbProduct = createdProduct.get();
             assertEquals(dbProduct.getName(), responseProduct.getName());
             assertEquals(dbProduct.getQuantity(),
                     responseProduct.getQuantity());
@@ -141,7 +139,7 @@ class ProductServiceImplTest {
         PdRqAddReviewArgs rateArgs = new PdRqAddReviewArgs(getProductId(), 5,
                 "review text");
 
-        ProductModel responseProduct = productService.addReview(user, rateArgs);
+        Product responseProduct = productService.addReview(user, rateArgs);
         List<ReviewModel> reviews = responseProduct.getReviews();
         //response test
         if (!reviews.isEmpty()) {
@@ -154,10 +152,10 @@ class ProductServiceImplTest {
         }
 
         //DB test
-        Optional<ProductModel> createdProduct = productRepository.findByName(
+        Optional<Product> createdProduct = productRepository.findByName(
                 "productName");
         if (createdProduct.isPresent()) {
-            ProductModel dbProduct = createdProduct.get();
+            Product dbProduct = createdProduct.get();
             reviews = new ArrayList<>(dbProduct.getReviews());
             if (!reviews.isEmpty()) {
                 ReviewModel reviewModel = reviews.get(0);
@@ -171,7 +169,7 @@ class ProductServiceImplTest {
     }
 
     String getProductId() {
-        Optional<ProductModel> createdProduct = productRepository.findByName(
+        Optional<Product> createdProduct = productRepository.findByName(
                 "productName");
         if (createdProduct.isEmpty()) {
             fail("test case failed!");

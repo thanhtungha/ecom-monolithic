@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "products")
-public class ProductModel extends BaseModel {
+public class Product extends BaseModel {
     private String name;
     private int price;
     private int quantity;
@@ -23,7 +24,7 @@ public class ProductModel extends BaseModel {
     private UUID sellerUUID;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch =
             FetchType.EAGER, orphanRemoval = true)
-    private List<ReviewModel> reviews;
+    private List<ReviewModel> reviews = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
     @ToString.Exclude

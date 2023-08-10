@@ -3,7 +3,7 @@ package com.be.monolithic.service.impl;
 import com.be.monolithic.dto.product.*;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.ProductMapper;
-import com.be.monolithic.model.ProductModel;
+import com.be.monolithic.model.Product;
 import com.be.monolithic.model.ReviewModel;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.ProductRepository;
@@ -22,43 +22,43 @@ public class ProductServiceImpl implements IProductService {
     private final ProductMapper productMapper;
 
     @Override
-    public ProductModel register(UserInfo seller,
-                                 PdRqRegisterArgs registerArgs) {
-        Optional<ProductModel> storedModel =
+    public Product register(UserInfo seller,
+                            PdRqRegisterArgs registerArgs) {
+        Optional<Product> storedModel =
                 productRepository.findByName(registerArgs.getName());
         if (storedModel.isPresent()) {
             throw new RestExceptions.Conflict("Product existed");
         }
 
-        ProductModel productModel =
-                productMapper.RegisterArgsToProductModel(registerArgs);
-        productModel.setCreateDate(new Date());
-        productModel.setUpdateDate(new Date());
-        productModel.setSellerUUID(seller.getId());
-        productRepository.save(productModel);
-        return productModel;
+        Product product =
+                productMapper.RegisterArgsToProduct(registerArgs);
+        product.setCreateDate(new Date());
+        product.setUpdateDate(new Date());
+        product.setSellerUUID(seller.getId());
+        productRepository.save(product);
+        return product;
     }
 
     @Override
-    public ProductModel update(PdRqUpdateArgs updateArgs) {
-        Optional<ProductModel> storedModel =
+    public Product update(PdRqUpdateArgs updateArgs) {
+        Optional<Product> storedModel =
                 productRepository.findById(UUID.fromString(updateArgs.getId()));
         if (storedModel.isEmpty()) {
             throw new RestExceptions.NotFound("Product does not existed!");
         }
 
-        ProductModel productModel = storedModel.get();
-        productModel.setUpdateDate(new Date());
-        productModel.setName(updateArgs.getName());
-        productModel.setPrice(updateArgs.getPrice());
-        productModel.setQuantity(updateArgs.getQuantity());
-        productRepository.save(productModel);
-        return productModel;
+        Product product = storedModel.get();
+        product.setUpdateDate(new Date());
+        product.setName(updateArgs.getName());
+        product.setPrice(updateArgs.getPrice());
+        product.setQuantity(updateArgs.getQuantity());
+        productRepository.save(product);
+        return product;
     }
 
     @Override
     public boolean remove(String productId) {
-        Optional<ProductModel> storedModel =
+        Optional<Product> storedModel =
                 productRepository.findById(UUID.fromString(productId));
         if (storedModel.isPresent()) {
             productRepository.delete(storedModel.get());
@@ -69,8 +69,8 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ProductModel getProduct(String productId) {
-        Optional<ProductModel> storedModel =
+    public Product getProduct(String productId) {
+        Optional<Product> storedModel =
                 productRepository.findById(UUID.fromString(productId));
         if (storedModel.isEmpty()) {
             throw new RestExceptions.NotFound("Product does not existed!");
@@ -80,9 +80,9 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ProductModel addReview(UserInfo buyer,
-                                  PdRqAddReviewArgs addReviewArgs) {
-        Optional<ProductModel> storedModel =
+    public Product addReview(UserInfo buyer,
+                             PdRqAddReviewArgs addReviewArgs) {
+        Optional<Product> storedModel =
                 productRepository.findById(UUID.fromString(addReviewArgs.getProductId()));
         if (storedModel.isEmpty()) {
             throw new RestExceptions.NotFound("Product does not existed!");
@@ -91,19 +91,23 @@ public class ProductServiceImpl implements IProductService {
         int rating = addReviewArgs.getRating();
         String review = addReviewArgs.getReview();
 
-        ProductModel productModel = storedModel.get();
-        productModel.setUpdateDate(new Date());
-        ReviewModel reviewModel = new ReviewModel(rating, review,
-                buyer.getId(), productModel, buyer);
-        productModel.getReviews().add(reviewModel);
+        Product product = storedModel.get();
+        product.setUpdateDate(new Date());
+        ReviewModel reviewModel = new ReviewModel();
+        reviewModel.setRate(rating);
+        reviewModel.setReview(review);
+        reviewModel.setBuyerUUID(buyer.getId());
+        reviewModel.setProduct(product);
+        reviewModel.setReviewer(buyer);
+        product.getReviews().add(reviewModel);
 
-        productRepository.save(productModel);
-        return productModel;
+        productRepository.save(product);
+        return product;
     }
 
     @Override
     public boolean deleteUserData(UserInfo seller) {
-        Optional<List<ProductModel>> storedModel =
+        Optional<List<Product>> storedModel =
                 productRepository.findBySeller(seller);
         storedModel.ifPresent(productRepository::deleteAll);
         return true;

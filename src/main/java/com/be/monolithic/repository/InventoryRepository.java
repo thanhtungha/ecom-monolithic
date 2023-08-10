@@ -1,7 +1,6 @@
 package com.be.monolithic.repository;
 
 import com.be.monolithic.model.Inventory;
-import com.be.monolithic.model.ProductModel;
 import com.be.monolithic.model.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 

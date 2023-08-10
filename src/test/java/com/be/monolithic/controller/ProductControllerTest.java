@@ -6,7 +6,7 @@ import com.be.monolithic.dto.product.PdRqAddReviewArgs;
 import com.be.monolithic.dto.product.PdRqProductArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqUpdateArgs;
-import com.be.monolithic.model.ProductModel;
+import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.AuthRepository;
 import com.be.monolithic.repository.ProductRepository;
@@ -48,7 +48,7 @@ class ProductControllerTest extends AbstractContainerBaseTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        if(authorizationHeader == null || authorizationHeader.isEmpty()) {
+        if(userInfo == null) {
             AuRqRegisterArgs registerArgs = new AuRqRegisterArgs("userName", "userPassword", "1234567890");
             String reqString = objectMapper.writeValueAsString(registerArgs);
             RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api" + "/auth/register").contentType(MediaType.APPLICATION_JSON).content(reqString);
@@ -75,15 +75,17 @@ class ProductControllerTest extends AbstractContainerBaseTest {
                 MockMvcRequestBuilders.post(BASE_API + "/register").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isCreated()).andReturn();
 
-        //check result
-        Optional<ProductModel> createdProduct =
+        //check response
+
+        //check db
+        Optional<Product> createdProduct =
                 productRepository.findByName(registerArgs.getName());
         if (createdProduct.isPresent()) {
-            ProductModel productModel = createdProduct.get();
-            assertEquals(registerArgs.getName(), productModel.getName());
-            assertEquals(registerArgs.getPrice(), productModel.getPrice());
-            assertEquals(userInfo.getId(), productModel.getSellerUUID());
-            productId = productModel.getId().toString();
+            Product product = createdProduct.get();
+            assertEquals(registerArgs.getName(), product.getName());
+            assertEquals(registerArgs.getPrice(), product.getPrice());
+            assertEquals(userInfo.getId(), product.getSellerUUID());
+            productId = product.getId().toString();
             return;
         }
         fail("test case failed!");
@@ -99,14 +101,16 @@ class ProductControllerTest extends AbstractContainerBaseTest {
                 MockMvcRequestBuilders.post(BASE_API + "/update").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
 
-        //check result
-        Optional<ProductModel> createdProduct =
+        //check response
+
+        //check db
+        Optional<Product> createdProduct =
                 productRepository.findById(UUID.fromString(productId));
         if (createdProduct.isPresent()) {
-            ProductModel productModel = createdProduct.get();
-            assertEquals(updateArgs.getName(), productModel.getName());
-            assertEquals(updateArgs.getPrice(), productModel.getPrice());
-            assertEquals(updateArgs.getQuantity(), productModel.getQuantity());
+            Product product = createdProduct.get();
+            assertEquals(updateArgs.getName(), product.getName());
+            assertEquals(updateArgs.getPrice(), product.getPrice());
+            assertEquals(updateArgs.getQuantity(), product.getQuantity());
             return;
         }
         fail("test case failed!");
@@ -120,6 +124,10 @@ class ProductControllerTest extends AbstractContainerBaseTest {
         RequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post(BASE_API + "/remove-product").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+
+        //check response
+
+        //check db
     }
 
     @Test
@@ -130,6 +138,8 @@ class ProductControllerTest extends AbstractContainerBaseTest {
         RequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post(BASE_API + "/get-product").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+
+        //check response
     }
 
     @Test
@@ -140,6 +150,10 @@ class ProductControllerTest extends AbstractContainerBaseTest {
         RequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post(BASE_API + "/add-review").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+
+        //check response
+
+        //check db
     }
 
     UserInfo getUserInfo() {

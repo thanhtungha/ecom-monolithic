@@ -1,9 +1,6 @@
 package com.be.monolithic.dto.product;
 
 import com.be.monolithic.model.ReviewModel;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PdRpProduct {
+public class ProductDTO {
     private UUID id;
     private Date createDate;
     private Date updateDate;

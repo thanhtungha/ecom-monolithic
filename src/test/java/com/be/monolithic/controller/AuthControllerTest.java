@@ -58,6 +58,8 @@ class AuthControllerTest extends AbstractContainerBaseTest {
         RequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post(BASE_API + "/login").contentType(MediaType.APPLICATION_JSON).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+
+        //check response
     }
 
     @Test
@@ -67,7 +69,9 @@ class AuthControllerTest extends AbstractContainerBaseTest {
                 MockMvcRequestBuilders.post(BASE_API + "/logout").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken());
         mockMvc.perform(requestBuilder).andExpect(status().isOk());
 
-        //check result
+        //check response
+
+        //check db
         Optional<UserInfo> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isPresent()) {
@@ -89,7 +93,9 @@ class AuthControllerTest extends AbstractContainerBaseTest {
                 MockMvcRequestBuilders.post(BASE_API + "/change-password").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk());
 
-        //check result
+        //check response
+
+        //check db
         Optional<UserInfo> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isPresent()) {
@@ -111,7 +117,9 @@ class AuthControllerTest extends AbstractContainerBaseTest {
                 MockMvcRequestBuilders.post(BASE_API + "/update").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk());
 
-        //check result
+        //check response
+
+        //check db
         Optional<UserInfo> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isPresent()) {
@@ -142,7 +150,9 @@ class AuthControllerTest extends AbstractContainerBaseTest {
                 "-account").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken());
         mockMvc.perform(requestBuilder).andExpect(status().isOk());
 
-        //check result
+        //check response
+
+        //check db
         Optional<UserInfo> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isPresent()) {

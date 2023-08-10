@@ -23,7 +23,7 @@ public class ReviewModel extends BaseModel {
     @JoinColumn(name = "product_id", referencedColumnName = "ID")
     @ToString.Exclude
     @JsonIgnore
-    private ProductModel product;
+    private Product product;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reviewer_id")

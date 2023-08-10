@@ -1,6 +1,6 @@
 package com.be.monolithic.mappers;
 
-import com.be.monolithic.dto.auth.AuRpUserInfo;
+import com.be.monolithic.dto.auth.UserDTO;
 import com.be.monolithic.dto.auth.AuRqLoginArgs;
 import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.model.UserInfo;
@@ -20,10 +20,5 @@ public interface AuthMapper {
     UserInfo LoginArgsToUserInfo(AuRqLoginArgs loginArgs);
 
     @Mapping(source = "id", target = "id")
-    AuRpUserInfo UserInfoToResponse(UserInfo userInfo);
-
-    @Named("stringToUUID")
-    static UUID stringToUUID(String stringId) {
-        return UUID.fromString(stringId);
-    }
+    UserDTO UserInfoToResponse(UserInfo userInfo);
 }

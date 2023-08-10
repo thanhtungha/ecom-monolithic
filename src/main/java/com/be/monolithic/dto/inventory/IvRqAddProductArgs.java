@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class IvRqAddProductArgs {
-    private String temp;
+    private String name;
+    private int price;
 }

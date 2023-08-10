@@ -1,19 +1,16 @@
 package com.be.monolithic.service.impl;
 
-import com.be.monolithic.dto.inventory.IvRqAddProductArgs;
-import com.be.monolithic.dto.inventory.IvRqGetInventoryArgs;
-import com.be.monolithic.dto.inventory.IvRqRemoveProductArgs;
-import com.be.monolithic.dto.inventory.IvRqUpdateQuantityArgs;
+import com.be.monolithic.exception.RestExceptions;
+import com.be.monolithic.mappers.ProductMapper;
 import com.be.monolithic.model.Inventory;
+import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.InventoryRepository;
 import com.be.monolithic.service.IInventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
@@ -22,11 +19,13 @@ import java.util.Optional;
 @Slf4j
 public class InventoryServiceImpl implements IInventoryService {
     private final InventoryRepository inventoryRepository;
+    private final ProductMapper productMapper;
 
     @Override
     public void createInventory(UserInfo userInfo) {
-        Optional<Inventory> created = inventoryRepository.findBySeller(userInfo);
-        if(created.isEmpty()) {
+        Optional<Inventory> created =
+                inventoryRepository.findBySeller(userInfo);
+        if (created.isEmpty()) {
             Inventory inventory = new Inventory();
             inventory.setSeller(userInfo);
             inventory.setCreateDate(new Date());
@@ -36,23 +35,53 @@ public class InventoryServiceImpl implements IInventoryService {
     }
 
     @Override
-    public ResponseEntity<?> addProduct(IvRqAddProductArgs addProductArgs) {
-        return null;
+    public Inventory addProduct(UserInfo userInfo, Product product) {
+        Optional<Inventory> storedModel =
+                inventoryRepository.findBySeller(userInfo);
+        if (storedModel.isEmpty()) {
+            throw new RestExceptions.InternalServerError("Can not find " +
+                    "user's inventory!");
+        }
+        Inventory dbInventory = storedModel.get();
+        product.setInventory(dbInventory);
+        dbInventory.getProducts().add(product);
+        inventoryRepository.save(dbInventory);
+        return dbInventory;
     }
 
     @Override
-    public ResponseEntity<?> removeProduct(IvRqRemoveProductArgs removeProductArgs) {
-        return null;
+    public Inventory removeProduct(UserInfo userInfo,
+                                   Product product) {
+        Optional<Inventory> storedModel =
+                inventoryRepository.findBySeller(userInfo);
+        if (storedModel.isEmpty()) {
+            throw new RestExceptions.InternalServerError("Can not find " +
+                    "user's inventory!");
+        }
+        Inventory dbInventory = storedModel.get();
+        Product dbProduct = null;
+        for(Product prd : dbInventory.getProducts()) {
+            if(prd.getId().equals(product.getId())) {
+                dbProduct = prd;
+                break;
+            }
+        }
+        if(dbProduct != null) {
+            dbInventory.getProducts().remove(dbProduct);
+            inventoryRepository.save(dbInventory);
+        }
+        return dbInventory;
     }
 
     @Override
-    public ResponseEntity<?> updateQuantity(IvRqUpdateQuantityArgs updateQuantityArgs) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<?> getInventory(IvRqGetInventoryArgs getInventoryArgs) {
-        return null;
+    public Inventory getInventory(UserInfo userInfo) {
+        Optional<Inventory> storedModel =
+                inventoryRepository.findBySeller(userInfo);
+        if (storedModel.isEmpty()) {
+            throw new RestExceptions.InternalServerError("Can not find " +
+                    "user's inventory!");
+        }
+        return storedModel.get();
     }
 
     @Override

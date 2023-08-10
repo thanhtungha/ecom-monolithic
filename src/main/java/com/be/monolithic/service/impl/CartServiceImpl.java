@@ -5,8 +5,14 @@ import com.be.monolithic.dto.cart.CtRqGetCartArgs;
 import com.be.monolithic.dto.cart.CtRqRemoveProductArgs;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.service.ICartService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
+@Service
+@Slf4j
 public class CartServiceImpl implements ICartService {
     @Override
     public void createCart(UserInfo buyer) {

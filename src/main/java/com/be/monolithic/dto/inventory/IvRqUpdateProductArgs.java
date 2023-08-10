@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class IvRqGetInventoryArgs {
-    private String temp;
+public class IvRqUpdateProductArgs {
+    private String id;
+    private String name;
+    private int price;
+    private int quantity;
 }

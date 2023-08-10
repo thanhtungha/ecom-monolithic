@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuRpUserInfo {
+public class UserDTO {
     private UUID id;
     private Date createDate;
     private Date updateDate;

@@ -1,17 +1,12 @@
 package com.be.monolithic.service;
 
-import com.be.monolithic.dto.inventory.IvRqAddProductArgs;
-import com.be.monolithic.dto.inventory.IvRqGetInventoryArgs;
-import com.be.monolithic.dto.inventory.IvRqRemoveProductArgs;
-import com.be.monolithic.dto.inventory.IvRqUpdateQuantityArgs;
 import com.be.monolithic.model.Inventory;
+import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
-import org.springframework.http.ResponseEntity;
 
 public interface IInventoryService extends IBaseService {
     void createInventory(UserInfo userInfo);
-    ResponseEntity<?> addProduct(IvRqAddProductArgs addProductArgs);
-    ResponseEntity<?> removeProduct(IvRqRemoveProductArgs removeProductArgs);
-    ResponseEntity<?> updateQuantity(IvRqUpdateQuantityArgs updateQuantityArgs);
-    ResponseEntity<?> getInventory(IvRqGetInventoryArgs getInventoryArgs);
+    Inventory addProduct(UserInfo userInfo, Product product);
+    Inventory removeProduct(UserInfo userInfo, Product product);
+    Inventory getInventory(UserInfo userInfo);
 }
