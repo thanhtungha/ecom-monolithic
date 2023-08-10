@@ -1,6 +1,7 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.dto.order.*;
+import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.service.IOrderService;
 import org.springframework.http.ResponseEntity;
 
@@ -28,5 +29,10 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public ResponseEntity<?> checkout(OrRqCheckOutArgs checkOutArgs) {
         return null;
+    }
+
+    @Override
+    public boolean deleteUserData(UserInfo userInfo) {
+        return false;
     }
 }

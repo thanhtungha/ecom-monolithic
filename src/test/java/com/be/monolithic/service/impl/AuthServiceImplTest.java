@@ -1,6 +1,7 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.dto.auth.*;
+import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.AuthRepository;
 import com.be.monolithic.service.IAuthService;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +32,10 @@ class AuthServiceImplTest {
     void register() {
         AuRqRegisterArgs registerArgs = new AuRqRegisterArgs("userName",
                 "userPassword", "0123456789");
-        authService.register(registerArgs);
+        Inventory inventory = new Inventory();
+        inventory.setCreateDate(new Date());
+        inventory.setUpdateDate(new Date());
+        authService.register(registerArgs, inventory);
         Optional<UserInfo> createdUser =
                 authRepository.findByUserName(registerArgs.getUserName());
         if (createdUser.isPresent()) {
@@ -124,9 +129,9 @@ class AuthServiceImplTest {
     @Order(4)
     void delete() {
         AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
-        authService.login(loginArgs);
+        UserInfo userInfo = authService.login(loginArgs);
 
-        boolean result = authService.delete(getAuthorizationHeader());
+        boolean result = authService.deleteUserData(userInfo);
         if (result) {
             Optional<UserInfo> createdUser = authRepository.findByUserName(
                     "userName");

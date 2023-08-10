@@ -3,7 +3,7 @@ package com.be.monolithic.service;
 import com.be.monolithic.dto.order.*;
 import org.springframework.http.ResponseEntity;
 
-public interface IOrderService {
+public interface IOrderService extends IBaseService {
     ResponseEntity<?> create(OrRqCreateOrderArgs createOrderArgs);
     ResponseEntity<?> update(OrRqUpdateOrderArgs updateOrderArgs);
     ResponseEntity<?> cancel(OrRqCancelOrderArgs cancelOrderArgs);

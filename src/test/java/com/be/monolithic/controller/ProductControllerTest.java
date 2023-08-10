@@ -82,7 +82,7 @@ class ProductControllerTest extends AbstractContainerBaseTest {
             ProductModel productModel = createdProduct.get();
             assertEquals(registerArgs.getName(), productModel.getName());
             assertEquals(registerArgs.getPrice(), productModel.getPrice());
-            assertEquals(userInfo.getId(), productModel.getSellerId());
+            assertEquals(userInfo.getId(), productModel.getSellerUUID());
             productId = productModel.getId().toString();
             return;
         }

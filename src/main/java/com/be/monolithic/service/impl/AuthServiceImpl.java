@@ -3,6 +3,7 @@ package com.be.monolithic.service.impl;
 import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.AuthMapper;
+import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.AuthRepository;
 import com.be.monolithic.security.AuthenticationProvider;
@@ -25,7 +26,8 @@ public class AuthServiceImpl implements IAuthService {
     private final AuthMapper authMapper;
 
     @Override
-    public UserInfo register(AuRqRegisterArgs registerArgs) {
+    public UserInfo register(AuRqRegisterArgs registerArgs,
+                             Inventory inventory) {
         Optional<UserInfo> storedModel =
                 authRepository.findByUserName(registerArgs.getUserName());
         if (storedModel.isPresent()) {
@@ -96,13 +98,6 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public boolean delete(String authorizationHeader) {
-        UserInfo userInfo = getUserInfo(authorizationHeader);
-        authRepository.delete(userInfo);
-        return true;
-    }
-
-    @Override
     public UserInfo getUserInfo(String authorizationHeader) {
         Optional<UserInfo> storedModel =
                 authRepository.findByAccessToken(extractAccessToken(authorizationHeader));
@@ -129,5 +124,11 @@ public class AuthServiceImpl implements IAuthService {
             return authorizationHeader.substring(7);
         }
         throw new RestExceptions.Forbidden("Invalid accessToken!");
+    }
+
+    @Override
+    public boolean deleteUserData(UserInfo userInfo) {
+        authRepository.delete(userInfo);
+        return true;
     }
 }

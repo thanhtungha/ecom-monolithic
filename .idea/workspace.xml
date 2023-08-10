@@ -5,12 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="359836cb-e4ae-43dc-ba71-b3b34389fae0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/Inventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/InventoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IBaseService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqAddReviewArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/PdRqAddReviewArgs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ProductModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ProductModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ReviewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ReviewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IAuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IAuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/ICartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/ICartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IInventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IInventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IOrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IOrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/IProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/CartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/CartServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/InventoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/InventoryServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/ProductServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/ProductControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/ProductControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/AuthServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/AuthServiceImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/ProductServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/ProductServiceImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,14 +95,14 @@
       <recent name="com.be.monolithic" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.be.monolithic.dto.product" />
-      <recent name="com.be.monolithic.model" />
-      <recent name="com.be.monolithic.mappers" />
+      <recent name="com.be.monolithic.service" />
       <recent name="com.be.monolithic.repository" />
-      <recent name="com.be.monolithic.dto.auth" />
+      <recent name="com.be.monolithic.model" />
+      <recent name="com.be.monolithic.dto.product" />
+      <recent name="com.be.monolithic.mappers" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProductServiceImplTest">
+  <component name="RunManager" selected="JUnit.ProductControllerTest">
     <configuration name="AuthControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="monolithic" />
       <extension name="coverage">
@@ -167,10 +181,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProductServiceImplTest" />
-        <item itemvalue="JUnit.AuthControllerTest" />
         <item itemvalue="JUnit.ProductControllerTest" />
+        <item itemvalue="JUnit.ProductServiceImplTest" />
         <item itemvalue="JUnit.AuthServiceImplTest" />
+        <item itemvalue="JUnit.AuthControllerTest" />
         <item itemvalue="JUnit.AuthControllerTest.delete" />
       </list>
     </recent_temporary>
@@ -196,5 +210,10 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ecom_monolithic$AuthServiceImplTest.ic" NAME="AuthServiceImplTest Coverage Results" MODIFIED="1691621174271" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.be.monolithic.service.impl.*</FILTER>
+    </SUITE>
   </component>
 </project>

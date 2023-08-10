@@ -34,7 +34,7 @@ public class ProductServiceImpl implements IProductService {
                 productMapper.RegisterArgsToProductModel(registerArgs);
         productModel.setCreateDate(new Date());
         productModel.setUpdateDate(new Date());
-        productModel.setSellerId(seller.getId());
+        productModel.setSellerUUID(seller.getId());
         productRepository.save(productModel);
         return productModel;
     }
@@ -94,10 +94,18 @@ public class ProductServiceImpl implements IProductService {
         ProductModel productModel = storedModel.get();
         productModel.setUpdateDate(new Date());
         ReviewModel reviewModel = new ReviewModel(rating, review,
-                buyer.getId(), productModel);
+                buyer.getId(), productModel, buyer);
         productModel.getReviews().add(reviewModel);
 
         productRepository.save(productModel);
         return productModel;
+    }
+
+    @Override
+    public boolean deleteUserData(UserInfo seller) {
+        Optional<List<ProductModel>> storedModel =
+                productRepository.findBySeller(seller);
+        storedModel.ifPresent(productRepository::deleteAll);
+        return true;
     }
 }
