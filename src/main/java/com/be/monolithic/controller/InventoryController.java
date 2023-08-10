@@ -95,7 +95,7 @@ public class InventoryController {
         }
     }
 
-    @PostMapping(path = "/get-inventory")
+    @GetMapping(path = "/get-inventory")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getInventory(@RequestHeader("Authorization") String authorizationHeader) {
         try {

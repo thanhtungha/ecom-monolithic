@@ -157,7 +157,7 @@ class InventoryControllerTest extends AbstractContainerBaseTest {
     @Order(1)
     void getInventory() throws Exception {
         RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(BASE_API + "/get-inventory").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader);
+                MockMvcRequestBuilders.get(BASE_API + "/get-inventory").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
 
         //check response
