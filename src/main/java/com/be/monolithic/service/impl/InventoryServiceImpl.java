@@ -1,7 +1,6 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.exception.RestExceptions;
-import com.be.monolithic.mappers.ProductMapper;
 import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
@@ -19,15 +18,14 @@ import java.util.Optional;
 @Slf4j
 public class InventoryServiceImpl implements IInventoryService {
     private final InventoryRepository inventoryRepository;
-    private final ProductMapper productMapper;
 
     @Override
     public void createInventory(UserInfo userInfo) {
         Optional<Inventory> created =
-                inventoryRepository.findBySeller(userInfo);
+                inventoryRepository.findByOwner(userInfo);
         if (created.isEmpty()) {
             Inventory inventory = new Inventory();
-            inventory.setSeller(userInfo);
+            inventory.setOwner(userInfo);
             inventory.setCreateDate(new Date());
             inventory.setUpdateDate(new Date());
             inventoryRepository.save(inventory);
@@ -37,13 +35,12 @@ public class InventoryServiceImpl implements IInventoryService {
     @Override
     public Inventory addProduct(UserInfo userInfo, Product product) {
         Optional<Inventory> storedModel =
-                inventoryRepository.findBySeller(userInfo);
+                inventoryRepository.findByOwner(userInfo);
         if (storedModel.isEmpty()) {
             throw new RestExceptions.InternalServerError("Can not find " +
                     "user's inventory!");
         }
         Inventory dbInventory = storedModel.get();
-        product.setInventory(dbInventory);
         dbInventory.getProducts().add(product);
         inventoryRepository.save(dbInventory);
         return dbInventory;
@@ -53,7 +50,7 @@ public class InventoryServiceImpl implements IInventoryService {
     public Inventory removeProduct(UserInfo userInfo,
                                    Product product) {
         Optional<Inventory> storedModel =
-                inventoryRepository.findBySeller(userInfo);
+                inventoryRepository.findByOwner(userInfo);
         if (storedModel.isEmpty()) {
             throw new RestExceptions.InternalServerError("Can not find " +
                     "user's inventory!");
@@ -76,7 +73,7 @@ public class InventoryServiceImpl implements IInventoryService {
     @Override
     public Inventory getInventory(UserInfo userInfo) {
         Optional<Inventory> storedModel =
-                inventoryRepository.findBySeller(userInfo);
+                inventoryRepository.findByOwner(userInfo);
         if (storedModel.isEmpty()) {
             throw new RestExceptions.InternalServerError("Can not find " +
                     "user's inventory!");
@@ -87,7 +84,7 @@ public class InventoryServiceImpl implements IInventoryService {
     @Override
     public boolean deleteUserData(UserInfo seller) {
         Optional<Inventory> storedModel =
-                inventoryRepository.findBySeller(seller);
+                inventoryRepository.findByOwner(seller);
         storedModel.ifPresent(inventoryRepository::delete);
         return true;
     }

@@ -2,13 +2,14 @@ package com.be.monolithic.controller;
 
 import com.be.monolithic.dto.auth.AuRqLoginArgs;
 import com.be.monolithic.dto.auth.AuRqRegisterArgs;
+import com.be.monolithic.dto.cart.CtRqProductArgs;
 import com.be.monolithic.dto.inventory.IvRqAddProductArgs;
-import com.be.monolithic.dto.inventory.IvRqRemoveProductArgs;
-import com.be.monolithic.dto.inventory.IvRqUpdateProductArgs;
+import com.be.monolithic.model.Cart;
 import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.AuthRepository;
+import com.be.monolithic.repository.CartRepository;
 import com.be.monolithic.repository.InventoryRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -23,22 +24,23 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class InventoryControllerTest extends AbstractContainerBaseTest {
+class CartControllerTest extends AbstractContainerBaseTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private InventoryRepository inventoryRepository;
-    private final String BASE_API = "/api/inventory";
+    private CartRepository cartRepository;
+    private final String BASE_API = "/api/cart";
 
+    @Autowired
+    private InventoryRepository inventoryRepository;
     @Autowired
     private AuthRepository authRepository;
     private static UserInfo userInfo;
@@ -64,33 +66,48 @@ class InventoryControllerTest extends AbstractContainerBaseTest {
 
             userInfo = getUserInfo();
             authorizationHeader = "Bearer " + userInfo.getAccessToken();
+
+            //create product
+            IvRqAddProductArgs args = new IvRqAddProductArgs("productName",
+                    100);
+            reqString = objectMapper.writeValueAsString(args);
+            requestBuilder =
+                    MockMvcRequestBuilders.post("/api/inventory/add-product").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
+            mockMvc.perform(requestBuilder).andExpect(status().isCreated()).andReturn();
+
+            Optional<Inventory> inventoryOptional =
+                    inventoryRepository.findByOwner(userInfo);
+            if (inventoryOptional.isPresent()) {
+                Inventory inventory = inventoryOptional.get();
+                if (!inventory.getProducts().isEmpty()) {
+                    Product addedProduct = inventory.getProducts().get(0);
+                    productId = addedProduct.getId().toString();
+                    return;
+                }
+            }
+            fail("failed to create product!");
         }
     }
 
     @Test
     @Order(0)
     void addProduct() throws Exception {
-        IvRqAddProductArgs args = new IvRqAddProductArgs(
-                "productName", 100);
+        CtRqProductArgs args = new CtRqProductArgs(productId);
         String reqString = objectMapper.writeValueAsString(args);
         RequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post(BASE_API + "/add-product").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
-        mockMvc.perform(requestBuilder).andExpect(status().isCreated()).andReturn();
+        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
 
         //check response
 
         //check db
-        Optional<Inventory> inventoryOptional =
-                inventoryRepository.findByOwner(userInfo);
-        if (inventoryOptional.isPresent()) {
-            Inventory inventory = inventoryOptional.get();
-            if (!inventory.getProducts().isEmpty()) {
-                Product addedProduct = inventory.getProducts().get(0);
-                assertEquals(args.getName(), addedProduct.getName());
-                assertEquals(args.getPrice(),
-                        addedProduct.getPrice());
-                assertEquals(userInfo.getId(), inventory.getOwner().getId());
-                productId = addedProduct.getId().toString();
+        Optional<Cart> cartOptional = cartRepository.findByOwner(userInfo);
+        if (cartOptional.isPresent()) {
+            Cart cart = cartOptional.get();
+            if (!cart.getProducts().isEmpty()) {
+                Product addedProduct = cart.getProducts().get(0);
+                assertEquals(productId, addedProduct.getId().toString());
+                assertEquals(userInfo.getId(), cart.getOwner().getId());
                 return;
             }
         }
@@ -99,9 +116,8 @@ class InventoryControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @Order(2)
-    void remove() throws Exception {
-        IvRqRemoveProductArgs args =
-                new IvRqRemoveProductArgs(productId);
+    void removeProduct() throws Exception {
+        CtRqProductArgs args = new CtRqProductArgs(productId);
         String reqString = objectMapper.writeValueAsString(args);
         RequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post(BASE_API + "/remove-product").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
@@ -110,11 +126,10 @@ class InventoryControllerTest extends AbstractContainerBaseTest {
         //check response
 
         //check db
-        Optional<Inventory> inventoryOptional =
-                inventoryRepository.findByOwner(userInfo);
-        if (inventoryOptional.isPresent()) {
-            Inventory inventory = inventoryOptional.get();
-            if (inventory.getProducts().isEmpty()) {
+        Optional<Cart> cartOptional = cartRepository.findByOwner(userInfo);
+        if (cartOptional.isPresent()) {
+            Cart cart = cartOptional.get();
+            if (cart.getProducts().isEmpty()) {
                 return;
             }
         }
@@ -123,40 +138,9 @@ class InventoryControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @Order(1)
-    void updateProduct() throws Exception {
-        IvRqUpdateProductArgs args =
-                new IvRqUpdateProductArgs(productId, "new Name", 300, 15);
-        String reqString = objectMapper.writeValueAsString(args);
+    void getCart() throws Exception{
         RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(BASE_API + "/update-product").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
-        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
-
-        //check response
-
-        //check db
-        Optional<Inventory> inventoryOptional =
-                inventoryRepository.findByOwner(userInfo);
-        if (inventoryOptional.isPresent()) {
-            Inventory inventory = inventoryOptional.get();
-            if (!inventory.getProducts().isEmpty()) {
-                Product updatedProduct = inventory.getProducts().get(0);
-                assertEquals(args.getName(),
-                        updatedProduct.getName());
-                assertEquals(args.getPrice(),
-                        updatedProduct.getPrice());
-                assertEquals(args.getQuantity(),
-                        updatedProduct.getQuantity());
-                return;
-            }
-        }
-        fail("test case failed!");
-    }
-
-    @Test
-    @Order(1)
-    void getInventory() throws Exception {
-        RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.get(BASE_API + "/get-inventory").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader);
+                MockMvcRequestBuilders.get(BASE_API + "/get-cart").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
 
         //check response

@@ -5,9 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="359836cb-e4ae-43dc-ba71-b3b34389fae0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/cart/CartDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/mappers/CartMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/Cart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/CartRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/CartControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/InventoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/InventoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/controller/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/cart/CtRqAddProductArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/cart/CtRqProductArgs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/cart/CtRqGetCartArgs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/cart/CtRqRemoveProductArgs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/inventory/InventoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/inventory/InventoryDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/dto/product/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/mappers/InventoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/mappers/InventoryMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/ReviewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/model/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/InventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/repository/InventoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/ICartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/ICartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/CartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/CartServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/InventoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/InventoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/ProductServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/InventoryControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/controller/InventoryControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/CartServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/CartServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/InventoryServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/InventoryServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/ProductServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/be/monolithic/service/impl/ProductServiceImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,14 +99,14 @@
       <recent name="com.be.monolithic" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.be.monolithic.dto.inventory" />
+      <recent name="com.be.monolithic.dto.cart" />
       <recent name="com.be.monolithic.mappers" />
-      <recent name="com.be.monolithic.service" />
       <recent name="com.be.monolithic.repository" />
       <recent name="com.be.monolithic.model" />
+      <recent name="com.be.monolithic.dto.inventory" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.CartControllerTest">
     <configuration name="AuthServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="monolithic" />
       <extension name="coverage">
@@ -100,7 +122,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InventoryControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CartControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="monolithic" />
       <extension name="coverage">
         <pattern>
@@ -109,7 +131,22 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.be.monolithic.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.controller.InventoryControllerTest" />
+      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.controller.CartControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CartServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="monolithic" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.be.monolithic.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.be.monolithic.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.service.impl.CartServiceImplTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -125,21 +162,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.be.monolithic.service.impl" />
       <option name="MAIN_CLASS_NAME" value="com.be.monolithic.service.impl.InventoryServiceImplTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProductControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="monolithic" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.be.monolithic.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.be.monolithic.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.be.monolithic.controller.ProductControllerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -162,10 +184,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.InventoryControllerTest" />
-        <item itemvalue="JUnit.InventoryServiceImplTest" />
+        <item itemvalue="JUnit.CartControllerTest" />
+        <item itemvalue="JUnit.CartServiceImplTest" />
         <item itemvalue="JUnit.ProductServiceImplTest" />
-        <item itemvalue="JUnit.ProductControllerTest" />
+        <item itemvalue="JUnit.InventoryServiceImplTest" />
         <item itemvalue="JUnit.AuthServiceImplTest" />
       </list>
     </recent_temporary>
@@ -182,6 +204,15 @@
     <servers />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/be/monolithic/service/impl/CartServiceImpl.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.util.LinkedHashMap$Entry" memberName="key" />

@@ -6,7 +6,7 @@ import com.be.monolithic.dto.product.PdRqAddReviewArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqUpdateArgs;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.ReviewModel;
+import com.be.monolithic.model.Review;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.ProductRepository;
 import com.be.monolithic.service.IAuthService;
@@ -140,13 +140,13 @@ class ProductServiceImplTest {
                 "review text");
 
         Product responseProduct = productService.addReview(user, rateArgs);
-        List<ReviewModel> reviews = responseProduct.getReviews();
+        List<Review> reviews = responseProduct.getReviews();
         //response test
         if (!reviews.isEmpty()) {
-            ReviewModel reviewModel = reviews.get(0);
-            assertEquals(rateArgs.getRating(), reviewModel.getRate());
-            assertEquals(rateArgs.getReview(), reviewModel.getReview());
-            assertEquals(user.getId(), reviewModel.getBuyerUUID());
+            Review review = reviews.get(0);
+            assertEquals(rateArgs.getRating(), review.getRate());
+            assertEquals(rateArgs.getReview(), review.getReview());
+            assertEquals(user.getId(), review.getBuyerUUID());
         } else {
             fail("test case failed!");
         }
@@ -158,10 +158,10 @@ class ProductServiceImplTest {
             Product dbProduct = createdProduct.get();
             reviews = new ArrayList<>(dbProduct.getReviews());
             if (!reviews.isEmpty()) {
-                ReviewModel reviewModel = reviews.get(0);
-                assertEquals(rateArgs.getRating(), reviewModel.getRate());
-                assertEquals(rateArgs.getReview(), reviewModel.getReview());
-                assertEquals(user.getId(), reviewModel.getBuyerUUID());
+                Review review = reviews.get(0);
+                assertEquals(rateArgs.getRating(), review.getRate());
+                assertEquals(rateArgs.getReview(), review.getReview());
+                assertEquals(user.getId(), review.getBuyerUUID());
                 return;
             }
         }

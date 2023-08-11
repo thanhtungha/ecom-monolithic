@@ -3,8 +3,6 @@ package com.be.monolithic.service.impl;
 import com.be.monolithic.dto.auth.AuRqLoginArgs;
 import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
-import com.be.monolithic.dto.product.ProductDTO;
-import com.be.monolithic.mappers.ProductMapper;
 import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
@@ -57,7 +55,7 @@ class InventoryServiceImplTest {
     @Order(0)
     void addProduct() {
         Inventory inventory = inventoryService.addProduct(user, product);
-        Optional<Inventory> createdInventory = inventoryRepository.findBySeller(user);
+        Optional<Inventory> createdInventory = inventoryRepository.findByOwner(user);
         if (createdInventory.isPresent()) {
             Inventory dbInventory = createdInventory.get();
             List<Product> productList = dbInventory.getProducts();
@@ -76,7 +74,7 @@ class InventoryServiceImplTest {
     @Order(2)
     void removeProduct() {
         Inventory inventory = inventoryService.removeProduct(user , product);
-        Optional<Inventory> createdInventory = inventoryRepository.findBySeller(user);
+        Optional<Inventory> createdInventory = inventoryRepository.findByOwner(user);
         if (createdInventory.isPresent()) {
             Inventory dbInventory = createdInventory.get();
             assertTrue(dbInventory.getProducts().isEmpty());
@@ -90,7 +88,7 @@ class InventoryServiceImplTest {
     @Order(1)
     void getInventory() {
         Inventory inventory = inventoryService.getInventory(user);
-        Optional<Inventory> createdInventory = inventoryRepository.findBySeller(user);
+        Optional<Inventory> createdInventory = inventoryRepository.findByOwner(user);
         if (createdInventory.isPresent()) {
             Inventory dbInventory = createdInventory.get();
             List<Product> productList = dbInventory.getProducts();

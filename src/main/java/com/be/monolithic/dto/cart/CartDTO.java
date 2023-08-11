@@ -1,4 +1,4 @@
-package com.be.monolithic.dto.inventory;
+package com.be.monolithic.dto.cart;
 
 import com.be.monolithic.dto.auth.UserDTO;
 import com.be.monolithic.dto.product.ProductDTO;
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class InventoryDTO {
+public class CartDTO {
     private String id;
     private Date createDate;
     private Date updateDate;

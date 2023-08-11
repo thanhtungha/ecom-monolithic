@@ -1,11 +1,9 @@
 package com.be.monolithic.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +20,8 @@ public class Product extends BaseModel {
     private int quantity;
     private double rating;
     private UUID sellerUUID;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch =
-            FetchType.EAGER, orphanRemoval = true)
-    private List<ReviewModel> reviews = new ArrayList<>();
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inventory_id")
-    @ToString.Exclude
-    @JsonIgnore
-    private Inventory inventory;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")

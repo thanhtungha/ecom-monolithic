@@ -1,6 +1,6 @@
 package com.be.monolithic.dto.product;
 
-import com.be.monolithic.model.ReviewModel;
+import com.be.monolithic.model.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,5 +23,5 @@ public class ProductDTO {
     private int quantity;
     private double rating;
     private UUID sellerId;
-    private List<ReviewModel> reviews;
+    private List<Review> reviews;
 }

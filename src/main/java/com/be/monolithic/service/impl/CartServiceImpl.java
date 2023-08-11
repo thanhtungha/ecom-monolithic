@@ -1,41 +1,86 @@
 package com.be.monolithic.service.impl;
 
-import com.be.monolithic.dto.cart.CtRqAddProductArgs;
-import com.be.monolithic.dto.cart.CtRqGetCartArgs;
-import com.be.monolithic.dto.cart.CtRqRemoveProductArgs;
+import com.be.monolithic.exception.RestExceptions;
+import com.be.monolithic.model.Cart;
+import com.be.monolithic.model.Inventory;
+import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.repository.CartRepository;
 import com.be.monolithic.service.ICartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 @Slf4j
 public class CartServiceImpl implements ICartService {
-    @Override
-    public void createCart(UserInfo buyer) {
+    private final CartRepository cartRepository;
 
+    @Override
+    public void createCart(UserInfo userInfo) {
+        Optional<Cart> stored = cartRepository.findByOwner(userInfo);
+        if (stored.isEmpty()) {
+            Cart cart = new Cart();
+            cart.setOwner(userInfo);
+            cart.setCreateDate(new Date());
+            cart.setUpdateDate(new Date());
+            cartRepository.save(cart);
+        }
     }
 
     @Override
-    public ResponseEntity<?> addProduct(CtRqAddProductArgs addProductArgs) {
-        return null;
+    public Cart addProduct(UserInfo userInfo, Product product) {
+        Optional<Cart> stored = cartRepository.findByOwner(userInfo);
+        if (stored.isEmpty()) {
+            throw new RestExceptions.InternalServerError("Can not find " +
+                    "user's cart!");
+        }
+        Cart dbCart = stored.get();
+        dbCart.getProducts().add(product);
+        cartRepository.save(dbCart);
+        return dbCart;
     }
 
     @Override
-    public ResponseEntity<?> removeProduct(CtRqRemoveProductArgs removeProductArgs) {
-        return null;
+    public Cart removeProduct(UserInfo userInfo, Product product) {
+        Optional<Cart> stored = cartRepository.findByOwner(userInfo);
+        if (stored.isEmpty()) {
+            throw new RestExceptions.InternalServerError("Can not find " +
+                    "user's cart!");
+        }
+        Cart dbCart = stored.get();
+        Product dbProduct = null;
+        for (Product prd : dbCart.getProducts()) {
+            if (prd.getId().equals(product.getId())) {
+                dbProduct = prd;
+                break;
+            }
+        }
+        if (dbProduct != null) {
+            dbCart.getProducts().remove(dbProduct);
+            cartRepository.save(dbCart);
+        }
+        return dbCart;
     }
 
     @Override
-    public ResponseEntity<?> getCart(CtRqGetCartArgs getCartArgs) {
-        return null;
+    public Cart getCart(UserInfo userInfo) {
+        Optional<Cart> stored = cartRepository.findByOwner(userInfo);
+        if (stored.isEmpty()) {
+            throw new RestExceptions.InternalServerError("Can not find " +
+                    "user's cart!");
+        }
+        return stored.get();
     }
 
     @Override
-    public boolean deleteUserData(UserInfo userInfo) {
-        return false;
+    public boolean deleteUserData(UserInfo owner) {
+        Optional<Cart> storedModel = cartRepository.findByOwner(owner);
+        storedModel.ifPresent(cartRepository::delete);
+        return true;
     }
 }

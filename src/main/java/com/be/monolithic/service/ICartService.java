@@ -1,16 +1,12 @@
 package com.be.monolithic.service;
 
-import com.be.monolithic.dto.cart.CtRqAddProductArgs;
-import com.be.monolithic.dto.cart.CtRqGetCartArgs;
-import com.be.monolithic.dto.cart.CtRqRemoveProductArgs;
+import com.be.monolithic.model.Cart;
+import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
-import org.springframework.http.ResponseEntity;
 
 public interface ICartService extends IBaseService {
-    void createCart(UserInfo buyer);
-    ResponseEntity<?> addProduct(CtRqAddProductArgs addProductArgs);
-
-    ResponseEntity<?> removeProduct(CtRqRemoveProductArgs removeProductArgs);
-
-    ResponseEntity<?> getCart(CtRqGetCartArgs getCartArgs);
+    void createCart(UserInfo userInfo);
+    Cart addProduct(UserInfo userInfo, Product product);
+    Cart removeProduct(UserInfo userInfo, Product product);
+    Cart getCart(UserInfo userInfo);
 }

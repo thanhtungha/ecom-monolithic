@@ -4,7 +4,7 @@ import com.be.monolithic.dto.product.*;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.ProductMapper;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.ReviewModel;
+import com.be.monolithic.model.Review;
 import com.be.monolithic.model.UserInfo;
 import com.be.monolithic.repository.ProductRepository;
 import com.be.monolithic.service.IProductService;
@@ -93,11 +93,11 @@ public class ProductServiceImpl implements IProductService {
 
         Product product = storedModel.get();
         product.setUpdateDate(new Date());
-        ReviewModel reviewModel = new ReviewModel();
+        Review reviewModel = new Review();
         reviewModel.setRate(rating);
         reviewModel.setReview(review);
         reviewModel.setBuyerUUID(buyer.getId());
-        reviewModel.setProduct(product);
+//        reviewModel.setProduct(product);
         reviewModel.setReviewer(buyer);
         product.getReviews().add(reviewModel);
 
