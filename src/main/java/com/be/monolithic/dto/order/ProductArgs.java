@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrRqCheckOutArgs {
-    private String temp;
+public class ProductArgs {
+    private String id;
+    private int quantity;
 }

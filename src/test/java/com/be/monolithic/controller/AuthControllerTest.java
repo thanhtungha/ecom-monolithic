@@ -1,22 +1,19 @@
 package com.be.monolithic.controller;
 
+import com.be.monolithic.AbstractContainerBaseTest;
 import com.be.monolithic.dto.auth.AuRqChangePasswordArgs;
 import com.be.monolithic.dto.auth.AuRqLoginArgs;
 import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.dto.auth.AuRqUpdateArgs;
 import com.be.monolithic.model.UserInfo;
-import com.be.monolithic.repository.AuthRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -30,13 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AuthControllerTest extends AbstractContainerBaseTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
-    private AuthRepository authRepository;
     private static String BASE_API = "/api/auth";
 
     @Test

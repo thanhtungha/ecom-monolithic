@@ -12,12 +12,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "inventory")
-public class Inventory extends BaseModel {
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", unique = true)
+@Table(name = "orders")
+public class Order extends BaseModel {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
     private UserInfo owner;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 }

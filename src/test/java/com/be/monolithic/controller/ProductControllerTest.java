@@ -1,5 +1,6 @@
 package com.be.monolithic.controller;
 
+import com.be.monolithic.AbstractContainerBaseTest;
 import com.be.monolithic.dto.auth.AuRqLoginArgs;
 import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqAddReviewArgs;
@@ -8,16 +9,11 @@ import com.be.monolithic.dto.product.PdRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqUpdateArgs;
 import com.be.monolithic.model.Product;
 import com.be.monolithic.model.UserInfo;
-import com.be.monolithic.repository.AuthRepository;
-import com.be.monolithic.repository.ProductRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -32,35 +28,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductControllerTest extends AbstractContainerBaseTest {
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
-    private ProductRepository productRepository;
     private final String BASE_API = "/api/product";
-    private static String productId;
-
-    @Autowired
-    private AuthRepository authRepository;
-    private static UserInfo userInfo;
-    private static String authorizationHeader;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         if(userInfo == null) {
-            AuRqRegisterArgs registerArgs = new AuRqRegisterArgs("userName", "userPassword", "1234567890");
-            String reqString = objectMapper.writeValueAsString(registerArgs);
-            RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api" + "/auth/register").contentType(MediaType.APPLICATION_JSON).content(reqString);
-            mockMvc.perform(requestBuilder).andExpect(status().isCreated());
-
-            AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
-            reqString = objectMapper.writeValueAsString(loginArgs);
-            requestBuilder = MockMvcRequestBuilders.post("/api/auth/login").contentType(MediaType.APPLICATION_JSON).content(reqString);
-            mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
-
-            userInfo = getUserInfo();
-            authorizationHeader = "Bearer " + userInfo.getAccessToken();
+            registerTestUser();
         }
     }
 
@@ -154,14 +127,5 @@ class ProductControllerTest extends AbstractContainerBaseTest {
         //check response
 
         //check db
-    }
-
-    UserInfo getUserInfo() {
-        Optional<UserInfo> createdUser = authRepository.findByUserName(
-                "userName");
-        if (createdUser.isEmpty()) {
-            fail("test case failed!");
-        }
-        return createdUser.get();
     }
 }

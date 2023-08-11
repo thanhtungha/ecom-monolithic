@@ -1,5 +1,6 @@
 package com.be.monolithic.service.impl;
 
+import com.be.monolithic.AbstractContainerBaseTest;
 import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.UserInfo;
@@ -19,14 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class AuthServiceImplTest {
-
-    @Autowired
-    private AuthRepository authRepository;
-
-    @Autowired
-    private IAuthService authService;
-
+class AuthServiceImplTest extends AbstractContainerBaseTest {
     @Test
     @Order(0)
     void register() {

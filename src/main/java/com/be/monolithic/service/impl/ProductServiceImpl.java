@@ -97,7 +97,6 @@ public class ProductServiceImpl implements IProductService {
         reviewModel.setRate(rating);
         reviewModel.setReview(review);
         reviewModel.setBuyerUUID(buyer.getId());
-//        reviewModel.setProduct(product);
         reviewModel.setReviewer(buyer);
         product.getReviews().add(reviewModel);
 

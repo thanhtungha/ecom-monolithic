@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class OrRqCancelOrderArgs {
-    private String temp;
+    private String id;
 }
