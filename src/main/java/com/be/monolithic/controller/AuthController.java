@@ -108,7 +108,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping(path = "/forgot-password")
+    @GetMapping(path = "/forgot-password")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> forgotPassword(@RequestBody AuRqForgotPwdArgs forgotPwdArgs) {            //TODO: Implement here
         try {

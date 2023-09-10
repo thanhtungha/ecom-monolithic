@@ -34,7 +34,7 @@ public class InventoryController {
     private final IProductService productService;
     private final InventoryMapper inventoryMapper;
 
-    @PostMapping(path = "/greeting")
+    @GetMapping(path = "/greeting")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> greeting() {
         return ResponseEntity.ok(new BaseResponse("Hello! This is Inventory " + "Service."));

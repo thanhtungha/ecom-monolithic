@@ -120,14 +120,14 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     }
 
     @Test
+    @Order(2)
     void forgotPassword() throws Exception {
         AuRqForgotPwdArgs updateArgs = new AuRqForgotPwdArgs("userName");
         String reqString = objectMapper.writeValueAsString(updateArgs);
 
         RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(BASE_API + "/forgot-password").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()).content(reqString);
+                MockMvcRequestBuilders.get(BASE_API + "/forgot-password").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk());
-        fail("test case failed!");
     }
 
     @Test

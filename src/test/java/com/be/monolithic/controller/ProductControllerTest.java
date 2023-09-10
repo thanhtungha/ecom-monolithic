@@ -94,10 +94,6 @@ class ProductControllerTest extends AbstractContainerBaseTest {
         RequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post(BASE_API + "/remove-product").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
-
-        //check response
-
-        //check db
     }
 
     @Test
@@ -106,10 +102,8 @@ class ProductControllerTest extends AbstractContainerBaseTest {
         PdRqProductArgs productArgs = new PdRqProductArgs(productId);
         String reqString = objectMapper.writeValueAsString(productArgs);
         RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(BASE_API + "/get-product").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
+                MockMvcRequestBuilders.get(BASE_API + "/get-product").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
-
-        //check response
     }
 
     @Test

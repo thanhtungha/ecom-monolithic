@@ -119,7 +119,5 @@ class InventoryControllerTest extends AbstractContainerBaseTest {
         RequestBuilder requestBuilder =
                 MockMvcRequestBuilders.get(BASE_API + "/get-inventory").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
-
-        //check response
     }
 }

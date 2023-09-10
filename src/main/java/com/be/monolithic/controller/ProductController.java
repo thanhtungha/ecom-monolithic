@@ -1,10 +1,7 @@
 package com.be.monolithic.controller;
 
 import com.be.monolithic.dto.BaseResponse;
-import com.be.monolithic.dto.product.PdRqAddReviewArgs;
-import com.be.monolithic.dto.product.PdRqProductArgs;
-import com.be.monolithic.dto.product.PdRqRegisterArgs;
-import com.be.monolithic.dto.product.PdRqUpdateArgs;
+import com.be.monolithic.dto.product.*;
 import com.be.monolithic.exception.BaseException;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.ProductMapper;
@@ -20,30 +17,35 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/product")
 public class ProductController {
-    private static final Logger logger =
-            LoggerFactory.getLogger(ProductController.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            ProductController.class);
     private final IProductService productService;
     private final IAuthService authService;
     private final ProductMapper productMapper;
 
-    @PostMapping(path = "/greeting")
+    @GetMapping(path = "/greeting")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> greeting() {
-        return ResponseEntity.ok(new BaseResponse("Hello! This is Product " + "Service."));
+        return ResponseEntity.ok(
+                new BaseResponse("Hello! This is Product " + "Service."));
     }
 
     @PostMapping(path = "/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> register(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody PdRqRegisterArgs registerArgs) {
+    public ResponseEntity<?> register(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @Valid @RequestBody PdRqRegisterArgs registerArgs) {
         try {
             User userInfo = authService.getUserInfo(authorizationHeader);
-            Product product = productService.register(userInfo,
-                    registerArgs);
-            return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.CREATED);
+            Product product = productService.register(userInfo, registerArgs);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product),
+                    HttpStatus.CREATED);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;
@@ -57,7 +59,8 @@ public class ProductController {
     public ResponseEntity<?> update(@RequestBody PdRqUpdateArgs updateArgs) {
         try {
             Product product = productService.update(updateArgs);
-            return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.OK);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product),
+                    HttpStatus.OK);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;
@@ -79,13 +82,28 @@ public class ProductController {
         }
     }
 
-    @PostMapping(path = "/get-product")
+    @GetMapping(path = "/get-product")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getProduct(@Valid @RequestBody PdRqProductArgs productArgs) {
+    public ResponseEntity<?> getProduct(
+            @RequestBody PdRqProductArgs productArgs) {
         try {
-            Product product =
-                    productService.getProduct(productArgs.getId());
-            return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.OK);
+            if (productArgs != null) {
+                Product product = productService.getProduct(
+                        productArgs.getId());
+                return new ResponseEntity<>(productMapper.ProductToDTO(product),
+                        HttpStatus.OK);
+            } else {
+                List<Product> listProduct = productService.getProductList();
+                if (listProduct.isEmpty()) {
+                    return new ResponseEntity<>(new ProductListDTO(),
+                            HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(new ProductListDTO(
+                            listProduct.stream()
+                                    .map(productMapper::ProductToDTO)
+                                    .toList()), HttpStatus.OK);
+                }
+            }
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;
@@ -96,11 +114,14 @@ public class ProductController {
 
     @PostMapping(path = "/add-review")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> addReview(@RequestHeader("Authorization") String authorizationHeader, @RequestBody PdRqAddReviewArgs reviewArgs) {
+    public ResponseEntity<?> addReview(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestBody PdRqAddReviewArgs reviewArgs) {
         try {
             User buyer = authService.getUserInfo(authorizationHeader);
             Product product = productService.addReview(buyer, reviewArgs);
-            return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.OK);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product),
+                    HttpStatus.OK);
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
                 throw ex;

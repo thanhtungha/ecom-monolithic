@@ -80,6 +80,11 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public List<Product> getProductList() {
+        return productRepository.findAll();
+    }
+
+    @Override
     public Product addReview(User buyer,
                              PdRqAddReviewArgs addReviewArgs) {
         Optional<Product> storedModel =
