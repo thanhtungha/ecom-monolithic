@@ -4,7 +4,7 @@ import com.be.monolithic.dto.auth.AuRqLoginArgs;
 import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.*;
 import com.be.monolithic.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,15 +55,15 @@ public abstract class AbstractContainerBaseTest {
     @Autowired
     public IOrderService orderService;
 
-    public static UserInfo userInfo;
+    public static User userInfo;
     public static String authorizationHeader;
 
     public static String productId;
     public static Product testProduct1;
     public static Product testProduct2;
     public static Product testProductInventory;
-    public UserInfo getUserInfo() {
-        Optional<UserInfo> createdUser = authRepository.findByUserName(
+    public User getUserInfo() {
+        Optional<User> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isEmpty()) {
             fail("test case failed!");

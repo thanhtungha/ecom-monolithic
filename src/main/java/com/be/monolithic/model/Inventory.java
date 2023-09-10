@@ -16,7 +16,7 @@ import java.util.List;
 public class Inventory extends BaseModel {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", unique = true)
-    private UserInfo owner;
+    private User owner;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();

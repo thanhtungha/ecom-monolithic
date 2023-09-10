@@ -25,5 +25,5 @@ public class Product extends BaseModel {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")
-    private UserInfo seller;
+    private User seller;
 }

@@ -4,7 +4,6 @@ import com.be.monolithic.dto.BaseResponse;
 import com.be.monolithic.dto.inventory.IvRqAddProductArgs;
 import com.be.monolithic.dto.inventory.IvRqRemoveProductArgs;
 import com.be.monolithic.dto.inventory.IvRqUpdateProductArgs;
-import com.be.monolithic.dto.product.PdRqProductArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqUpdateArgs;
 import com.be.monolithic.exception.BaseException;
@@ -12,7 +11,7 @@ import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.InventoryMapper;
 import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.service.IAuthService;
 import com.be.monolithic.service.IInventoryService;
 import com.be.monolithic.service.IProductService;
@@ -45,7 +44,7 @@ public class InventoryController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> addProduct(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody IvRqAddProductArgs addProductArgs) {
         try {
-            UserInfo seller = authService.getUserInfo(authorizationHeader);
+            User seller = authService.getUserInfo(authorizationHeader);
             PdRqRegisterArgs registerArgs =
                     inventoryMapper.GenerateRegisterArgs(addProductArgs);
             Product product = productService.register(seller, registerArgs);
@@ -63,7 +62,7 @@ public class InventoryController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> removeProduct(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody IvRqRemoveProductArgs removeProductArgs) {
         try {
-            UserInfo seller = authService.getUserInfo(authorizationHeader);
+            User seller = authService.getUserInfo(authorizationHeader);
             Product product =
                     productService.getProduct(removeProductArgs.getId());
             Inventory inventory = inventoryService.removeProduct(seller,
@@ -81,7 +80,7 @@ public class InventoryController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> updateProduct(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody IvRqUpdateProductArgs updateProductArgs) {
         try {
-            UserInfo seller = authService.getUserInfo(authorizationHeader);
+            User seller = authService.getUserInfo(authorizationHeader);
             PdRqUpdateArgs registerArgs =
                     inventoryMapper.GenerateUpdateArgs(updateProductArgs);
             productService.update(registerArgs);
@@ -99,7 +98,7 @@ public class InventoryController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getInventory(@RequestHeader("Authorization") String authorizationHeader) {
         try {
-            UserInfo seller = authService.getUserInfo(authorizationHeader);
+            User seller = authService.getUserInfo(authorizationHeader);
             Inventory inventory = inventoryService.getInventory(seller);
             return new ResponseEntity<>(inventoryMapper.InventoryToDTO(inventory), HttpStatus.OK);
         } catch (Exception ex) {

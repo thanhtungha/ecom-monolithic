@@ -16,7 +16,7 @@ import java.util.List;
 public class Cart extends BaseModel {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
-    private UserInfo owner;
+    private User owner;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();

@@ -9,7 +9,7 @@ import com.be.monolithic.exception.BaseException;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.ProductMapper;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.service.IAuthService;
 import com.be.monolithic.service.IProductService;
 import jakarta.validation.Valid;
@@ -40,7 +40,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> register(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody PdRqRegisterArgs registerArgs) {
         try {
-            UserInfo userInfo = authService.getUserInfo(authorizationHeader);
+            User userInfo = authService.getUserInfo(authorizationHeader);
             Product product = productService.register(userInfo,
                     registerArgs);
             return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.CREATED);
@@ -98,7 +98,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> addReview(@RequestHeader("Authorization") String authorizationHeader, @RequestBody PdRqAddReviewArgs reviewArgs) {
         try {
-            UserInfo buyer = authService.getUserInfo(authorizationHeader);
+            User buyer = authService.getUserInfo(authorizationHeader);
             Product product = productService.addReview(buyer, reviewArgs);
             return new ResponseEntity<>(productMapper.ProductToDTO(product), HttpStatus.OK);
         } catch (Exception ex) {

@@ -16,8 +16,9 @@ public class UserDTO {
     private UUID id;
     private Date createDate;
     private Date updateDate;
+    private String userName;
+    private String userPassword;
     private String phoneNumber;
     private String address;
     private String accessToken;
-    private String refreshToken;
 }

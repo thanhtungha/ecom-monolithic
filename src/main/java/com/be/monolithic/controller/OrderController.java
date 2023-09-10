@@ -2,19 +2,16 @@ package com.be.monolithic.controller;
 
 import com.be.monolithic.dto.BaseResponse;
 import com.be.monolithic.dto.order.*;
-import com.be.monolithic.dto.product.PdRqProductArgs;
-import com.be.monolithic.dto.product.PdRqUpdateArgs;
 import com.be.monolithic.exception.BaseException;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.OrderMapper;
 import com.be.monolithic.model.Order;
 import com.be.monolithic.model.OrderItem;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.service.IAuthService;
 import com.be.monolithic.service.IOrderService;
 import com.be.monolithic.service.IProductService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +42,7 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String authorizationHeader, @RequestBody OrRqCreateOrderArgs orderArgs) {
         try {
-            UserInfo userInfo = authService.getUserInfo(authorizationHeader);
+            User userInfo = authService.getUserInfo(authorizationHeader);
             List<OrderItem> orderItems = new ArrayList<>();
             for(ProductArgs productArgs : orderArgs.getProducts()) {
                 Product product = productService.getProduct(productArgs.getId());
@@ -66,7 +63,7 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> updateOrder(@RequestHeader("Authorization") String authorizationHeader, @RequestBody OrRqUpdateOrderArgs orderArgs) {
         try {
-            UserInfo userInfo = authService.getUserInfo(authorizationHeader);
+            User userInfo = authService.getUserInfo(authorizationHeader);
             List<OrderItem> orderItems = new ArrayList<>();
             for(ProductArgs productArgs : orderArgs.getProducts()) {
                 Product product = productService.getProduct(productArgs.getId());
@@ -87,7 +84,7 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     public void cancelOrder(@RequestHeader("Authorization") String authorizationHeader, @RequestBody OrRqCancelOrderArgs orderArgs) {
         try {
-            UserInfo userInfo = authService.getUserInfo(authorizationHeader);
+            User userInfo = authService.getUserInfo(authorizationHeader);
             orderService.cancel(userInfo, orderArgs.getId());
         } catch (Exception ex) {
             if (ex instanceof BaseException) {
@@ -101,7 +98,7 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getOrder(@RequestHeader("Authorization") String authorizationHeader, @RequestBody OrRqGetOrderArgs orderArgs) {
         try {
-            UserInfo userInfo = authService.getUserInfo(authorizationHeader);
+            User userInfo = authService.getUserInfo(authorizationHeader);
             Order order = orderService.getOrder(userInfo, orderArgs.getId());
             return new ResponseEntity<>(orderMapper.OrderToDTO(order), HttpStatus.OK);
         } catch (Exception ex) {

@@ -3,7 +3,7 @@ package com.be.monolithic.service.impl;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.model.Order;
 import com.be.monolithic.model.OrderItem;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.OrderRepository;
 import com.be.monolithic.service.IOrderService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class OrderServiceImpl implements IOrderService {
     private final OrderRepository orderRepository;
 
     @Override
-    public Order create(UserInfo userInfo, List<OrderItem> orderItems) {
+    public Order create(User userInfo, List<OrderItem> orderItems) {
         Order order = new Order();
         order.setCreateDate(new Date());
         order.setUpdateDate(new Date());
@@ -33,7 +33,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Order update(UserInfo userInfo, String orderId,
+    public Order update(User userInfo, String orderId,
                         List<OrderItem> orderItems) {
         Optional<Order> storedModel =
                 orderRepository.findByIdAndOwner(UUID.fromString(orderId),
@@ -51,7 +51,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public boolean cancel(UserInfo userInfo, String orderId) {
+    public boolean cancel(User userInfo, String orderId) {
         Optional<Order> storedModel =
                 orderRepository.findByIdAndOwner(UUID.fromString(orderId),
                         userInfo);
@@ -64,7 +64,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Order getOrder(UserInfo userInfo, String orderId) {
+    public Order getOrder(User userInfo, String orderId) {
         Optional<Order> storedModel =
                 orderRepository.findByIdAndOwner(UUID.fromString(orderId),
                         userInfo);
@@ -76,7 +76,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public boolean deleteUserData(UserInfo owner) {
+    public boolean deleteUserData(User owner) {
         Optional<List<Order>> storedModel = orderRepository.findByOwner(owner);
         storedModel.ifPresent(orderRepository::deleteAll);
         return true;

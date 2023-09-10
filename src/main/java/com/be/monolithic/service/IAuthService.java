@@ -1,26 +1,25 @@
 package com.be.monolithic.service;
 
 import com.be.monolithic.dto.auth.*;
-import com.be.monolithic.model.UserInfo;
-import org.springframework.http.ResponseEntity;
+import com.be.monolithic.model.User;
 
 import java.util.UUID;
 
 public interface IAuthService extends IBaseService {
-    UserInfo register(AuRqRegisterArgs registerArgs);
+    User register(AuRqRegisterArgs registerArgs);
 
-    UserInfo login(AuRqLoginArgs loginArgs);
+    User login(AuRqLoginArgs loginArgs);
 
     boolean logout(String authorizationHeader);
 
     boolean changePassword(String authorizationHeader,
                            AuRqChangePasswordArgs changePasswordArgs);
 
-    UserInfo update(String authorizationHeader, AuRqUpdateArgs updateArgs);
+    User update(String authorizationHeader, AuRqUpdateArgs updateArgs);
 
-    ResponseEntity<?> forgotPassword(String authorizationHeader);
+    User forgotPassword(AuRqForgotPwdArgs forgotPwdArgs);
 
-    UserInfo getUserInfo(String authorizationHeader);
+    User getUserInfo(String authorizationHeader);
 
-    UserInfo getUserInfo(UUID id);
+    User getUserInfo(UUID id);
 }

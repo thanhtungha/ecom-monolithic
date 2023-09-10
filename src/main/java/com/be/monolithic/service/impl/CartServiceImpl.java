@@ -2,9 +2,8 @@ package com.be.monolithic.service.impl;
 
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.model.Cart;
-import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.CartRepository;
 import com.be.monolithic.service.ICartService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class CartServiceImpl implements ICartService {
     private final CartRepository cartRepository;
 
     @Override
-    public void createCart(UserInfo userInfo) {
+    public void createCart(User userInfo) {
         Optional<Cart> stored = cartRepository.findByOwner(userInfo);
         if (stored.isEmpty()) {
             Cart cart = new Cart();
@@ -33,7 +32,7 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public Cart addProduct(UserInfo userInfo, Product product) {
+    public Cart addProduct(User userInfo, Product product) {
         Optional<Cart> stored = cartRepository.findByOwner(userInfo);
         if (stored.isEmpty()) {
             throw new RestExceptions.InternalServerError("Can not find " +
@@ -46,7 +45,7 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public Cart removeProduct(UserInfo userInfo, Product product) {
+    public Cart removeProduct(User userInfo, Product product) {
         Optional<Cart> stored = cartRepository.findByOwner(userInfo);
         if (stored.isEmpty()) {
             throw new RestExceptions.InternalServerError("Can not find " +
@@ -68,7 +67,7 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public Cart getCart(UserInfo userInfo) {
+    public Cart getCart(User userInfo) {
         Optional<Cart> stored = cartRepository.findByOwner(userInfo);
         if (stored.isEmpty()) {
             throw new RestExceptions.InternalServerError("Can not find " +
@@ -78,7 +77,7 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public boolean deleteUserData(UserInfo owner) {
+    public boolean deleteUserData(User owner) {
         Optional<Cart> storedModel = cartRepository.findByOwner(owner);
         storedModel.ifPresent(cartRepository::delete);
         return true;

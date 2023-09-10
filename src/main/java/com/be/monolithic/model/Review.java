@@ -19,5 +19,5 @@ public class Review extends BaseModel {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reviewer_id")
-    private UserInfo reviewer;
+    private User reviewer;
 }

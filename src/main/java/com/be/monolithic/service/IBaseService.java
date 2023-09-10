@@ -1,7 +1,7 @@
 package com.be.monolithic.service;
 
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 
 public interface IBaseService {
-    boolean deleteUserData(UserInfo userInfo);
+    boolean deleteUserData(User userInfo);
 }

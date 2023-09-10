@@ -5,7 +5,7 @@ import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.ProductMapper;
 import com.be.monolithic.model.Product;
 import com.be.monolithic.model.Review;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.ProductRepository;
 import com.be.monolithic.service.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class ProductServiceImpl implements IProductService {
     private final ProductMapper productMapper;
 
     @Override
-    public Product register(UserInfo seller,
+    public Product register(User seller,
                             PdRqRegisterArgs registerArgs) {
         Optional<Product> storedModel =
                 productRepository.findByName(registerArgs.getName());
@@ -80,7 +80,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Product addReview(UserInfo buyer,
+    public Product addReview(User buyer,
                              PdRqAddReviewArgs addReviewArgs) {
         Optional<Product> storedModel =
                 productRepository.findById(UUID.fromString(addReviewArgs.getProductId()));
@@ -105,7 +105,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public boolean deleteUserData(UserInfo seller) {
+    public boolean deleteUserData(User seller) {
         Optional<List<Product>> storedModel =
                 productRepository.findBySeller(seller);
         storedModel.ifPresent(productRepository::deleteAll);

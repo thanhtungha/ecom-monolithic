@@ -1,14 +1,11 @@
 package com.be.monolithic.controller;
 
 import com.be.monolithic.AbstractContainerBaseTest;
-import com.be.monolithic.dto.auth.AuRqLoginArgs;
-import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.dto.inventory.IvRqAddProductArgs;
 import com.be.monolithic.dto.inventory.IvRqRemoveProductArgs;
 import com.be.monolithic.dto.inventory.IvRqUpdateProductArgs;
 import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.UserInfo;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

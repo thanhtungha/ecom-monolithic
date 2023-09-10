@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AuRqForgotPwdArgs {
-    private String phoneNumber;
+    private String userName;
 }

@@ -2,14 +2,12 @@ package com.be.monolithic.controller;
 
 import com.be.monolithic.dto.BaseResponse;
 import com.be.monolithic.dto.cart.CtRqProductArgs;
-import com.be.monolithic.dto.inventory.IvRqRemoveProductArgs;
 import com.be.monolithic.exception.BaseException;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.CartMapper;
 import com.be.monolithic.model.Cart;
-import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.service.IAuthService;
 import com.be.monolithic.service.ICartService;
 import com.be.monolithic.service.IProductService;
@@ -43,7 +41,7 @@ public class CartController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> addProduct(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody CtRqProductArgs productArgs) {
         try {
-            UserInfo owner = authService.getUserInfo(authorizationHeader);
+            User owner = authService.getUserInfo(authorizationHeader);
             Product product = productService.getProduct(productArgs.getId());
             Cart cart = cartService.addProduct(owner, product);
             return new ResponseEntity<>(cartMapper.CartToDTO(cart),
@@ -60,7 +58,7 @@ public class CartController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> removeProduct(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody CtRqProductArgs productArgs) {
         try {
-            UserInfo owner = authService.getUserInfo(authorizationHeader);
+            User owner = authService.getUserInfo(authorizationHeader);
             Product product = productService.getProduct(productArgs.getId());
             Cart cart = cartService.removeProduct(owner, product);
             return new ResponseEntity<>(cartMapper.CartToDTO(cart),
@@ -77,7 +75,7 @@ public class CartController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getCart(@RequestHeader("Authorization") String authorizationHeader) {
         try {
-            UserInfo owner = authService.getUserInfo(authorizationHeader);
+            User owner = authService.getUserInfo(authorizationHeader);
             Cart cart = cartService.getCart(owner);
             return new ResponseEntity<>(cartMapper.CartToDTO(cart),
                     HttpStatus.OK);

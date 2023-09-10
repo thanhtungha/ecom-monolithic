@@ -3,14 +3,11 @@ package com.be.monolithic.service.impl;
 import com.be.monolithic.AbstractContainerBaseTest;
 import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.model.Inventory;
-import com.be.monolithic.model.UserInfo;
-import com.be.monolithic.repository.AuthRepository;
-import com.be.monolithic.service.IAuthService;
+import com.be.monolithic.model.User;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
@@ -30,10 +27,10 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
         inventory.setCreateDate(new Date());
         inventory.setUpdateDate(new Date());
         authService.register(registerArgs);
-        Optional<UserInfo> createdUser =
-                authRepository.findByUserName(registerArgs.getUserName());
+        Optional<User> createdUser = authRepository.findByUserName(
+                registerArgs.getUserName());
         if (createdUser.isPresent()) {
-            UserInfo user = createdUser.get();
+            User user = createdUser.get();
             assertEquals(registerArgs.getUserName(), user.getUserName());
             assertEquals(registerArgs.getUserPassword(),
                     user.getUserPassword());
@@ -47,7 +44,7 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
     @Order(1)
     void login() {
         AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
-        UserInfo userInfo = authService.login(loginArgs);
+        User userInfo = authService.login(loginArgs);
         if (userInfo != null) {
             assertEquals(loginArgs.getUserName(), userInfo.getUserName());
             assertEquals(loginArgs.getUserPassword(),
@@ -66,8 +63,8 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
         String bearerToken = getAuthorizationHeader();
         boolean result = authService.logout(bearerToken);
         if (result) {
-            Optional<UserInfo> createdUser =
-                    authRepository.findByAccessToken(bearerToken);
+            Optional<User> createdUser = authRepository.findByAccessToken(
+                    bearerToken);
             if (createdUser.isPresent()) {
                 fail("test case failed!");
             }
@@ -79,12 +76,12 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
     @Test
     @Order(2)
     void changePassword() {
-        AuRqChangePasswordArgs changePasswordArgs =
-                new AuRqChangePasswordArgs("newPassword");
+        AuRqChangePasswordArgs changePasswordArgs = new AuRqChangePasswordArgs(
+                "newPassword");
         boolean result = authService.changePassword(getAuthorizationHeader(),
                 changePasswordArgs);
         if (result) {
-            Optional<UserInfo> createdUser = authRepository.findByUserName(
+            Optional<User> createdUser = authRepository.findByUserName(
                     "userName");
             createdUser.ifPresent(info -> assertEquals("newPassword",
                     info.getUserPassword()));
@@ -102,7 +99,7 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
     void update() {
         AuRqUpdateArgs updateArgs = new AuRqUpdateArgs("0987654321",
                 "new " + "address");
-        UserInfo userInfo = authService.update(getAuthorizationHeader(),
+        User userInfo = authService.update(getAuthorizationHeader(),
                 updateArgs);
         if (userInfo != null) {
             assertEquals(updateArgs.getPhoneNumber(),
@@ -114,20 +111,26 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
     }
 
     @Test
+    @Order(2)
     void forgotPassword() {
-        //TODO: do not implement in phase 1
-        //fail("This feature is not implemented yet.");
+        AuRqForgotPwdArgs forgotPwdArgs = new AuRqForgotPwdArgs("userName");
+        User userInfo = authService.forgotPassword(forgotPwdArgs);
+        if (userInfo != null) {
+            assertEquals("userPassword",userInfo.getUserPassword());
+        } else {
+            fail("test case failed!");
+        }
     }
 
     @Test
     @Order(4)
     void delete() {
         AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
-        UserInfo userInfo = authService.login(loginArgs);
+        User userInfo = authService.login(loginArgs);
 
         boolean result = authService.deleteUserData(userInfo);
         if (result) {
-            Optional<UserInfo> createdUser = authRepository.findByUserName(
+            Optional<User> createdUser = authRepository.findByUserName(
                     "userName");
             if (createdUser.isPresent()) {
                 fail("test case failed!");
@@ -138,8 +141,7 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
     }
 
     String getAuthorizationHeader() {
-        Optional<UserInfo> createdUser = authRepository.findByUserName(
-                "userName");
+        Optional<User> createdUser = authRepository.findByUserName("userName");
         if (createdUser.isEmpty()) {
             fail("test case failed!");
         }

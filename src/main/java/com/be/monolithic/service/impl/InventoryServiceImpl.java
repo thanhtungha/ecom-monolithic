@@ -3,7 +3,7 @@ package com.be.monolithic.service.impl;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.model.Inventory;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.InventoryRepository;
 import com.be.monolithic.service.IInventoryService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class InventoryServiceImpl implements IInventoryService {
     private final InventoryRepository inventoryRepository;
 
     @Override
-    public void createInventory(UserInfo userInfo) {
+    public void createInventory(User userInfo) {
         Optional<Inventory> created =
                 inventoryRepository.findByOwner(userInfo);
         if (created.isEmpty()) {
@@ -33,7 +33,7 @@ public class InventoryServiceImpl implements IInventoryService {
     }
 
     @Override
-    public Inventory addProduct(UserInfo userInfo, Product product) {
+    public Inventory addProduct(User userInfo, Product product) {
         Optional<Inventory> storedModel =
                 inventoryRepository.findByOwner(userInfo);
         if (storedModel.isEmpty()) {
@@ -47,7 +47,7 @@ public class InventoryServiceImpl implements IInventoryService {
     }
 
     @Override
-    public Inventory removeProduct(UserInfo userInfo,
+    public Inventory removeProduct(User userInfo,
                                    Product product) {
         Optional<Inventory> storedModel =
                 inventoryRepository.findByOwner(userInfo);
@@ -71,7 +71,7 @@ public class InventoryServiceImpl implements IInventoryService {
     }
 
     @Override
-    public Inventory getInventory(UserInfo userInfo) {
+    public Inventory getInventory(User userInfo) {
         Optional<Inventory> storedModel =
                 inventoryRepository.findByOwner(userInfo);
         if (storedModel.isEmpty()) {
@@ -82,7 +82,7 @@ public class InventoryServiceImpl implements IInventoryService {
     }
 
     @Override
-    public boolean deleteUserData(UserInfo seller) {
+    public boolean deleteUserData(User seller) {
         Optional<Inventory> storedModel =
                 inventoryRepository.findByOwner(seller);
         storedModel.ifPresent(inventoryRepository::delete);

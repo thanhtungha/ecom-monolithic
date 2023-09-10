@@ -1,11 +1,8 @@
 package com.be.monolithic.controller;
 
 import com.be.monolithic.AbstractContainerBaseTest;
-import com.be.monolithic.dto.auth.AuRqChangePasswordArgs;
-import com.be.monolithic.dto.auth.AuRqLoginArgs;
-import com.be.monolithic.dto.auth.AuRqRegisterArgs;
-import com.be.monolithic.dto.auth.AuRqUpdateArgs;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.dto.auth.*;
+import com.be.monolithic.model.User;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -62,7 +59,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
         //check response
 
         //check db
-        Optional<UserInfo> createdUser = authRepository.findByUserName(
+        Optional<User> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isPresent()) {
             if (createdUser.get().getAccessToken().isEmpty()) {
@@ -86,7 +83,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
         //check response
 
         //check db
-        Optional<UserInfo> createdUser = authRepository.findByUserName(
+        Optional<User> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isPresent()) {
             assertEquals(createdUser.get().getUserPassword(),
@@ -110,7 +107,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
         //check response
 
         //check db
-        Optional<UserInfo> createdUser = authRepository.findByUserName(
+        Optional<User> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isPresent()) {
             assertEquals(createdUser.get().getPhoneNumber(),
@@ -123,8 +120,14 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     }
 
     @Test
-    void forgotPassword() {
-        //TODO: Do not implement in phase 1
+    void forgotPassword() throws Exception {
+        AuRqForgotPwdArgs updateArgs = new AuRqForgotPwdArgs("userName");
+        String reqString = objectMapper.writeValueAsString(updateArgs);
+
+        RequestBuilder requestBuilder =
+                MockMvcRequestBuilders.post(BASE_API + "/forgot-password").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()).content(reqString);
+        mockMvc.perform(requestBuilder).andExpect(status().isOk());
+        fail("test case failed!");
     }
 
     @Test
@@ -143,7 +146,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
         //check response
 
         //check db
-        Optional<UserInfo> createdUser = authRepository.findByUserName(
+        Optional<User> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isPresent()) {
             fail("test case failed!");
@@ -151,7 +154,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     }
 
     String getAccessToken() {
-        Optional<UserInfo> createdUser = authRepository.findByUserName(
+        Optional<User> createdUser = authRepository.findByUserName(
                 "userName");
         if (createdUser.isEmpty()) {
             fail("test case failed!");

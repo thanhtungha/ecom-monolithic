@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.be.monolithic.exception.RestExceptions;
-import com.be.monolithic.model.UserInfo;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.AuthRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +48,8 @@ public class AuthenticationProvider {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decoded = verifier.verify(jwt);
-        Optional<UserInfo> user = authRepository.findByUserName(decoded.getIssuer());
-        UserInfo userInfo = user.orElse(null);
+        Optional<User> user = authRepository.findByUserName(decoded.getIssuer());
+        User userInfo = user.orElse(null);
         if(userInfo != null && jwt.equals(userInfo.getAccessToken())) {
             return new UsernamePasswordAuthenticationToken(userInfo, userInfo.getUserPassword(), Collections.emptyList());
         } else {

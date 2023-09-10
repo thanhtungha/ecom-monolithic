@@ -1,22 +1,22 @@
-package com.be.monolithic.dto.order;
+package com.be.monolithic.dto.auth;
 
-import com.be.monolithic.dto.auth.UserInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderDTO {
-    private String id;
+public class UserInfoDTO {
+    private UUID id;
     private Date createDate;
     private Date updateDate;
-    private UserInfoDTO owner;
-    private List<OrderItemDTO> orderItems;
+    private String phoneNumber;
+    private String address;
+    private String accessToken;
 }
