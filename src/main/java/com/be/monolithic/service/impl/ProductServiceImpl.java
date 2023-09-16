@@ -88,7 +88,7 @@ public class ProductServiceImpl implements IProductService {
     public Product addReview(User buyer,
                              PdRqAddReviewArgs addReviewArgs) {
         Optional<Product> storedModel =
-                productRepository.findById(UUID.fromString(addReviewArgs.getProductId()));
+                productRepository.findById(UUID.fromString(addReviewArgs.getId()));
         if (storedModel.isEmpty()) {
             throw new RestExceptions.NotFound("Product does not existed!");
         }

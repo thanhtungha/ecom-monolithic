@@ -32,7 +32,7 @@ public class OrderController {
     private final IProductService productService;
     private final OrderMapper orderMapper;
 
-    @PostMapping(path = "/greeting")
+    @GetMapping(path = "/greeting")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> greeting() {
         return ResponseEntity.ok(new BaseResponse("Hello! This is Order Service."));
@@ -94,7 +94,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping(path = "/get-order")
+    @GetMapping(path = "/get-order")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getOrder(@RequestHeader("Authorization") String authorizationHeader, @RequestBody OrRqGetOrderArgs orderArgs) {
         try {

@@ -29,7 +29,7 @@ public class AuthController {
     private final IOrderService orderService;
     private final AuthMapper authMapper;
 
-    @PostMapping(path = "/greeting")
+    @GetMapping(path = "/greeting")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> greeting() {
         logger.info("greeting");

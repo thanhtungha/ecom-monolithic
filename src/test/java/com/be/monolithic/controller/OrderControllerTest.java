@@ -123,7 +123,7 @@ class OrderControllerTest extends AbstractContainerBaseTest {
         OrRqGetOrderArgs args = new OrRqGetOrderArgs(orderId);
         String reqString = objectMapper.writeValueAsString(args);
         RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(BASE_API + "/get-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
+                MockMvcRequestBuilders.get(BASE_API + "/get-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
 
         //check response
