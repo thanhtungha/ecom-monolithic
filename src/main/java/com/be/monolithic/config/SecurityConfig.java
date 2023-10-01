@@ -51,7 +51,8 @@ public class SecurityConfig {
                                         "/api/cart/greeting",
                                         "/api/inventory/greeting",
                                         "/api/order/greeting",
-                                        "/api/product/greeting")
+                                        "/api/product/greeting",
+                                        "/swagger-ui/**", "/v3/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated());
