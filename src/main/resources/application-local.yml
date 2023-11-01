@@ -1,11 +1,4 @@
-server:
-  port: 8080
 spring:
-  application:
-    name: monolithic
-  jpa:
-    hibernate:
-      ddl-auto: update
   datasource:
     url: jdbc:mysql://localhost:3306/MonolithicEcommerce
     username: admin

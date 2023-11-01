@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://ecommercedb.c5vapug9qok4.ap-southeast-1.rds.amazonaws.com:3306/MonolithicEcommerce
+    username: admin
+    password: 12345678
