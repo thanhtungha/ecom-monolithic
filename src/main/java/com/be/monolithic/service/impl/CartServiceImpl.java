@@ -1,9 +1,9 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.exception.RestExceptions;
-import com.be.monolithic.model.Cart;
-import com.be.monolithic.model.Product;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.Cart;
+import com.be.monolithic.model_old.Product;
+import com.be.monolithic.model_old.User;
 import com.be.monolithic.repository.CartRepository;
 import com.be.monolithic.service.ICartService;
 import lombok.RequiredArgsConstructor;

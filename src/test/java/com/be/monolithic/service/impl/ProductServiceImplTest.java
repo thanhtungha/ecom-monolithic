@@ -4,8 +4,8 @@ import com.be.monolithic.AbstractContainerBaseTest;
 import com.be.monolithic.dto.product.PdRqAddReviewArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqUpdateArgs;
-import com.be.monolithic.model.Product;
-import com.be.monolithic.model.Review;
+import com.be.monolithic.model_old.Product;
+import com.be.monolithic.model_old.Review;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 

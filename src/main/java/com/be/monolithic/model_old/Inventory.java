@@ -1,4 +1,4 @@
-package com.be.monolithic.model;
+package com.be.monolithic.model_old;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,12 +12,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "cart")
-public class Cart extends BaseModel {
+@Table(name = "inventory")
+public class Inventory extends BaseModel {
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id", unique = true)
     private User owner;
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
 }

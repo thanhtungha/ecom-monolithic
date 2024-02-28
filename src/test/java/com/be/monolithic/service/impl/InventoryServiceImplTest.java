@@ -1,8 +1,8 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.AbstractContainerBaseTest;
-import com.be.monolithic.model.Inventory;
-import com.be.monolithic.model.Product;
+import com.be.monolithic.model_old.Inventory;
+import com.be.monolithic.model_old.Product;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 

@@ -5,7 +5,7 @@ import com.be.monolithic.dto.inventory.IvRqAddProductArgs;
 import com.be.monolithic.dto.inventory.IvRqUpdateProductArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqUpdateArgs;
-import com.be.monolithic.model.Inventory;
+import com.be.monolithic.model_old.Inventory;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

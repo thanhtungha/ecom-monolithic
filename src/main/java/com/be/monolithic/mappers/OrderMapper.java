@@ -1,10 +1,7 @@
 package com.be.monolithic.mappers;
 
 import com.be.monolithic.dto.order.OrderDTO;
-import com.be.monolithic.dto.product.PdRqRegisterArgs;
-import com.be.monolithic.dto.product.ProductDTO;
-import com.be.monolithic.model.Order;
-import com.be.monolithic.model.Product;
+import com.be.monolithic.model_old.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

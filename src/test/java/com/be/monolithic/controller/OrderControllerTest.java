@@ -1,11 +1,8 @@
 package com.be.monolithic.controller;
 
 import com.be.monolithic.AbstractContainerBaseTest;
-import com.be.monolithic.dto.auth.AuRqLoginArgs;
-import com.be.monolithic.dto.auth.AuRqRegisterArgs;
-import com.be.monolithic.dto.inventory.IvRqAddProductArgs;
 import com.be.monolithic.dto.order.*;
-import com.be.monolithic.model.*;
+import com.be.monolithic.model_old.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;

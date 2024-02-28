@@ -1,10 +1,8 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.AbstractContainerBaseTest;
-import com.be.monolithic.dto.product.PdRqRegisterArgs;
-import com.be.monolithic.model.Order;
-import com.be.monolithic.model.OrderItem;
-import com.be.monolithic.model.Product;
+import com.be.monolithic.model_old.Order;
+import com.be.monolithic.model_old.OrderItem;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 

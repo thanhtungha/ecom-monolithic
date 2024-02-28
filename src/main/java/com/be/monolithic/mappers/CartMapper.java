@@ -1,13 +1,7 @@
 package com.be.monolithic.mappers;
 
 import com.be.monolithic.dto.cart.CartDTO;
-import com.be.monolithic.dto.inventory.InventoryDTO;
-import com.be.monolithic.dto.inventory.IvRqAddProductArgs;
-import com.be.monolithic.dto.inventory.IvRqUpdateProductArgs;
-import com.be.monolithic.dto.product.PdRqRegisterArgs;
-import com.be.monolithic.dto.product.PdRqUpdateArgs;
-import com.be.monolithic.model.Cart;
-import com.be.monolithic.model.Inventory;
+import com.be.monolithic.model_old.Cart;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

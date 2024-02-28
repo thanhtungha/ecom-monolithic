@@ -1,9 +1,9 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.exception.RestExceptions;
-import com.be.monolithic.model.Order;
-import com.be.monolithic.model.OrderItem;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.Order;
+import com.be.monolithic.model_old.OrderItem;
+import com.be.monolithic.model_old.User;
 import com.be.monolithic.repository.OrderRepository;
 import com.be.monolithic.service.IOrderService;
 import lombok.RequiredArgsConstructor;

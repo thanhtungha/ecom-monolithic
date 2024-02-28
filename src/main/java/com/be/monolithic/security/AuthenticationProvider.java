@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.be.monolithic.exception.RestExceptions;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.User;
 import com.be.monolithic.repository.AuthRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

@@ -3,7 +3,7 @@ package com.be.monolithic.service.impl;
 import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.AuthMapper;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.User;
 import com.be.monolithic.repository.AuthRepository;
 import com.be.monolithic.security.AuthenticationProvider;
 import com.be.monolithic.service.IAuthService;

@@ -5,7 +5,7 @@ import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.exception.BaseException;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.AuthMapper;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.User;
 import com.be.monolithic.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.be.monolithic.service;
 
 import com.be.monolithic.dto.auth.*;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.User;
 
 import java.util.UUID;
 

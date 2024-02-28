@@ -1,4 +1,4 @@
-package com.be.monolithic.model;
+package com.be.monolithic.model_old;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

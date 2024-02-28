@@ -2,8 +2,8 @@ package com.be.monolithic.service.impl;
 
 import com.be.monolithic.AbstractContainerBaseTest;
 import com.be.monolithic.dto.auth.*;
-import com.be.monolithic.model.Inventory;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.Inventory;
+import com.be.monolithic.model_old.User;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

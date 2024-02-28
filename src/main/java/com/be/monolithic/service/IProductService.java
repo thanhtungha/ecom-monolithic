@@ -1,8 +1,8 @@
 package com.be.monolithic.service;
 
 import com.be.monolithic.dto.product.*;
-import com.be.monolithic.model.Product;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.Product;
+import com.be.monolithic.model_old.User;
 
 import java.util.List;
 

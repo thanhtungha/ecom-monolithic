@@ -1,6 +1,5 @@
 package com.be.monolithic.dto.product;
 
-import com.be.monolithic.model.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

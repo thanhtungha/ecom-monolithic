@@ -1,9 +1,9 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.exception.RestExceptions;
-import com.be.monolithic.model.Inventory;
-import com.be.monolithic.model.Product;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.Inventory;
+import com.be.monolithic.model_old.Product;
+import com.be.monolithic.model_old.User;
 import com.be.monolithic.repository.InventoryRepository;
 import com.be.monolithic.service.IInventoryService;
 import lombok.RequiredArgsConstructor;

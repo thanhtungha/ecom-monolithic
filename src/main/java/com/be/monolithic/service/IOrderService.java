@@ -1,8 +1,8 @@
 package com.be.monolithic.service;
 
-import com.be.monolithic.model.Order;
-import com.be.monolithic.model.OrderItem;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.Order;
+import com.be.monolithic.model_old.OrderItem;
+import com.be.monolithic.model_old.User;
 
 import java.util.List;
 

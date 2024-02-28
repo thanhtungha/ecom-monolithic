@@ -4,7 +4,7 @@ import com.be.monolithic.dto.auth.UserDTO;
 import com.be.monolithic.dto.auth.UserInfoDTO;
 import com.be.monolithic.dto.auth.AuRqLoginArgs;
 import com.be.monolithic.dto.auth.AuRqRegisterArgs;
-import com.be.monolithic.model.User;
+import com.be.monolithic.model_old.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
