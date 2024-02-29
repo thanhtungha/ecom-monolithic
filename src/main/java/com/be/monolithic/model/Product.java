@@ -20,7 +20,9 @@ public class Product {
     private UUID id;
     private Date createdAt;
     private Date updatedAt;
-    private UUID userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private String productName;
     private double price;
     private int inventoryQuantity;

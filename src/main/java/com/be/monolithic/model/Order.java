@@ -20,6 +20,10 @@ public class Order {
     private UUID id;
     private Date createdAt;
     private Date updatedAt;
-    private UUID buyerId;
-    private UUID sellerId;
+    @ManyToOne()
+    @JoinColumn(name = "buyer_id")
+    private User buyer;
+    @ManyToOne()
+    @JoinColumn(name = "seller_id")
+    private User seller;
 }

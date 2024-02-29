@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -25,4 +26,14 @@ public class User {
     private String phoneNumber;
     private String address;
     private String accessToken;
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+    @OneToMany(mappedBy = "buyer")
+    private List<Order> buyingList;
+    @OneToMany(mappedBy = "seller")
+    private List<Order> sellingList;
+    @OneToMany(mappedBy = "user")
+    private List<Product> productList;
+    @OneToMany(mappedBy = "buyer")
+    private List<Review> reviewList;
 }

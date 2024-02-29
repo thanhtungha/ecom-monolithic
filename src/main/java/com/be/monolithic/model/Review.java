@@ -18,8 +18,12 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "review_id")
     private UUID id;
-    private UUID buyerId;
-    private UUID productId;
+    @ManyToOne
+    @JoinColumn(name = "buyer_id")
+    private User buyer;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
     private int rating;
     private String reviewComment;
     private Date createdAt;

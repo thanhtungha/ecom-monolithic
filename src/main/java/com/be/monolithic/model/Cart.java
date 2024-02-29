@@ -18,7 +18,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "cart_id")
     private UUID id;
-    private UUID userId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private Date createdAt;
     private Date updatedAt;
 }
