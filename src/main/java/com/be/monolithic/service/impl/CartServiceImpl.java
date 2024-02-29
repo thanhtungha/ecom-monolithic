@@ -1,9 +1,9 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.exception.RestExceptions;
-import com.be.monolithic.model_old.Cart;
-import com.be.monolithic.model_old.Product;
-import com.be.monolithic.model_old.User;
+import com.be.monolithic.model.Cart;
+import com.be.monolithic.model.Product;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.CartRepository;
 import com.be.monolithic.service.ICartService;
 import lombok.RequiredArgsConstructor;
@@ -24,46 +24,48 @@ public class CartServiceImpl implements ICartService {
         Optional<Cart> stored = cartRepository.findByOwner(userInfo);
         if (stored.isEmpty()) {
             Cart cart = new Cart();
-            cart.setOwner(userInfo);
-            cart.setCreateDate(new Date());
-            cart.setUpdateDate(new Date());
+            cart.setUser(userInfo);
+            cart.setCreatedAt(new Date());
+            cart.setUpdatedAt(new Date());
             cartRepository.save(cart);
         }
     }
 
     @Override
     public Cart addProduct(User userInfo, Product product) {
-        Optional<Cart> stored = cartRepository.findByOwner(userInfo);
-        if (stored.isEmpty()) {
-            throw new RestExceptions.InternalServerError("Can not find " +
-                    "user's cart!");
-        }
-        Cart dbCart = stored.get();
-        dbCart.getProducts().add(product);
-        cartRepository.save(dbCart);
-        return dbCart;
+        throw new RestExceptions.NotImplemented();
+        //Optional<Cart> stored = cartRepository.findByOwner(userInfo);
+        //if (stored.isEmpty()) {
+        //    throw new RestExceptions.InternalServerError("Can not find " +
+        //            "user's cart!");
+        //}
+        //Cart dbCart = stored.get();
+        //dbCart.getProducts().add(product);
+        //cartRepository.save(dbCart);
+        //return dbCart;
     }
 
     @Override
     public Cart removeProduct(User userInfo, Product product) {
-        Optional<Cart> stored = cartRepository.findByOwner(userInfo);
-        if (stored.isEmpty()) {
-            throw new RestExceptions.InternalServerError("Can not find " +
-                    "user's cart!");
-        }
-        Cart dbCart = stored.get();
-        Product dbProduct = null;
-        for (Product prd : dbCart.getProducts()) {
-            if (prd.getId().equals(product.getId())) {
-                dbProduct = prd;
-                break;
-            }
-        }
-        if (dbProduct != null) {
-            dbCart.getProducts().remove(dbProduct);
-            cartRepository.save(dbCart);
-        }
-        return dbCart;
+        throw new RestExceptions.NotImplemented();
+        //Optional<Cart> stored = cartRepository.findByOwner(userInfo);
+        //if (stored.isEmpty()) {
+        //    throw new RestExceptions.InternalServerError("Can not find " +
+        //            "user's cart!");
+        //}
+        //Cart dbCart = stored.get();
+        //Product dbProduct = null;
+        //for (Product prd : dbCart.getProducts()) {
+        //    if (prd.getId().equals(product.getId())) {
+        //        dbProduct = prd;
+        //        break;
+        //    }
+        //}
+        //if (dbProduct != null) {
+        //    dbCart.getProducts().remove(dbProduct);
+        //    cartRepository.save(dbCart);
+        //}
+        //return dbCart;
     }
 
     @Override

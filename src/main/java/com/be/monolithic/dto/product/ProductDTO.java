@@ -15,8 +15,8 @@ import java.util.UUID;
 @Builder
 public class ProductDTO {
     private UUID id;
-    private Date createDate;
-    private Date updateDate;
+    private Date createdAt;
+    private Date updatedAt;
     private String name;
     private int price;
     private int quantity;

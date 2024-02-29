@@ -14,8 +14,8 @@ import java.util.UUID;
 @Builder
 public class UserInfoDTO {
     private UUID id;
-    private Date createDate;
-    private Date updateDate;
+    private Date createdAt;
+    private Date updatedAt;
     private String phoneNumber;
     private String address;
     private String accessToken;

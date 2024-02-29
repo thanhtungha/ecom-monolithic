@@ -14,8 +14,8 @@ import java.util.Date;
 @Builder
 public class OrderItemDTO {
     private String id;
-    private Date createDate;
-    private Date updateDate;
+    private Date createdAt;
+    private Date updatedAt;
     private ProductDTO product;
     private int quantity;
 }

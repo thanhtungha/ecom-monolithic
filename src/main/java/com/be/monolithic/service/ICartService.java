@@ -1,8 +1,8 @@
 package com.be.monolithic.service;
 
-import com.be.monolithic.model_old.Cart;
-import com.be.monolithic.model_old.Product;
-import com.be.monolithic.model_old.User;
+import com.be.monolithic.model.Cart;
+import com.be.monolithic.model.Product;
+import com.be.monolithic.model.User;
 
 public interface ICartService extends IBaseService {
     void createCart(User userInfo);

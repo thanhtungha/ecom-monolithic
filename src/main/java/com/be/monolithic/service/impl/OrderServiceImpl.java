@@ -1,9 +1,9 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.exception.RestExceptions;
-import com.be.monolithic.model_old.Order;
-import com.be.monolithic.model_old.OrderItem;
-import com.be.monolithic.model_old.User;
+import com.be.monolithic.model.Order;
+import com.be.monolithic.model.OrderItem;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.OrderRepository;
 import com.be.monolithic.service.IOrderService;
 import lombok.RequiredArgsConstructor;
@@ -23,31 +23,33 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public Order create(User userInfo, List<OrderItem> orderItems) {
-        Order order = new Order();
-        order.setCreateDate(new Date());
-        order.setUpdateDate(new Date());
-        order.setOwner(userInfo);
-        order.setOrderItems(orderItems);
-        orderRepository.save(order);
-        return order;
+        throw new RestExceptions.NotImplemented();
+        //Order order = new Order();
+        //order.setCreatedAt(new Date());
+        //order.setUpdatedAt(new Date());
+        //order.setBuyer(userInfo);
+        //order.setOrderItems(orderItems);
+        //orderRepository.save(order);
+        //return order;
     }
 
     @Override
     public Order update(User userInfo, String orderId,
                         List<OrderItem> orderItems) {
-        Optional<Order> storedModel =
-                orderRepository.findByIdAndOwner(UUID.fromString(orderId),
-                        userInfo);
-        if (storedModel.isEmpty()) {
-            throw new RestExceptions.NotFound("Order does not existed!");
-        }
-
-        Order order = storedModel.get();
-        order.setUpdateDate(new Date());
-        order.getOrderItems().clear();
-        order.getOrderItems().addAll(orderItems);
-        orderRepository.save(order);
-        return order;
+        throw new RestExceptions.NotImplemented();
+        //Optional<Order> storedModel =
+        //        orderRepository.findByIdAndOwner(UUID.fromString(orderId),
+        //                userInfo);
+        //if (storedModel.isEmpty()) {
+        //    throw new RestExceptions.NotFound("Order does not existed!");
+        //}
+        //
+        //Order order = storedModel.get();
+        //order.setUpdateDate(new Date());
+        //order.getOrderItems().clear();
+        //order.getOrderItems().addAll(orderItems);
+        //orderRepository.save(order);
+        //return order;
     }
 
     @Override

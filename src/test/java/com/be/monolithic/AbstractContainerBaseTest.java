@@ -3,8 +3,8 @@ package com.be.monolithic;
 import com.be.monolithic.dto.auth.AuRqLoginArgs;
 import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
-import com.be.monolithic.model_old.Product;
-import com.be.monolithic.model_old.User;
+import com.be.monolithic.model.Product;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.*;
 import com.be.monolithic.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,8 +38,6 @@ public abstract class AbstractContainerBaseTest {
     @Autowired
     public AuthRepository authRepository;
     @Autowired
-    public InventoryRepository inventoryRepository;
-    @Autowired
     public CartRepository cartRepository;
     @Autowired
     public OrderRepository orderRepository;
@@ -50,8 +48,6 @@ public abstract class AbstractContainerBaseTest {
     public ICartService cartService;
     @Autowired
     public IProductService productService;
-    @Autowired
-    public IInventoryService inventoryService;
     @Autowired
     public IOrderService orderService;
 
@@ -82,7 +78,6 @@ public abstract class AbstractContainerBaseTest {
         AuRqLoginArgs loginArgs = new AuRqLoginArgs("testUser", "userPassword");
         userInfo = authService.login(loginArgs);
         cartService.createCart(userInfo);
-        inventoryService.createInventory(userInfo);
         authorizationHeader = "Bearer " + userInfo.getAccessToken();
     }
 

@@ -2,7 +2,7 @@ package com.be.monolithic.controller;
 
 import com.be.monolithic.AbstractContainerBaseTest;
 import com.be.monolithic.dto.order.*;
-import com.be.monolithic.model_old.*;
+import com.be.monolithic.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -51,90 +51,94 @@ class OrderControllerTest extends AbstractContainerBaseTest {
     @Test
     @org.junit.jupiter.api.Order(0)
     void createOrder() throws Exception {
-        OrRqCreateOrderArgs args = new OrRqCreateOrderArgs(productList);
-        String reqString = objectMapper.writeValueAsString(args);
-        RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(BASE_API + "/create-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
-        mockMvc.perform(requestBuilder).andExpect(status().isCreated()).andReturn();
-
-        //check response
-
-        //check db
-        Optional<List<Order>> orderOptional =
-                orderRepository.findByOwner(userInfo);
-        if (orderOptional.isPresent()) {
-            Order order = orderOptional.get().get(0);
-            if (!order.getOrderItems().isEmpty()) {
-                assertEquals(productList.size(), order.getOrderItems().size());
-                assertEquals(userInfo.getId(), order.getOwner().getId());
-                orderId = order.getId().toString();
-                return;
-            }
-        }
-        fail("test case failed!");
+        fail("test case not implemented!");
+        //OrRqCreateOrderArgs args = new OrRqCreateOrderArgs(productList);
+        //String reqString = objectMapper.writeValueAsString(args);
+        //RequestBuilder requestBuilder =
+        //        MockMvcRequestBuilders.post(BASE_API + "/create-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
+        //mockMvc.perform(requestBuilder).andExpect(status().isCreated()).andReturn();
+        //
+        ////check response
+        //
+        ////check db
+        //Optional<List<Order>> orderOptional =
+        //        orderRepository.findByOwner(userInfo);
+        //if (orderOptional.isPresent()) {
+        //    Order order = orderOptional.get().get(0);
+        //    if (!order.getOrderItems().isEmpty()) {
+        //        assertEquals(productList.size(), order.getOrderItems().size());
+        //        assertEquals(userInfo.getId(), order.getOwner().getId());
+        //        orderId = order.getId().toString();
+        //        return;
+        //    }
+        //}
+        //fail("test case failed!");
     }
 
     @Test
     @org.junit.jupiter.api.Order(1)
     void updateOrder() throws Exception {
-        productList.remove(0);
-        OrRqUpdateOrderArgs args = new OrRqUpdateOrderArgs(orderId,
-                productList);
-        String reqString = objectMapper.writeValueAsString(args);
-        RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(BASE_API + "/update-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
-        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
-
-        //check response
-
-        //check db
-        Optional<List<Order>> orderOptional =
-                orderRepository.findByOwner(userInfo);
-        if (orderOptional.isPresent()) {
-            Order order = orderOptional.get().get(0);
-            if (!order.getOrderItems().isEmpty()) {
-                assertEquals(productList.size(), order.getOrderItems().size());
-                return;
-            }
-        }
-        fail("test case failed!");
+        fail("test case not implemented!");
+        //productList.remove(0);
+        //OrRqUpdateOrderArgs args = new OrRqUpdateOrderArgs(orderId,
+        //        productList);
+        //String reqString = objectMapper.writeValueAsString(args);
+        //RequestBuilder requestBuilder =
+        //        MockMvcRequestBuilders.post(BASE_API + "/update-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
+        //mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+        //
+        ////check response
+        //
+        ////check db
+        //Optional<List<Order>> orderOptional =
+        //        orderRepository.findByOwner(userInfo);
+        //if (orderOptional.isPresent()) {
+        //    Order order = orderOptional.get().get(0);
+        //    if (!order.getOrderItems().isEmpty()) {
+        //        assertEquals(productList.size(), order.getOrderItems().size());
+        //        return;
+        //    }
+        //}
+        //fail("test case failed!");
     }
 
     @Test
     @org.junit.jupiter.api.Order(2)
     void cancelOrder() throws Exception {
-        OrRqCancelOrderArgs args = new OrRqCancelOrderArgs(orderId);
-        String reqString = objectMapper.writeValueAsString(args);
-        RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(BASE_API + "/cancel-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
-        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
-
-        //check response
-
-        //check db
+        fail("test case not implemented!");
+        //OrRqCancelOrderArgs args = new OrRqCancelOrderArgs(orderId);
+        //String reqString = objectMapper.writeValueAsString(args);
+        //RequestBuilder requestBuilder =
+        //        MockMvcRequestBuilders.post(BASE_API + "/cancel-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
+        //mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+        //
+        ////check response
+        //
+        ////check db
     }
 
     @Test
     @org.junit.jupiter.api.Order(1)
     void getOrder() throws Exception {
-        OrRqGetOrderArgs args = new OrRqGetOrderArgs(orderId);
-        String reqString = objectMapper.writeValueAsString(args);
-        RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.get(BASE_API + "/get-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
-        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
-
-        //check response
-
-        //check db
-        Optional<List<Order>> orderOptional =
-                orderRepository.findByOwner(userInfo);
-        if (orderOptional.isPresent()) {
-            Order order = orderOptional.get().get(0);
-            if (!order.getOrderItems().isEmpty()) {
-                assertEquals(productList.size(), order.getOrderItems().size());
-                return;
-            }
-        }
-        fail("test case failed!");
+        fail("test case not implemented!");
+        //OrRqGetOrderArgs args = new OrRqGetOrderArgs(orderId);
+        //String reqString = objectMapper.writeValueAsString(args);
+        //RequestBuilder requestBuilder =
+        //        MockMvcRequestBuilders.get(BASE_API + "/get-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
+        //mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+        //
+        ////check response
+        //
+        ////check db
+        //Optional<List<Order>> orderOptional =
+        //        orderRepository.findByOwner(userInfo);
+        //if (orderOptional.isPresent()) {
+        //    Order order = orderOptional.get().get(0);
+        //    if (!order.getOrderItems().isEmpty()) {
+        //        assertEquals(productList.size(), order.getOrderItems().size());
+        //        return;
+        //    }
+        //}
+        //fail("test case failed!");
     }
 }

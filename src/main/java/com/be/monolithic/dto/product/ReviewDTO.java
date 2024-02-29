@@ -15,8 +15,8 @@ import java.util.UUID;
 @Builder
 public class ReviewDTO {
     private UUID id;
-    private Date createDate;
-    private Date updateDate;
+    private Date createdAt;
+    private Date updatedAt;
     private int rate;
     private String review;
     private UUID buyerUUID;

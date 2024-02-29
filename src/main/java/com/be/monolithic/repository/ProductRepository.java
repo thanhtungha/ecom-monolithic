@@ -1,7 +1,7 @@
 package com.be.monolithic.repository;
 
-import com.be.monolithic.model_old.Product;
-import com.be.monolithic.model_old.User;
+import com.be.monolithic.model.Product;
+import com.be.monolithic.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

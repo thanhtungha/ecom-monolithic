@@ -16,8 +16,8 @@ import java.util.List;
 @Builder
 public class CartDTO {
     private String id;
-    private Date createDate;
-    private Date updateDate;
+    private Date createdAt;
+    private Date updatedAt;
     private UserInfoDTO owner;
     private List<ProductDTO> products;
 }

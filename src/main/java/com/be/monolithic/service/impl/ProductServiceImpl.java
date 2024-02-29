@@ -3,9 +3,9 @@ package com.be.monolithic.service.impl;
 import com.be.monolithic.dto.product.*;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.ProductMapper;
-import com.be.monolithic.model_old.Product;
-import com.be.monolithic.model_old.Review;
-import com.be.monolithic.model_old.User;
+import com.be.monolithic.model.Product;
+import com.be.monolithic.model.Review;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.ProductRepository;
 import com.be.monolithic.service.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -32,28 +32,29 @@ public class ProductServiceImpl implements IProductService {
 
         Product product =
                 productMapper.RegisterArgsToProduct(registerArgs);
-        product.setCreateDate(new Date());
-        product.setUpdateDate(new Date());
-        product.setSellerUUID(seller.getId());
+        product.setCreatedAt(new Date());
+        product.setUpdatedAt(new Date());
+        product.setUser(seller);
         productRepository.save(product);
         return product;
     }
 
     @Override
     public Product update(PdRqUpdateArgs updateArgs) {
-        Optional<Product> storedModel =
-                productRepository.findById(UUID.fromString(updateArgs.getId()));
-        if (storedModel.isEmpty()) {
-            throw new RestExceptions.NotFound("Product does not existed!");
-        }
-
-        Product product = storedModel.get();
-        product.setUpdateDate(new Date());
-        product.setName(updateArgs.getName());
-        product.setPrice(updateArgs.getPrice());
-        product.setQuantity(updateArgs.getQuantity());
-        productRepository.save(product);
-        return product;
+        throw new RestExceptions.NotImplemented();
+        //Optional<Product> storedModel =
+        //        productRepository.findById(UUID.fromString(updateArgs.getId()));
+        //if (storedModel.isEmpty()) {
+        //    throw new RestExceptions.NotFound("Product does not existed!");
+        //}
+        //
+        //Product product = storedModel.get();
+        //product.setUpdatedAt(new Date());
+        //product.setName(updateArgs.getName());
+        //product.setPrice(updateArgs.getPrice());
+        //product.setQuantity(updateArgs.getQuantity());
+        //productRepository.save(product);
+        //return product;
     }
 
     @Override
@@ -87,26 +88,27 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Product addReview(User buyer,
                              PdRqAddReviewArgs addReviewArgs) {
-        Optional<Product> storedModel =
-                productRepository.findById(UUID.fromString(addReviewArgs.getId()));
-        if (storedModel.isEmpty()) {
-            throw new RestExceptions.NotFound("Product does not existed!");
-        }
-
-        int rating = addReviewArgs.getRating();
-        String review = addReviewArgs.getReview();
-
-        Product product = storedModel.get();
-        product.setUpdateDate(new Date());
-        Review reviewModel = new Review();
-        reviewModel.setRate(rating);
-        reviewModel.setReview(review);
-        reviewModel.setBuyerUUID(buyer.getId());
-        reviewModel.setReviewer(buyer);
-        product.getReviews().add(reviewModel);
-
-        productRepository.save(product);
-        return product;
+        throw new RestExceptions.NotImplemented();
+        //Optional<Product> storedModel =
+        //        productRepository.findById(UUID.fromString(addReviewArgs.getId()));
+        //if (storedModel.isEmpty()) {
+        //    throw new RestExceptions.NotFound("Product does not existed!");
+        //}
+        //
+        //int rating = addReviewArgs.getRating();
+        //String review = addReviewArgs.getReview();
+        //
+        //Product product = storedModel.get();
+        //product.setUpdateDate(new Date());
+        //Review reviewModel = new Review();
+        //reviewModel.setRate(rating);
+        //reviewModel.setReview(review);
+        //reviewModel.setBuyerUUID(buyer.getId());
+        //reviewModel.setReviewer(buyer);
+        //product.getReviews().add(reviewModel);
+        //
+        //productRepository.save(product);
+        //return product;
     }
 
     @Override

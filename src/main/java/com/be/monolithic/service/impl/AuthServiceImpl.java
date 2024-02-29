@@ -3,7 +3,7 @@ package com.be.monolithic.service.impl;
 import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.AuthMapper;
-import com.be.monolithic.model_old.User;
+import com.be.monolithic.model.User;
 import com.be.monolithic.repository.AuthRepository;
 import com.be.monolithic.security.AuthenticationProvider;
 import com.be.monolithic.service.IAuthService;
@@ -32,8 +32,8 @@ public class AuthServiceImpl implements IAuthService {
         }
 
         User userInfo = authMapper.RegisterArgsToUserInfo(registerArgs);
-        userInfo.setCreateDate(new Date());
-        userInfo.setUpdateDate(new Date());
+        userInfo.setCreatedAt(new Date());
+        userInfo.setUpdatedAt(new Date());
         userInfo.setAccessToken(authenticationProvider.createAccessToken(
                 userInfo.getUserName()));
         authRepository.save(userInfo);
@@ -50,7 +50,7 @@ public class AuthServiceImpl implements IAuthService {
             User userInfo = storedModel.get();
             userInfo.setAccessToken(authenticationProvider.createAccessToken(
                     userInfo.getUserName()));
-            userInfo.setUpdateDate(new Date());
+            userInfo.setUpdatedAt(new Date());
             authRepository.save(userInfo);
             return userInfo;
         } else {
@@ -63,7 +63,7 @@ public class AuthServiceImpl implements IAuthService {
     public boolean logout(String authorizationHeader) {
         User userInfo = getUserInfo(authorizationHeader);
         userInfo.setAccessToken("");
-        userInfo.setUpdateDate(new Date());
+        userInfo.setUpdatedAt(new Date());
         authRepository.save(userInfo);
         return true;
     }
@@ -79,7 +79,7 @@ public class AuthServiceImpl implements IAuthService {
                             "password" + ".");
         }
         userInfo.setUserPassword(changePasswordArgs.getNewPassword());
-        userInfo.setUpdateDate(new Date());
+        userInfo.setUpdatedAt(new Date());
         authRepository.save(userInfo);
         return true;
     }
@@ -90,7 +90,7 @@ public class AuthServiceImpl implements IAuthService {
         User userInfo = getUserInfo(authorizationHeader);
         userInfo.setAddress(updateArgs.getAddress());
         userInfo.setPhoneNumber(updateArgs.getPhoneNumber());
-        userInfo.setUpdateDate(new Date());
+        userInfo.setUpdatedAt(new Date());
         authRepository.save(userInfo);
         return userInfo;
     }
