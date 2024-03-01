@@ -1,16 +1,10 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.AbstractContainerBaseTest;
-import com.be.monolithic.dto.product.PdRqAddReviewArgs;
-import com.be.monolithic.dto.product.PdRqRegisterArgs;
-import com.be.monolithic.dto.product.PdRqUpdateArgs;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.Review;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -151,7 +145,7 @@ class ProductServiceImplTest extends AbstractContainerBaseTest {
     }
 
     String getProductId() {
-        Optional<Product> createdProduct = productRepository.findByName(
+        Optional<Product> createdProduct = productRepository.findByProductName(
                 "testProduct");
         if (createdProduct.isEmpty()) {
             fail("test case failed!");

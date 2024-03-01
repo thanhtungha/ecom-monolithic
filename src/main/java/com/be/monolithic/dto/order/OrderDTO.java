@@ -1,6 +1,6 @@
 package com.be.monolithic.dto.order;
 
-import com.be.monolithic.dto.auth.UserInfoDTO;
+import com.be.monolithic.dto.auth.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +17,6 @@ public class OrderDTO {
     private String id;
     private Date createdAt;
     private Date updatedAt;
-    private UserInfoDTO owner;
+    private UserDTO owner;
     private List<OrderItemDTO> orderItems;
 }

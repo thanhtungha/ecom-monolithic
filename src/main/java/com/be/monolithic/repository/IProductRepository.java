@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ProductRepository extends JpaRepository<Product, UUID> {
-    Optional<Product> findByName(String productName);
-    Optional<List<Product>> findBySeller(User seller);
+public interface IProductRepository extends JpaRepository<Product, UUID> {
+    Optional<Product> findByProductName(String productName);
+    Optional<List<Product>> findByUser(User user);
 }
 

@@ -1,6 +1,6 @@
 package com.be.monolithic.dto.product;
 
-import com.be.monolithic.dto.auth.UserInfoDTO;
+import com.be.monolithic.dto.auth.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,5 +20,5 @@ public class ReviewDTO {
     private int rate;
     private String review;
     private UUID buyerUUID;
-    private UserInfoDTO reviewer;
+    private UserDTO reviewer;
 }

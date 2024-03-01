@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface AuthRepository extends JpaRepository<User, UUID> {
+public interface IAuthRepository extends JpaRepository<User, UUID> {
     Optional<User> findByUserName(String userName);
     Optional<User> findByAccessToken(String accessToken);
+    Optional<User> findByUserNameAndUserPassword(String userName, String userPassword);
 }
 

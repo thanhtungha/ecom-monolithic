@@ -4,13 +4,12 @@ import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.model.Order;
 import com.be.monolithic.model.OrderItem;
 import com.be.monolithic.model.User;
-import com.be.monolithic.repository.OrderRepository;
+import com.be.monolithic.repository.IOrderRepository;
 import com.be.monolithic.service.IOrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +18,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class OrderServiceImpl implements IOrderService {
-    private final OrderRepository orderRepository;
+    private final IOrderRepository orderRepository;
 
     @Override
     public Order create(User userInfo, List<OrderItem> orderItems) {
@@ -55,7 +54,7 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean cancel(User userInfo, String orderId) {
         Optional<Order> storedModel =
-                orderRepository.findByIdAndOwner(UUID.fromString(orderId),
+                orderRepository.findByIdAndBuyer(UUID.fromString(orderId),
                         userInfo);
         if (storedModel.isPresent()) {
             orderRepository.delete(storedModel.get());
@@ -68,7 +67,7 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public Order getOrder(User userInfo, String orderId) {
         Optional<Order> storedModel =
-                orderRepository.findByIdAndOwner(UUID.fromString(orderId),
+                orderRepository.findByIdAndBuyer(UUID.fromString(orderId),
                         userInfo);
         if (storedModel.isEmpty()) {
             throw new RestExceptions.NotFound("Order does not existed!");
@@ -79,7 +78,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public boolean deleteUserData(User owner) {
-        Optional<List<Order>> storedModel = orderRepository.findByOwner(owner);
+        Optional<List<Order>> storedModel = orderRepository.findByBuyer(owner);
         storedModel.ifPresent(orderRepository::deleteAll);
         return true;
     }

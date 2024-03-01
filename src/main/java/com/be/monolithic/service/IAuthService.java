@@ -10,9 +10,9 @@ public interface IAuthService extends IBaseService {
 
     User login(AuRqLoginArgs loginArgs);
 
-    boolean logout(String authorizationHeader);
+    void logout(String authorizationHeader);
 
-    boolean changePassword(String authorizationHeader,
+    void changePassword(String authorizationHeader,
                            AuRqChangePasswordArgs changePasswordArgs);
 
     User update(String authorizationHeader, AuRqUpdateArgs updateArgs);

@@ -4,7 +4,7 @@ import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.model.Cart;
 import com.be.monolithic.model.Product;
 import com.be.monolithic.model.User;
-import com.be.monolithic.repository.CartRepository;
+import com.be.monolithic.repository.ICartRepository;
 import com.be.monolithic.service.ICartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +17,11 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class CartServiceImpl implements ICartService {
-    private final CartRepository cartRepository;
+    private final ICartRepository cartRepository;
 
     @Override
     public void createCart(User userInfo) {
-        Optional<Cart> stored = cartRepository.findByOwner(userInfo);
+        Optional<Cart> stored = cartRepository.findByUser(userInfo);
         if (stored.isEmpty()) {
             Cart cart = new Cart();
             cart.setUser(userInfo);
@@ -70,7 +70,7 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public Cart getCart(User userInfo) {
-        Optional<Cart> stored = cartRepository.findByOwner(userInfo);
+        Optional<Cart> stored = cartRepository.findByUser(userInfo);
         if (stored.isEmpty()) {
             throw new RestExceptions.InternalServerError("Can not find " +
                     "user's cart!");
@@ -80,7 +80,7 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public boolean deleteUserData(User owner) {
-        Optional<Cart> storedModel = cartRepository.findByOwner(owner);
+        Optional<Cart> storedModel = cartRepository.findByUser(owner);
         storedModel.ifPresent(cartRepository::delete);
         return true;
     }

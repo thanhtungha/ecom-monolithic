@@ -36,4 +36,19 @@ public class User {
     private List<Product> productList;
     @OneToMany(mappedBy = "buyer")
     private List<Review> reviewList;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", accessToken='" + accessToken + '\'' +
+                ", cart=" + cart +
+                '}';
+    }
 }

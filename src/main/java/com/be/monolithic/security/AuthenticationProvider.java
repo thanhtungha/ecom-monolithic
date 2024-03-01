@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.model.User;
-import com.be.monolithic.repository.AuthRepository;
+import com.be.monolithic.repository.IAuthRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +26,7 @@ public class AuthenticationProvider {
     @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
 
-    private final AuthRepository authRepository;
+    private final IAuthRepository authRepository;
 
     @PostConstruct
     protected void init() {

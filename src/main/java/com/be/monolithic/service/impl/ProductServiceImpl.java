@@ -4,9 +4,8 @@ import com.be.monolithic.dto.product.*;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.ProductMapper;
 import com.be.monolithic.model.Product;
-import com.be.monolithic.model.Review;
 import com.be.monolithic.model.User;
-import com.be.monolithic.repository.ProductRepository;
+import com.be.monolithic.repository.IProductRepository;
 import com.be.monolithic.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +17,14 @@ import java.util.*;
 @Service
 @Slf4j
 public class ProductServiceImpl implements IProductService {
-    private final ProductRepository productRepository;
+    private final IProductRepository productRepository;
     private final ProductMapper productMapper;
 
     @Override
     public Product register(User seller,
                             PdRqRegisterArgs registerArgs) {
         Optional<Product> storedModel =
-                productRepository.findByName(registerArgs.getName());
+                productRepository.findByProductName(registerArgs.getName());
         if (storedModel.isPresent()) {
             throw new RestExceptions.Conflict("Product existed");
         }
@@ -114,7 +113,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public boolean deleteUserData(User seller) {
         Optional<List<Product>> storedModel =
-                productRepository.findBySeller(seller);
+                productRepository.findByUser(seller);
         storedModel.ifPresent(productRepository::deleteAll);
         return true;
     }

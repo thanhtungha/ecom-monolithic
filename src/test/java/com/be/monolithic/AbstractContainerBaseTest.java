@@ -34,13 +34,13 @@ public abstract class AbstractContainerBaseTest {
     public ObjectMapper objectMapper;
 
     @Autowired
-    public ProductRepository productRepository;
+    public IProductRepository productRepository;
     @Autowired
-    public AuthRepository authRepository;
+    public IAuthRepository authRepository;
     @Autowired
-    public CartRepository cartRepository;
+    public ICartRepository cartRepository;
     @Autowired
-    public OrderRepository orderRepository;
+    public IOrderRepository orderRepository;
 
     @Autowired
     public IAuthService authService;

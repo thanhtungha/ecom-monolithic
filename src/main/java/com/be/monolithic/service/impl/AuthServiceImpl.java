@@ -4,7 +4,7 @@ import com.be.monolithic.dto.auth.*;
 import com.be.monolithic.exception.RestExceptions;
 import com.be.monolithic.mappers.AuthMapper;
 import com.be.monolithic.model.User;
-import com.be.monolithic.repository.AuthRepository;
+import com.be.monolithic.repository.IAuthRepository;
 import com.be.monolithic.security.AuthenticationProvider;
 import com.be.monolithic.service.IAuthService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class AuthServiceImpl implements IAuthService {
-    private final AuthRepository authRepository;
+    private final IAuthRepository authRepository;
     private final AuthenticationProvider authenticationProvider;
     private final AuthMapper authMapper;
 
@@ -31,68 +31,79 @@ public class AuthServiceImpl implements IAuthService {
             throw new RestExceptions.Conflict("User existed");
         }
 
-        User userInfo = authMapper.RegisterArgsToUserInfo(registerArgs);
-        userInfo.setCreatedAt(new Date());
-        userInfo.setUpdatedAt(new Date());
-        userInfo.setAccessToken(authenticationProvider.createAccessToken(
-                userInfo.getUserName()));
-        authRepository.save(userInfo);
-        return userInfo;
+        User user = authMapper.RegisterArgsToUserInfo(registerArgs);
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
+        user.setAccessToken(authenticationProvider.createAccessToken(
+                user.getUserName()));
+        authRepository.save(user);
+        return user;
     }
 
     @Override
-    public User login(AuRqLoginArgs loginArgs) {
-        Optional<User> storedModel = authRepository.findByUserName(
-                loginArgs.getUserName());
-        if (storedModel.isPresent() && storedModel.get()
-                .getUserPassword()
-                .equals(loginArgs.getUserPassword())) {
-            User userInfo = storedModel.get();
-            userInfo.setAccessToken(authenticationProvider.createAccessToken(
-                    userInfo.getUserName()));
-            userInfo.setUpdatedAt(new Date());
-            authRepository.save(userInfo);
-            return userInfo;
+    public User login(AuRqLoginArgs arg) {
+        Optional<User> storedModel =
+                authRepository.findByUserNameAndUserPassword(
+                        arg.getUserName(), arg.getUserPassword());
+        if (storedModel.isPresent()) {
+            User user = storedModel.get();
+            user.setAccessToken(authenticationProvider.createAccessToken(
+                    user.getUserName()));
+            user.setUpdatedAt(new Date());
+            authRepository.save(user);
+            return user;
         } else {
             throw new RestExceptions.NotFound(
-                    "User not found or wrong " + "password");
+                    "User not found or wrong password");
         }
     }
 
     @Override
-    public boolean logout(String authorizationHeader) {
-        User userInfo = getUserInfo(authorizationHeader);
-        userInfo.setAccessToken("");
-        userInfo.setUpdatedAt(new Date());
-        authRepository.save(userInfo);
-        return true;
+    public void logout(String authorizationHeader) {
+        Optional<User> storedModel = authRepository.findByAccessToken(
+                extractAccessToken(authorizationHeader));
+        storedModel.ifPresentOrElse(user -> {
+            user.setAccessToken("");
+            user.setUpdatedAt(new Date());
+            authRepository.save(user);
+        }, () -> {
+            throw new RestExceptions.Forbidden("Invalid accessToken!");
+        });
     }
 
     @Override
-    public boolean changePassword(String authorizationHeader,
-                                  AuRqChangePasswordArgs changePasswordArgs) {
-        User userInfo = getUserInfo(authorizationHeader);
-        if (userInfo.getUserPassword()
-                .equals(changePasswordArgs.getNewPassword())) {
-            throw new RestExceptions.BadRequest(
-                    "New password cannot be " + "the same as the old " +
-                            "password" + ".");
+    public void changePassword(String authorizationHeader,
+                               AuRqChangePasswordArgs changePasswordArgs) {
+        Optional<User> storedModel = authRepository.findByAccessToken(
+                extractAccessToken(authorizationHeader));
+        storedModel.ifPresentOrElse(user -> {
+            if (user.getUserPassword()
+                    .equals(changePasswordArgs.getNewPassword())) {
+                throw new RestExceptions.BadRequest(
+                        "New password cannot be the same as the old password.");
+            }
+            user.setUserPassword(changePasswordArgs.getNewPassword());
+            user.setUpdatedAt(new Date());
+            authRepository.save(user);
+        }, () -> {
+            throw new RestExceptions.Forbidden("Invalid accessToken!");
+        });
+    }
+
+    @Override
+    public User update(String authorizationHeader, AuRqUpdateArgs updateArgs) {
+        Optional<User> storedModel = authRepository.findByAccessToken(
+                extractAccessToken(authorizationHeader));
+        if (storedModel.isPresent()) {
+            User user = storedModel.get();
+            user.setAddress(updateArgs.getAddress());
+            user.setPhoneNumber(updateArgs.getPhoneNumber());
+            user.setUpdatedAt(new Date());
+            authRepository.save(user);
+            return user;
+        } else {
+            throw new RestExceptions.Forbidden("Invalid accessToken!");
         }
-        userInfo.setUserPassword(changePasswordArgs.getNewPassword());
-        userInfo.setUpdatedAt(new Date());
-        authRepository.save(userInfo);
-        return true;
-    }
-
-    @Override
-    public User update(String authorizationHeader,
-                       AuRqUpdateArgs updateArgs) {
-        User userInfo = getUserInfo(authorizationHeader);
-        userInfo.setAddress(updateArgs.getAddress());
-        userInfo.setPhoneNumber(updateArgs.getPhoneNumber());
-        userInfo.setUpdatedAt(new Date());
-        authRepository.save(userInfo);
-        return userInfo;
     }
 
     @Override
@@ -136,8 +147,8 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public boolean deleteUserData(User userInfo) {
-        authRepository.delete(userInfo);
+    public boolean deleteUserData(User user) {
+        authRepository.delete(user);
         return true;
     }
 }

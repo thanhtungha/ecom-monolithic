@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface OrderRepository extends JpaRepository<Order, UUID> {
-    Optional<List<Order>> findByOwner(User owner);
-    Optional<Order> findByIdAndOwner(UUID uuid, User owner);
+public interface IOrderRepository extends JpaRepository<Order, UUID> {
+    Optional<List<Order>> findByBuyer(User buyer);
+    Optional<Order> findByIdAndBuyer(UUID uuid, User buyer);
 }
 

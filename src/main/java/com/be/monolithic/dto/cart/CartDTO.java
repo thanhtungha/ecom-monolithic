@@ -1,6 +1,6 @@
 package com.be.monolithic.dto.cart;
 
-import com.be.monolithic.dto.auth.UserInfoDTO;
+import com.be.monolithic.dto.auth.UserDTO;
 import com.be.monolithic.dto.product.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +18,6 @@ public class CartDTO {
     private String id;
     private Date createdAt;
     private Date updatedAt;
-    private UserInfoDTO owner;
+    private UserDTO owner;
     private List<ProductDTO> products;
 }
