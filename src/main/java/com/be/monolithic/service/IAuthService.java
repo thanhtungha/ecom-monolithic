@@ -19,7 +19,7 @@ public interface IAuthService extends IBaseService {
 
     User forgotPassword(AuRqForgotPwdArgs forgotPwdArgs);
 
-    User getUserInfo(String authorizationHeader);
+    User getUser(String authorizationHeader);
 
-    User getUserInfo(UUID id);
+    User getUser(UUID id);
 }

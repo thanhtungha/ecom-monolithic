@@ -118,7 +118,7 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public User getUserInfo(String authorizationHeader) {
+    public User getUser(String authorizationHeader) {
         Optional<User> storedModel = authRepository.findByAccessToken(
                 extractAccessToken(authorizationHeader));
         if (storedModel.isPresent()) {
@@ -129,7 +129,7 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public User getUserInfo(UUID id) {
+    public User getUser(UUID id) {
         Optional<User> storedModel = authRepository.findById(id);
         if (storedModel.isPresent()) {
             return storedModel.get();

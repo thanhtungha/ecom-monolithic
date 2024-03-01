@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,40 +56,34 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
         authService.logout(bearerToken);
         Optional<User> createdUser = authRepository.findByAccessToken(
                 bearerToken);
-        if (createdUser.isPresent()) {
-            fail("test case failed!");
-        }
+        createdUser.ifPresent(user -> fail("test case failed!"));
     }
 
     @Test
     @Order(2)
     void changePassword() {
-        AuRqChangePasswordArgs changePasswordArgs = new AuRqChangePasswordArgs(
-                "newPassword");
-        authService.changePassword(getAuthorizationHeader(),
-                changePasswordArgs);
-        Optional<User> createdUser =
-                authRepository.findByUserNameAndUserPassword(
-                        "userName", "newPassword");
-        if (createdUser.isEmpty()) {
-            fail("test case failed!");
-        } else {
+        AuRqChangePasswordArgs args = new AuRqChangePasswordArgs("newPassword");
+        String bearerToken = getAuthorizationHeader();
+        authService.changePassword(bearerToken, args);
+        Optional<User> optional = authRepository.findByUserNameAndUserPassword(
+                "userName", "newPassword");
+        optional.ifPresentOrElse(user -> {
             //change user password to original password: "userPassword"
-            changePasswordArgs.setNewPassword("userPassword");
-            authService.changePassword(getAuthorizationHeader(),
-                    changePasswordArgs);
-        }
+            //for next test case
+            args.setNewPassword("userPassword");
+            authService.changePassword(bearerToken, args);
+        }, () -> fail("test case failed!"));
     }
 
     @Test
     @Order(2)
     void update() {
-        AuRqUpdateArgs updateArgs = new AuRqUpdateArgs("0987654321",
-                "new address");
-        User userInfo = authService.update(getAuthorizationHeader(), updateArgs);
-        if (userInfo != null) {
-            assertEquals(updateArgs.getPhoneNumber(), userInfo.getPhoneNumber());
-            assertEquals(updateArgs.getAddress(), userInfo.getAddress());
+        AuRqUpdateArgs args = new AuRqUpdateArgs("0987654321", "new address");
+        String bearerToken = getAuthorizationHeader();
+        User user = authService.update(bearerToken, args);
+        if (user != null) {
+            assertEquals(args.getPhoneNumber(), user.getPhoneNumber());
+            assertEquals(args.getAddress(), user.getAddress());
         } else {
             fail("test case failed!");
         }
@@ -99,39 +92,29 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
     @Test
     @Order(2)
     void forgotPassword() {
-        AuRqForgotPwdArgs forgotPwdArgs = new AuRqForgotPwdArgs("userName");
-        User user = authService.forgotPassword(forgotPwdArgs);
-        if (user != null) {
-            assertEquals("userPassword",user.getUserPassword());
-        } else {
-            fail("test case failed!");
-        }
+        AuRqForgotPwdArgs args = new AuRqForgotPwdArgs("userName");
+        User user = authService.forgotPassword(args);
+        assertEquals("userPassword", user.getUserPassword());
     }
 
     @Test
     @Order(4)
     void delete() {
-        AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName",
-         "userPassword");
-        User user = authService.login(loginArgs);
-
+        AuRqLoginArgs args = new AuRqLoginArgs("userName", "userPassword");
+        User user = authService.login(args);
         boolean result = authService.deleteUserData(user);
-        if (result) {
-            Optional<User> createdUser = authRepository.findByUserName(
-                    "userName");
-            if (createdUser.isPresent()) {
-                fail("test case failed!");
-            }
-            return;
-        }
-        fail("test case failed!");
+
+        assertTrue(result);
+
+        Optional<User> optional = authRepository.findByUserName("userName");
+        optional.ifPresent(value -> fail("test case failed!"));
     }
 
     String getAuthorizationHeader() {
-        Optional<User> createdUser = authRepository.findByUserName("userName");
-        if (createdUser.isEmpty()) {
+        Optional<User> optional = authRepository.findByUserName("userName");
+        if (optional.isEmpty()) {
             fail("test case failed!");
         }
-        return "Bearer " + createdUser.get().getAccessToken();
+        return "Bearer " + optional.get().getAccessToken();
     }
 }
