@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "reviews")
-public class Review {
+public class Review implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "review_id")
@@ -28,4 +29,17 @@ public class Review {
     private String reviewComment;
     private Date createdAt;
     private Date updatedAt;
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", buyer=" + buyer.getId() +
+                ", product=" + product.getId() +
+                ", rating=" + rating +
+                ", reviewComment='" + reviewComment + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

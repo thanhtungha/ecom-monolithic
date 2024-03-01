@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "products")
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "product_id")
@@ -27,4 +29,20 @@ public class Product {
     private double price;
     private int inventoryQuantity;
     private double avg_rates;
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviewList;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", user=" + user.getId() +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                ", inventoryQuantity=" + inventoryQuantity +
+                ", avg_rates=" + avg_rates +
+                '}';
+    }
 }

@@ -19,38 +19,38 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class AuthServiceImpl implements IAuthService {
-    private final IAuthRepository authRepository;
+    private final IAuthRepository repository;
     private final AuthenticationProvider authenticationProvider;
-    private final AuthMapper authMapper;
+    private final AuthMapper mapper;
 
     @Override
     public User register(AuRqRegisterArgs registerArgs) {
-        Optional<User> storedModel = authRepository.findByUserName(
+        Optional<User> storedModel = repository.findByUserName(
                 registerArgs.getUserName());
         if (storedModel.isPresent()) {
             throw new RestExceptions.Conflict("User existed");
         }
 
-        User user = authMapper.RegisterArgsToUserInfo(registerArgs);
+        User user = mapper.RegisterArgsToUserInfo(registerArgs);
         user.setCreatedAt(new Date());
         user.setUpdatedAt(new Date());
         user.setAccessToken(authenticationProvider.createAccessToken(
                 user.getUserName()));
-        authRepository.save(user);
+        repository.save(user);
         return user;
     }
 
     @Override
     public User login(AuRqLoginArgs arg) {
         Optional<User> storedModel =
-                authRepository.findByUserNameAndUserPassword(
+                repository.findByUserNameAndUserPassword(
                         arg.getUserName(), arg.getUserPassword());
         if (storedModel.isPresent()) {
             User user = storedModel.get();
             user.setAccessToken(authenticationProvider.createAccessToken(
                     user.getUserName()));
             user.setUpdatedAt(new Date());
-            authRepository.save(user);
+            repository.save(user);
             return user;
         } else {
             throw new RestExceptions.NotFound(
@@ -60,12 +60,12 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public void logout(String authorizationHeader) {
-        Optional<User> storedModel = authRepository.findByAccessToken(
+        Optional<User> storedModel = repository.findByAccessToken(
                 extractAccessToken(authorizationHeader));
         storedModel.ifPresentOrElse(user -> {
             user.setAccessToken("");
             user.setUpdatedAt(new Date());
-            authRepository.save(user);
+            repository.save(user);
         }, () -> {
             throw new RestExceptions.Forbidden("Invalid accessToken!");
         });
@@ -74,7 +74,7 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     public void changePassword(String authorizationHeader,
                                AuRqChangePasswordArgs changePasswordArgs) {
-        Optional<User> storedModel = authRepository.findByAccessToken(
+        Optional<User> storedModel = repository.findByAccessToken(
                 extractAccessToken(authorizationHeader));
         storedModel.ifPresentOrElse(user -> {
             if (user.getUserPassword()
@@ -84,7 +84,7 @@ public class AuthServiceImpl implements IAuthService {
             }
             user.setUserPassword(changePasswordArgs.getNewPassword());
             user.setUpdatedAt(new Date());
-            authRepository.save(user);
+            repository.save(user);
         }, () -> {
             throw new RestExceptions.Forbidden("Invalid accessToken!");
         });
@@ -92,14 +92,14 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public User update(String authorizationHeader, AuRqUpdateArgs updateArgs) {
-        Optional<User> storedModel = authRepository.findByAccessToken(
+        Optional<User> storedModel = repository.findByAccessToken(
                 extractAccessToken(authorizationHeader));
         if (storedModel.isPresent()) {
             User user = storedModel.get();
             user.setAddress(updateArgs.getAddress());
             user.setPhoneNumber(updateArgs.getPhoneNumber());
             user.setUpdatedAt(new Date());
-            authRepository.save(user);
+            repository.save(user);
             return user;
         } else {
             throw new RestExceptions.Forbidden("Invalid accessToken!");
@@ -108,7 +108,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public User forgotPassword(AuRqForgotPwdArgs forgotPwdArgs) {
-        Optional<User> storedModel = authRepository.findByUserName(
+        Optional<User> storedModel = repository.findByUserName(
                 forgotPwdArgs.getUserName());
         if (storedModel.isPresent()) {
             return storedModel.get();
@@ -119,7 +119,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public User getUser(String authorizationHeader) {
-        Optional<User> storedModel = authRepository.findByAccessToken(
+        Optional<User> storedModel = repository.findByAccessToken(
                 extractAccessToken(authorizationHeader));
         if (storedModel.isPresent()) {
             return storedModel.get();
@@ -130,7 +130,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public User getUser(UUID id) {
-        Optional<User> storedModel = authRepository.findById(id);
+        Optional<User> storedModel = repository.findById(id);
         if (storedModel.isPresent()) {
             return storedModel.get();
         } else {
@@ -148,7 +148,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public boolean deleteUserData(User user) {
-        authRepository.delete(user);
+        repository.delete(user);
         return true;
     }
 }

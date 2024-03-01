@@ -23,4 +23,14 @@ public class Cart {
     private User user;
     private Date createdAt;
     private Date updatedAt;
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", user=" + user.getId() +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

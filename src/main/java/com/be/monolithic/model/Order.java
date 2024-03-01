@@ -26,4 +26,15 @@ public class Order {
     @ManyToOne()
     @JoinColumn(name = "seller_id")
     private User seller;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", buyer=" + buyer.getId() +
+                ", seller=" + seller.getId() +
+                '}';
+    }
 }

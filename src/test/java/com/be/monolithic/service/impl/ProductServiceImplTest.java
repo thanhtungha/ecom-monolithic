@@ -1,11 +1,18 @@
 package com.be.monolithic.service.impl;
 
 import com.be.monolithic.AbstractContainerBaseTest;
+import com.be.monolithic.dto.product.PdRqAddReviewArgs;
+import com.be.monolithic.dto.product.PdRqRegisterArgs;
+import com.be.monolithic.dto.product.PdRqUpdateArgs;
 import com.be.monolithic.model.Product;
+import com.be.monolithic.model.Review;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductServiceImplTest extends AbstractContainerBaseTest {
     @BeforeEach
     void setUp() {
-        if(userInfo == null) {
+        if (userInfo == null) {
             registerTestUser();
         }
     }
@@ -22,126 +29,109 @@ class ProductServiceImplTest extends AbstractContainerBaseTest {
     @Test
     @Order(0)
     void register() {
-        fail("test case not implemented!");
-        //PdRqRegisterArgs registerArgs = new PdRqRegisterArgs("testProduct",
-        //        300);
-        //Product responseProduct = productService.register(userInfo,
-        //        registerArgs);
-        //Optional<Product> createdProduct = productRepository.findByName(
-        //        "testProduct");
-        //
-        //if (createdProduct.isPresent()) {
-        //    Product dbProduct = createdProduct.get();
-        //    assertEquals(registerArgs.getName(), dbProduct.getName());
-        //    assertEquals(registerArgs.getPrice(), dbProduct.getPrice());
-        //    assertEquals(userInfo.getId(), dbProduct.getSellerUUID());
-        //
-        //    assertEquals(registerArgs.getName(), responseProduct.getName());
-        //    assertEquals(registerArgs.getPrice(), responseProduct.getPrice());
-        //    assertEquals(userInfo.getId(), responseProduct.getSellerUUID());
-        //} else {
-        //    fail("test case failed!");
-        //}
+        PdRqRegisterArgs registerArgs = new PdRqRegisterArgs("testProduct",
+                300);
+        Product responseProduct = productService.register(userInfo,
+                registerArgs);
+        Optional<Product> optional = productRepository.findByProductName(
+                "testProduct");
+        optional.ifPresentOrElse(product -> {
+            assertEquals(registerArgs.getName(), product.getProductName());
+            assertEquals(registerArgs.getPrice(), product.getPrice());
+            assertEquals(userInfo.getId(), product.getUser().getId());
+
+            assertEquals(registerArgs.getName(),
+                    responseProduct.getProductName());
+            assertEquals(registerArgs.getPrice(), responseProduct.getPrice());
+            assertEquals(userInfo.getId(), responseProduct.getUser().getId());
+        }, () -> fail("test case failed!"));
     }
 
     @Test
     @Order(1)
     void update() {
-        fail("test case not implemented!");
-        //PdRqUpdateArgs updateArgs = new PdRqUpdateArgs(getProductId(),
-        //        "updatedName", 300, 10);
-        //Product responseProduct = productService.update(updateArgs);
-        //Optional<Product> createdProduct = productRepository.findByName(
-        //        "updatedName");
-        //
-        //if (createdProduct.isPresent()) {
-        //    Product dbProduct = createdProduct.get();
-        //    assertEquals(updateArgs.getName(), dbProduct.getName());
-        //    assertEquals(updateArgs.getQuantity(), dbProduct.getQuantity());
-        //    assertEquals(updateArgs.getPrice(), dbProduct.getPrice());
-        //
-        //    assertEquals(updateArgs.getName(), responseProduct.getName());
-        //    assertEquals(updateArgs.getQuantity(),
-        //            responseProduct.getQuantity());
-        //    assertEquals(updateArgs.getPrice(), responseProduct.getPrice());
-        //
-        //    updateArgs.setName("testProduct");
-        //    updateArgs.setPrice(0);
-        //    updateArgs.setQuantity(0);
-        //    productService.update(updateArgs);
-        //} else {
-        //    fail("test case failed!");
-        //}
+        PdRqUpdateArgs args = new PdRqUpdateArgs(getProductId(),
+                "updatedName", 300, 10);
+        Product responseProduct = productService.update(args);
+        Optional<Product> optional = productRepository.findByProductName(
+                "updatedName");
+        optional.ifPresentOrElse(product -> {
+            assertEquals(args.getName(), product.getProductName());
+            assertEquals(args.getQuantity(), product.getInventoryQuantity());
+            assertEquals(args.getPrice(), product.getPrice());
+
+            assertEquals(args.getName(), responseProduct.getProductName());
+            assertEquals(args.getQuantity(),
+                    responseProduct.getInventoryQuantity());
+            assertEquals(args.getPrice(), responseProduct.getPrice());
+
+            //change product data to original data for other test cases
+            args.setName("testProduct");
+            args.setPrice(0);
+            args.setQuantity(0);
+            productService.update(args);
+        }, () -> fail("test case failed!"));
     }
 
     @Test
     @Order(2)
     void remove() {
-        fail("test case not implemented!");
-        //boolean result = productService.remove(getProductId());
-        //Optional<Product> removedProduct = productRepository.findByName(
-        //        "testProduct");
-        //
-        //if (removedProduct.isPresent() || !result) {
-        //    fail("test case failed!");
-        //}
+        boolean result = productService.remove(getProductId());
+        assertTrue(result);
+
+        Optional<Product> optional = productRepository.findByProductName(
+                "testProduct");
+        optional.ifPresent(product -> fail("test case failed!"));
     }
 
     @Test
     @Order(1)
     void getProduct() {
-        fail("test case not implemented!");
-        //Product responseProduct =
-        //        productService.getProduct(getProductId());
-        //Optional<Product> createdProduct = productRepository.findByName(
-        //        "testProduct");
-        //
-        //if (createdProduct.isPresent()) {
-        //    Product dbProduct = createdProduct.get();
-        //    assertEquals(dbProduct.getName(), responseProduct.getName());
-        //    assertEquals(dbProduct.getQuantity(),
-        //            responseProduct.getQuantity());
-        //    assertEquals(dbProduct.getPrice(), responseProduct.getPrice());
-        //    assertEquals(dbProduct.getRating(), responseProduct.getRating());
-        //} else {
-        //    fail("test case failed!");
-        //}
+        Product responseProduct =
+                productService.getProduct(getProductId());
+        Optional<Product> optional = productRepository.findByProductName(
+                "testProduct");
+        optional.ifPresentOrElse(product -> {
+            assertEquals(product.getProductName(),
+                    responseProduct.getProductName());
+            assertEquals(product.getInventoryQuantity(),
+                    responseProduct.getInventoryQuantity());
+            assertEquals(product.getPrice(), responseProduct.getPrice());
+            assertEquals(product.getAvg_rates(),
+                    responseProduct.getAvg_rates());
+        }, () -> fail("test case failed!"));
     }
 
     @Test
     @Order(1)
     void addReview() {
-        fail("test case not implemented!");
-        //PdRqAddReviewArgs rateArgs = new PdRqAddReviewArgs(getProductId(), 5,
-        //        "review text");
-        //
-        //Product responseProduct = productService.addReview(userInfo, rateArgs);
-        //List<Review> reviews = responseProduct.getReviews();
-        ////response test
-        //if (!reviews.isEmpty()) {
-        //    Review review = reviews.get(0);
-        //    assertEquals(rateArgs.getRating(), review.getRate());
-        //    assertEquals(rateArgs.getReview(), review.getReview());
-        //    assertEquals(userInfo.getId(), review.getBuyerUUID());
-        //} else {
-        //    fail("test case failed!");
-        //}
-        //
-        ////DB test
-        //Optional<Product> createdProduct = productRepository.findByName(
-        //        "testProduct");
-        //if (createdProduct.isPresent()) {
-        //    Product dbProduct = createdProduct.get();
-        //    reviews = new ArrayList<>(dbProduct.getReviews());
-        //    if (!reviews.isEmpty()) {
-        //        Review review = reviews.get(0);
-        //        assertEquals(rateArgs.getRating(), review.getRate());
-        //        assertEquals(rateArgs.getReview(), review.getReview());
-        //        assertEquals(userInfo.getId(), review.getBuyerUUID());
-        //        return;
-        //    }
-        //}
-        //fail("test case failed!");
+        PdRqAddReviewArgs args = new PdRqAddReviewArgs(getProductId(), 5,
+                "review text");
+
+        Product responseProduct = productService.addReview(userInfo, args);
+        List<Review> reviews = responseProduct.getReviewList();
+        //response test
+        if (!reviews.isEmpty()) {
+            Review review = reviews.get(0);
+            assertEquals(args.getRating(), review.getRating());
+            assertEquals(args.getReview(), review.getReviewComment());
+            assertEquals(userInfo.getId(), review.getBuyer().getId());
+        } else {
+            fail("test case failed!");
+        }
+
+        //DB test
+        Optional<Product> optional = productRepository.findByIdWithReviewList(
+                UUID.fromString(getProductId()));
+        optional.ifPresentOrElse(product -> {
+            List<Review> reviewList = new ArrayList<>(product.getReviewList());
+            if (!reviewList.isEmpty()) {
+                Review review = reviewList.get(0);
+                assertEquals(args.getRating(), review.getRating());
+                assertEquals(args.getReview(), review.getReviewComment());
+                assertEquals(userInfo.getId(), review.getBuyer().getId());
+            }
+        }, ()->fail("test case failed!"));
     }
 
     String getProductId() {
