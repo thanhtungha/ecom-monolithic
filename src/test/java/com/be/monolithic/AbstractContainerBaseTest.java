@@ -3,6 +3,7 @@ package com.be.monolithic;
 import com.be.monolithic.dto.auth.AuRqLoginArgs;
 import com.be.monolithic.dto.auth.AuRqRegisterArgs;
 import com.be.monolithic.dto.product.PdRqRegisterArgs;
+import com.be.monolithic.model.Cart;
 import com.be.monolithic.model.Product;
 import com.be.monolithic.model.User;
 import com.be.monolithic.repository.*;

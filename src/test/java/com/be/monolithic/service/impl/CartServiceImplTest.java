@@ -2,12 +2,12 @@ package com.be.monolithic.service.impl;
 
 import com.be.monolithic.AbstractContainerBaseTest;
 import com.be.monolithic.model.Cart;
-import com.be.monolithic.model.Product;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,55 +27,53 @@ class CartServiceImplTest extends AbstractContainerBaseTest {
     @Test
     @Order(0)
     void addProduct() {
-        fail("test case not implemented!");
-        //Cart cart = cartService.addProduct(userInfo, testProduct1);
-        //Optional<Cart> createdCart = cartRepository.findByOwner(userInfo);
-        //if (createdCart.isPresent()) {
-        //    Cart dbCart = createdCart.get();
-        //    List<Product> productList = dbCart.getProducts();
-        //    assertEquals(testProduct1.getId(), productList.get(0).getId());
-        //    assertEquals(testProduct1.getName(), productList.get(0).getName());
-        //
-        //    productList = cart.getProducts();
-        //    assertEquals(testProduct1.getId(), productList.get(0).getId());
-        //    assertEquals(testProduct1.getName(), productList.get(0).getName());
-        //} else {
-        //    fail("test case failed!");
-        //}
+        Cart result = cartService.addProduct(userInfo, testProduct1);
+        List<UUID> productList = result.getItemList()
+                .parallelStream()
+                .map(cartItem -> cartItem.getProduct().getId())
+                .toList();
+        assertTrue(productList.contains(testProduct1.getId()));
+
+        Optional<Cart> optional = cartRepository.findByUser(userInfo);
+        optional.ifPresentOrElse(cart -> {
+            List<UUID> productIds = cart.getItemList()
+                    .parallelStream()
+                    .map(cartItem -> cartItem.getProduct().getId())
+                    .toList();
+            assertTrue(productIds.contains(testProduct1.getId()));
+
+        }, () -> fail("test case failed!"));
     }
 
     @Test
     @Order(2)
     void removeProduct() {
-        fail("test case not implemented!");
-        //Cart cart = cartService.removeProduct(userInfo, testProduct1);
-        //Optional<Cart> createdCart = cartRepository.findByOwner(userInfo);
-        //if (createdCart.isPresent()) {
-        //    Cart dbCart = createdCart.get();
-        //    assertTrue(dbCart.getProducts().isEmpty());
-        //    assertTrue(cart.getProducts().isEmpty());
-        //} else {
-        //    fail("test case failed!");
-        //}
+        Cart result = cartService.removeProduct(userInfo, testProduct1);
+        assertTrue(result.getItemList().isEmpty());
+
+        Optional<Cart> optional = cartRepository.findByUser(userInfo);
+        optional.ifPresentOrElse(
+                cart -> assertTrue(cart.getItemList().isEmpty()),
+                () -> fail("test case failed!"));
     }
 
     @Test
     @Order(1)
     void getCart() {
-        fail("test case not implemented!");
-        //Cart cart = cartService.getCart(userInfo);
-        //Optional<Cart> createdCart = cartRepository.findByOwner(userInfo);
-        //if (createdCart.isPresent()) {
-        //    Cart dbCart = createdCart.get();
-        //    List<Product> productList = dbCart.getProducts();
-        //    assertEquals(testProduct1.getId(), productList.get(0).getId());
-        //    assertEquals(testProduct1.getName(), productList.get(0).getName());
-        //
-        //    productList = cart.getProducts();
-        //    assertEquals(testProduct1.getId(), productList.get(0).getId());
-        //    assertEquals(testProduct1.getName(), productList.get(0).getName());
-        //} else {
-        //    fail("test case failed!");
-        //}
+        Cart result = cartService.getCart(userInfo);
+        List<UUID> productList = result.getItemList()
+                .parallelStream()
+                .map(cartItem -> cartItem.getProduct().getId())
+                .toList();
+        assertTrue(productList.contains(testProduct1.getId()));
+
+        Optional<Cart> optional = cartRepository.findByUser(userInfo);
+        optional.ifPresentOrElse(cart -> {
+            List<UUID> itemList = cart.getItemList()
+                    .parallelStream()
+                    .map(cartItem -> cartItem.getProduct().getId())
+                    .toList();
+            assertTrue(itemList.contains(testProduct1.getId()));
+        }, () -> fail("test case failed!"));
     }
 }
