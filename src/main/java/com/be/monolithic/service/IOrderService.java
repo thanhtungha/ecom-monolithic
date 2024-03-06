@@ -6,9 +6,9 @@ import com.be.monolithic.model.User;
 
 import java.util.List;
 
-public interface IOrderService extends IBaseService {
-    Order create(User userInfo, List<OrderItem> orderItems);
+public interface IOrderService {
+    Order create(User userInfo);
     Order update(User userInfo, String orderId, List<OrderItem> orderItems);
-    boolean cancel(User userInfo, String orderId);
-    Order getOrder(User userInfo, String orderId);
+    void cancelBuyingOrder(User buyer, String orderId);
+    Order getBuyingOrder(User buyer, String orderId);
 }

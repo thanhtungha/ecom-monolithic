@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "order_product")
 public class OrderItem {
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Order order;
     @Id
@@ -20,4 +20,8 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
     private int quantity;
+
+    public void increaseQuantity() {
+        quantity++;
+    }
 }

@@ -97,19 +97,6 @@ class AuthServiceImplTest extends AbstractContainerBaseTest {
         assertEquals("userPassword", user.getUserPassword());
     }
 
-    @Test
-    @Order(4)
-    void delete() {
-        AuRqLoginArgs args = new AuRqLoginArgs("userName", "userPassword");
-        User user = authService.login(args);
-        boolean result = authService.deleteUserData(user);
-
-        assertTrue(result);
-
-        Optional<User> optional = authRepository.findByUserName("userName");
-        optional.ifPresent(value -> fail("test case failed!"));
-    }
-
     String getAuthorizationHeader() {
         Optional<User> optional = authRepository.findByUserName("userName");
         if (optional.isEmpty()) {

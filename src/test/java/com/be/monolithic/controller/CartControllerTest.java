@@ -1,21 +1,11 @@
 package com.be.monolithic.controller;
 
 import com.be.monolithic.AbstractContainerBaseTest;
-import com.be.monolithic.dto.cart.CtRqProductArgs;
-import com.be.monolithic.model.Cart;
-import com.be.monolithic.model.Product;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -25,7 +15,7 @@ class CartControllerTest extends AbstractContainerBaseTest {
 
     @BeforeEach
     void setUp() {
-        if (userInfo == null) {
+        if (seller == null) {
             registerTestUser();
         }
         if(testProduct1 == null) {

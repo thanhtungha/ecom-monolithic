@@ -16,90 +16,81 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class OrderServiceImplTest extends AbstractContainerBaseTest {
-    private static final List<OrderItem> orderItems = new ArrayList<>();
-    private static String orderId;
+    private static Order createdOrder;
 
     @BeforeEach
     void setUp() {
-        //fail("test case not implemented!");
-        //if (userInfo == null) {
-        //    registerTestUser();
-        //}
-        //if (orderItems.isEmpty()) {
-        //    OrderItem item = new OrderItem(testProduct1, 30);
-        //    orderItems.add(item);
-        //    item = new OrderItem(testProduct2, 45);
-        //    orderItems.add(item);
-        //}
+        if (buyer == null) {
+            registerTestUser();
+        }
+        if (testProduct1 == null) {
+            registerTestProduct();
+        }
     }
 
     @Test
     @org.junit.jupiter.api.Order(0)
     void create() {
-        fail("test case not implemented!");
-        //Order order = orderService.create(userInfo, orderItems);
-        //Optional<Order> createdOrder = orderRepository.findById(order.getId());
-        //if (createdOrder.isPresent()) {
-        //    Order dbOrder = createdOrder.get();
-        //    List<OrderItem> orderItemList = dbOrder.getOrderItems();
-        //    assertEquals(orderItems.size(), orderItemList.size());
-        //
-        //    orderItemList = order.getOrderItems();
-        //    assertEquals(orderItems.size(), orderItemList.size());
-        //    orderId = order.getId().toString();
-        //} else {
-        //    fail("test case failed!");
-        //}
+        Order result = orderService.create(buyer);
+
+        Optional<Order> optional = orderRepository.findById(result.getId());
+        optional.ifPresentOrElse(order -> {
+            assertEquals(order.getId(), result.getId());
+            assertEquals(order.getBuyer().getId(), result.getBuyer().getId());
+            createdOrder = result;
+        }, () -> fail("test case failed!"));
     }
 
     @Test
     @org.junit.jupiter.api.Order(1)
     void update() {
-        fail("test case not implemented!");
-        //orderItems.remove(0);
-        //Order order = orderService.update(userInfo, orderId, orderItems);
-        //Optional<Order> createdOrder =
-        //        orderRepository.findById(UUID.fromString(orderId));
-        //if (createdOrder.isPresent()) {
-        //    Order dbOrder = createdOrder.get();
-        //    List<OrderItem> orderItemList = dbOrder.getOrderItems();
-        //    assertEquals(orderItems.size(), orderItemList.size());
-        //
-        //    orderItemList = order.getOrderItems();
-        //    assertEquals(orderItems.size(), orderItemList.size());
-        //} else {
-        //    fail("test case failed!");
-        //}
+        List<OrderItem> orderItems = new ArrayList<>();
+        OrderItem orderItem1 = new OrderItem();
+        orderItem1.setOrder(createdOrder);
+        orderItem1.setProduct(testProduct1);
+        orderItem1.setQuantity(3);
+        OrderItem orderItem2 = new OrderItem();
+        orderItem2.setOrder(createdOrder);
+        orderItem2.setProduct(testProduct2);
+        orderItem2.setQuantity(5);
+
+        Order result = orderService.update(buyer,
+                createdOrder.getId().toString(), orderItems);
+        assertEquals(orderItems.size(), result.getItemList().size());
+
+        Optional<Order> optional =
+                orderRepository.findById(
+                        UUID.fromString(createdOrder.getId().toString()));
+        optional.ifPresentOrElse(order -> {
+            List<OrderItem> orderItemList = order.getItemList();
+            assertEquals(orderItems.size(), orderItemList.size());
+            createdOrder = result;
+        }, () -> fail("test case failed!"));
     }
 
     @Test
     @org.junit.jupiter.api.Order(2)
     void cancel() {
-        fail("test case not implemented!");
-        //boolean result = orderService.cancel(userInfo, orderId);
-        //Optional<Order> createdOrder =
-        //        orderRepository.findById(UUID.fromString(orderId));
-        //if (createdOrder.isPresent() || !result) {
-        //    fail("test case failed!");
-        //}
+        orderService.cancelBuyingOrder(buyer, createdOrder.getId().toString());
+        Optional<Order> optional = orderRepository.findById(createdOrder.getId());
+        if (optional.isPresent()) {
+            fail("test case failed!");
+        }
     }
 
     @Test
     @org.junit.jupiter.api.Order(1)
     void getOrder() {
-        fail("test case not implemented!");
-        //Order order = orderService.getOrder(userInfo, orderId);
-        //Optional<Order> createdOrder =
-        //        orderRepository.findById(UUID.fromString(orderId));
-        //if (createdOrder.isPresent()) {
-        //    Order dbOrder = createdOrder.get();
-        //    List<OrderItem> orderItemList = dbOrder.getOrderItems();
-        //    assertEquals(orderItems.size(), orderItemList.size());
-        //
-        //    orderItemList = order.getOrderItems();
-        //    assertEquals(orderItems.size(), orderItemList.size());
-        //} else {
-        //    fail("test case failed!");
-        //}
+        Order result = orderService.getBuyingOrder(buyer,
+                createdOrder.getId().toString());
+        List<OrderItem> orderItems = result.getItemList();
+        assertEquals(createdOrder.getItemList().size(), orderItems.size());
+
+        Optional<Order> optional = orderRepository.findById(createdOrder.getId());
+
+        optional.ifPresentOrElse(order -> {
+            List<OrderItem> orderItemList = order.getItemList();
+            assertEquals(createdOrder.getItemList().size(), orderItemList.size());
+        }, () -> fail("test case failed!"));
     }
 }

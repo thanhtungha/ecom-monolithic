@@ -29,9 +29,9 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Cart cart;
     @OneToMany(mappedBy = "buyer")
-    private List<Order> buyingList;
+    private List<Order> buyOrders;
     @OneToMany(mappedBy = "seller")
-    private List<Order> sellingList;
+    private List<Order> sellOrders;
     @OneToMany(mappedBy = "user")
     private List<Product> productList;
     @OneToMany(mappedBy = "buyer")

@@ -145,10 +145,4 @@ public class AuthServiceImpl implements IAuthService {
         }
         throw new RestExceptions.Forbidden("Invalid accessToken!");
     }
-
-    @Override
-    public boolean deleteUserData(User user) {
-        repository.delete(user);
-        return true;
-    }
 }

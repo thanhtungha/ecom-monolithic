@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,65 +22,49 @@ public class OrderServiceImpl implements IOrderService {
     private final IOrderRepository orderRepository;
 
     @Override
-    public Order create(User userInfo, List<OrderItem> orderItems) {
-        throw new RestExceptions.NotImplemented();
-        //Order order = new Order();
-        //order.setCreatedAt(new Date());
-        //order.setUpdatedAt(new Date());
-        //order.setBuyer(userInfo);
-        //order.setOrderItems(orderItems);
-        //orderRepository.save(order);
-        //return order;
+    public Order create(User user) {
+        Order order = new Order();
+        order.setCreatedAt(new Date());
+        order.setUpdatedAt(new Date());
+        order.setBuyer(user);
+        return orderRepository.save(order);
     }
 
     @Override
-    public Order update(User userInfo, String orderId,
+    public Order update(User buyer, String orderId,
                         List<OrderItem> orderItems) {
-        throw new RestExceptions.NotImplemented();
-        //Optional<Order> storedModel =
-        //        orderRepository.findByIdAndOwner(UUID.fromString(orderId),
-        //                userInfo);
-        //if (storedModel.isEmpty()) {
-        //    throw new RestExceptions.NotFound("Order does not existed!");
-        //}
-        //
-        //Order order = storedModel.get();
-        //order.setUpdateDate(new Date());
-        //order.getOrderItems().clear();
-        //order.getOrderItems().addAll(orderItems);
-        //orderRepository.save(order);
-        //return order;
-    }
-
-    @Override
-    public boolean cancel(User userInfo, String orderId) {
-        Optional<Order> storedModel =
+        Optional<Order> optional =
                 orderRepository.findByIdAndBuyer(UUID.fromString(orderId),
-                        userInfo);
-        if (storedModel.isPresent()) {
-            orderRepository.delete(storedModel.get());
-            return true;
+                        buyer);
+        if (optional.isPresent()) {
+            Order order = optional.get();
+            order.setUpdatedAt(new Date());
+            order.setItemList(orderItems);
+            return orderRepository.save(order);
         } else {
             throw new RestExceptions.NotFound("Order does not existed!");
         }
     }
 
     @Override
-    public Order getOrder(User userInfo, String orderId) {
+    public void cancelBuyingOrder(User buyer, String orderId) {
+        Optional<Order> optional =
+                orderRepository.findByIdAndBuyer(UUID.fromString(orderId),
+                        buyer);
+        optional.ifPresentOrElse(orderRepository::delete, () -> {
+            throw new RestExceptions.NotFound("Order does not existed!");
+        });
+    }
+
+    @Override
+    public Order getBuyingOrder(User buyer, String orderId) {
         Optional<Order> storedModel =
                 orderRepository.findByIdAndBuyer(UUID.fromString(orderId),
-                        userInfo);
+                        buyer);
         if (storedModel.isEmpty()) {
             throw new RestExceptions.NotFound("Order does not existed!");
         }
 
         return storedModel.get();
-    }
-
-    @Override
-    public boolean deleteUserData(User owner) {
-        Optional<List<Order>> storedModel = orderRepository.findByBuyer(owner);
-        storedModel.ifPresent(orderRepository::deleteAll);
-        return true;
     }
 }

@@ -92,11 +92,4 @@ public class CartServiceImpl implements ICartService {
         }
         return optional.get();
     }
-
-    @Override
-    public boolean deleteUserData(User owner) {
-        Optional<Cart> storedModel = cartRepository.findByUser(owner);
-        storedModel.ifPresent(cartRepository::delete);
-        return true;
-    }
 }

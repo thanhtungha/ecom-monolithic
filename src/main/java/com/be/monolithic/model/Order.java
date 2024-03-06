@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -27,6 +28,9 @@ public class Order {
     @JoinColumn(name = "seller_id")
     private User seller;
 
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<OrderItem> itemList;
+
     @Override
     public String toString() {
         return "Order{" +
@@ -34,7 +38,6 @@ public class Order {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", buyer=" + buyer.getId() +
-                ", seller=" + seller.getId() +
                 '}';
     }
 }

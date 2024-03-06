@@ -5,7 +5,7 @@ import com.be.monolithic.model.User;
 
 import java.util.UUID;
 
-public interface IAuthService extends IBaseService {
+public interface IAuthService {
     User register(AuRqRegisterArgs registerArgs);
 
     User login(AuRqLoginArgs loginArgs);

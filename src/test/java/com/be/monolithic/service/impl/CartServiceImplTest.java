@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CartServiceImplTest extends AbstractContainerBaseTest {
     @BeforeEach
     void setUp() {
-        if (userInfo == null) {
+        if (buyer == null) {
             registerTestUser();
         }
         if (testProduct1 == null) {
@@ -27,14 +27,14 @@ class CartServiceImplTest extends AbstractContainerBaseTest {
     @Test
     @Order(0)
     void addProduct() {
-        Cart result = cartService.addProduct(userInfo, testProduct1);
+        Cart result = cartService.addProduct(buyer, testProduct1);
         List<UUID> productList = result.getItemList()
                 .parallelStream()
                 .map(cartItem -> cartItem.getProduct().getId())
                 .toList();
         assertTrue(productList.contains(testProduct1.getId()));
 
-        Optional<Cart> optional = cartRepository.findByUser(userInfo);
+        Optional<Cart> optional = cartRepository.findByUser(buyer);
         optional.ifPresentOrElse(cart -> {
             List<UUID> productIds = cart.getItemList()
                     .parallelStream()
@@ -48,10 +48,10 @@ class CartServiceImplTest extends AbstractContainerBaseTest {
     @Test
     @Order(2)
     void removeProduct() {
-        Cart result = cartService.removeProduct(userInfo, testProduct1);
+        Cart result = cartService.removeProduct(buyer, testProduct1);
         assertTrue(result.getItemList().isEmpty());
 
-        Optional<Cart> optional = cartRepository.findByUser(userInfo);
+        Optional<Cart> optional = cartRepository.findByUser(buyer);
         optional.ifPresentOrElse(
                 cart -> assertTrue(cart.getItemList().isEmpty()),
                 () -> fail("test case failed!"));
@@ -60,14 +60,14 @@ class CartServiceImplTest extends AbstractContainerBaseTest {
     @Test
     @Order(1)
     void getCart() {
-        Cart result = cartService.getCart(userInfo);
+        Cart result = cartService.getCart(buyer);
         List<UUID> productList = result.getItemList()
                 .parallelStream()
                 .map(cartItem -> cartItem.getProduct().getId())
                 .toList();
         assertTrue(productList.contains(testProduct1.getId()));
 
-        Optional<Cart> optional = cartRepository.findByUser(userInfo);
+        Optional<Cart> optional = cartRepository.findByUser(buyer);
         optional.ifPresentOrElse(cart -> {
             List<UUID> itemList = cart.getItemList()
                     .parallelStream()

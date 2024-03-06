@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductServiceImplTest extends AbstractContainerBaseTest {
     @BeforeEach
     void setUp() {
-        if (userInfo == null) {
+        if (seller == null) {
             registerTestUser();
         }
     }
@@ -31,19 +31,19 @@ class ProductServiceImplTest extends AbstractContainerBaseTest {
     void register() {
         PdRqRegisterArgs registerArgs = new PdRqRegisterArgs("testProduct",
                 300);
-        Product responseProduct = productService.register(userInfo,
+        Product responseProduct = productService.register(seller,
                 registerArgs);
         Optional<Product> optional = productRepository.findByProductName(
                 "testProduct");
         optional.ifPresentOrElse(product -> {
             assertEquals(registerArgs.getName(), product.getProductName());
             assertEquals(registerArgs.getPrice(), product.getPrice());
-            assertEquals(userInfo.getId(), product.getUser().getId());
+            assertEquals(seller.getId(), product.getUser().getId());
 
             assertEquals(registerArgs.getName(),
                     responseProduct.getProductName());
             assertEquals(registerArgs.getPrice(), responseProduct.getPrice());
-            assertEquals(userInfo.getId(), responseProduct.getUser().getId());
+            assertEquals(seller.getId(), responseProduct.getUser().getId());
         }, () -> fail("test case failed!"));
     }
 
@@ -108,14 +108,14 @@ class ProductServiceImplTest extends AbstractContainerBaseTest {
         PdRqAddReviewArgs args = new PdRqAddReviewArgs(getProductId(), 5,
                 "review text");
 
-        Product responseProduct = productService.addReview(userInfo, args);
+        Product responseProduct = productService.addReview(seller, args);
         List<Review> reviews = responseProduct.getReviewList();
         //response test
         if (!reviews.isEmpty()) {
             Review review = reviews.get(0);
             assertEquals(args.getRating(), review.getRating());
             assertEquals(args.getReview(), review.getReviewComment());
-            assertEquals(userInfo.getId(), review.getBuyer().getId());
+            assertEquals(seller.getId(), review.getBuyer().getId());
         } else {
             fail("test case failed!");
         }
@@ -129,7 +129,7 @@ class ProductServiceImplTest extends AbstractContainerBaseTest {
                 Review review = reviewList.get(0);
                 assertEquals(args.getRating(), review.getRating());
                 assertEquals(args.getReview(), review.getReviewComment());
-                assertEquals(userInfo.getId(), review.getBuyer().getId());
+                assertEquals(seller.getId(), review.getBuyer().getId());
             }
         }, ()->fail("test case failed!"));
     }

@@ -6,7 +6,7 @@ import com.be.monolithic.model.User;
 
 import java.util.List;
 
-public interface IProductService extends IBaseService {
+public interface IProductService {
     Product register(User seller, PdRqRegisterArgs registerArgs);
     Product update(PdRqUpdateArgs updateArgs);
     boolean remove(String productId);

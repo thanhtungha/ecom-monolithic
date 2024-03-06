@@ -82,13 +82,13 @@ public class OrderController {
         //}
     }
 
-    @PostMapping(path = "/cancel-order")
+    @PostMapping(path = "/cancelBuyingOrder-order")
     @ResponseStatus(HttpStatus.OK)
     public void cancelOrder(@RequestHeader("Authorization") String authorizationHeader, @RequestBody OrRqCancelOrderArgs orderArgs) {
         throw new RestExceptions.NotImplemented();
         //try {
         //    User userInfo = authService.getUserInfo(authorizationHeader);
-        //    orderService.cancel(userInfo, orderArgs.getId());
+        //    orderService.cancelBuyingOrder(userInfo, orderArgs.getId());
         //} catch (Exception ex) {
         //    if (ex instanceof BaseException) {
         //        throw ex;
@@ -103,7 +103,7 @@ public class OrderController {
         throw new RestExceptions.NotImplemented();
         //try {
         //    User userInfo = authService.getUserInfo(authorizationHeader);
-        //    Order order = orderService.getOrder(userInfo, orderArgs.getId());
+        //    Order order = orderService.getBuyingOrder(userInfo, orderArgs.getId());
         //    return new ResponseEntity<>(orderMapper.OrderToDTO(order), HttpStatus.OK);
         //} catch (Exception ex) {
         //    if (ex instanceof BaseException) {

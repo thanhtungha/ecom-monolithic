@@ -107,12 +107,4 @@ public class ProductServiceImpl implements IProductService {
         repository.save(product);
         return product;
     }
-
-    @Override
-    public boolean deleteUserData(User seller) {
-        Optional<List<Product>> storedModel = repository.findByUser(
-                seller);
-        storedModel.ifPresent(repository::deleteAll);
-        return true;
-    }
 }

@@ -1,25 +1,12 @@
 package com.be.monolithic.controller;
 
 import com.be.monolithic.AbstractContainerBaseTest;
-import com.be.monolithic.dto.product.PdRqAddReviewArgs;
-import com.be.monolithic.dto.product.PdRqProductArgs;
-import com.be.monolithic.dto.product.PdRqRegisterArgs;
-import com.be.monolithic.dto.product.PdRqUpdateArgs;
-import com.be.monolithic.model.Product;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,7 +16,7 @@ class ProductControllerTest extends AbstractContainerBaseTest {
 
     @BeforeEach
     void setUp() {
-        if(userInfo == null) {
+        if(seller == null) {
             registerTestUser();
         }
     }

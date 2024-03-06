@@ -2,25 +2,18 @@ package com.be.monolithic.controller;
 
 import com.be.monolithic.AbstractContainerBaseTest;
 import com.be.monolithic.dto.order.*;
-import com.be.monolithic.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -32,7 +25,7 @@ class OrderControllerTest extends AbstractContainerBaseTest {
 
     @BeforeEach
     void setUp() {
-        if (userInfo == null) {
+        if (seller == null) {
             registerTestUser();
         }
         if (testProduct1 == null) {
@@ -109,7 +102,7 @@ class OrderControllerTest extends AbstractContainerBaseTest {
         //OrRqCancelOrderArgs args = new OrRqCancelOrderArgs(orderId);
         //String reqString = objectMapper.writeValueAsString(args);
         //RequestBuilder requestBuilder =
-        //        MockMvcRequestBuilders.post(BASE_API + "/cancel-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
+        //        MockMvcRequestBuilders.post(BASE_API + "/cancelBuyingOrder-order").contentType(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, authorizationHeader).content(reqString);
         //mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
         //
         ////check response
