@@ -41,79 +41,71 @@ public class ProductController {
     public ResponseEntity<?> register(
             @RequestHeader("Authorization") String authorizationHeader,
             @Valid @RequestBody PdRqRegisterArgs registerArgs) {
-        throw new RestExceptions.NotImplemented();
-        //try {
-        //    User userInfo = authService.getUserInfo(authorizationHeader);
-        //    Product product = productService.register(userInfo, registerArgs);
-        //    return new ResponseEntity<>(productMapper.ProductToDTO(product),
-        //            HttpStatus.CREATED);
-        //} catch (Exception ex) {
-        //    if (ex instanceof BaseException) {
-        //        throw ex;
-        //    }
-        //    throw new RestExceptions.InternalServerError(ex.getMessage());
-        //}
+        try {
+            User user = authService.getUser(authorizationHeader);
+            Product product = productService.register(user, registerArgs);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product),
+                    HttpStatus.CREATED);
+        } catch (BaseException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RestExceptions.InternalServerError(ex.getMessage());
+        }
     }
 
     @PostMapping(path = "/update")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> update(@RequestBody PdRqUpdateArgs updateArgs) {
-        throw new RestExceptions.NotImplemented();
-        //try {
-        //    Product product = productService.update(updateArgs);
-        //    return new ResponseEntity<>(productMapper.ProductToDTO(product),
-        //            HttpStatus.OK);
-        //} catch (Exception ex) {
-        //    if (ex instanceof BaseException) {
-        //        throw ex;
-        //    }
-        //    throw new RestExceptions.InternalServerError(ex.getMessage());
-        //}
+        try {
+            Product product = productService.update(updateArgs);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product),
+                    HttpStatus.OK);
+        } catch (BaseException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RestExceptions.InternalServerError(ex.getMessage());
+        }
     }
 
     @PostMapping(path = "/remove-product")
     @ResponseStatus(HttpStatus.OK)
     public void remove(@Valid @RequestBody PdRqProductArgs productArgs) {
-        throw new RestExceptions.NotImplemented();
-        //try {
-        //    productService.remove(productArgs.getId());
-        //} catch (Exception ex) {
-        //    if (ex instanceof BaseException) {
-        //        throw ex;
-        //    }
-        //    throw new RestExceptions.InternalServerError(ex.getMessage());
-        //}
+        try {
+            productService.remove(productArgs.getId());
+        } catch (BaseException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RestExceptions.InternalServerError(ex.getMessage());
+        }
     }
 
     @GetMapping(path = "/get-product")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getProduct(
             @RequestBody PdRqProductArgs productArgs) {
-        throw new RestExceptions.NotImplemented();
-        //try {
-        //    if (productArgs != null) {
-        //        Product product = productService.getProduct(
-        //                productArgs.getId());
-        //        return new ResponseEntity<>(productMapper.ProductToDTO(product),
-        //                HttpStatus.OK);
-        //    } else {
-        //        List<Product> listProduct = productService.getProductList();
-        //        if (listProduct.isEmpty()) {
-        //            return new ResponseEntity<>(new ProductListDTO(),
-        //                    HttpStatus.OK);
-        //        } else {
-        //            return new ResponseEntity<>(new ProductListDTO(
-        //                    listProduct.stream()
-        //                            .map(productMapper::ProductToDTO)
-        //                            .toList()), HttpStatus.OK);
-        //        }
-        //    }
-        //} catch (Exception ex) {
-        //    if (ex instanceof BaseException) {
-        //        throw ex;
-        //    }
-        //    throw new RestExceptions.InternalServerError(ex.getMessage());
-        //}
+        try {
+            if (productArgs != null) {
+                Product product = productService.getProduct(
+                        productArgs.getId());
+                return new ResponseEntity<>(productMapper.ProductToDTO(product),
+                        HttpStatus.OK);
+            } else {
+                List<Product> listProduct = productService.getProductList();
+                if (listProduct.isEmpty()) {
+                    return new ResponseEntity<>(new ProductListDTO(),
+                            HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(new ProductListDTO(
+                            listProduct.stream()
+                                    .map(productMapper::ProductToDTO)
+                                    .toList()), HttpStatus.OK);
+                }
+            }
+        } catch (BaseException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RestExceptions.InternalServerError(ex.getMessage());
+        }
     }
 
     @PostMapping(path = "/add-review")
@@ -121,17 +113,15 @@ public class ProductController {
     public ResponseEntity<?> addReview(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestBody PdRqAddReviewArgs reviewArgs) {
-        throw new RestExceptions.NotImplemented();
-        //try {
-        //    User buyer = authService.getUserInfo(authorizationHeader);
-        //    Product product = productService.addReview(buyer, reviewArgs);
-        //    return new ResponseEntity<>(productMapper.ProductToDTO(product),
-        //            HttpStatus.OK);
-        //} catch (Exception ex) {
-        //    if (ex instanceof BaseException) {
-        //        throw ex;
-        //    }
-        //    throw new RestExceptions.InternalServerError(ex.getMessage());
-        //}
+        try {
+            User buyer = authService.getUser(authorizationHeader);
+            Product product = productService.addReview(buyer, reviewArgs);
+            return new ResponseEntity<>(productMapper.ProductToDTO(product),
+                    HttpStatus.OK);
+        } catch (BaseException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RestExceptions.InternalServerError(ex.getMessage());
+        }
     }
 }

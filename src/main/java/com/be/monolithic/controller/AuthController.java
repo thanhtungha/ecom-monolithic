@@ -55,10 +55,9 @@ public class AuthController {
         try {
             User user = authService.login(loginArgs);
             return new ResponseEntity<>(authMapper.UserToUserDTO(user), HttpStatus.OK);
+        } catch (BaseException ex) {
+            throw ex;
         } catch (Exception ex) {
-            if (ex instanceof BaseException) {
-                throw ex;
-            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
@@ -68,10 +67,9 @@ public class AuthController {
     public void logout(@RequestHeader("Authorization") String authorizationHeader) {
         try {
             authService.logout(authorizationHeader);
+        } catch (BaseException ex) {
+            throw ex;
         } catch (Exception ex) {
-            if (ex instanceof BaseException) {
-                throw ex;
-            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
@@ -81,10 +79,9 @@ public class AuthController {
     public void changePassword(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody AuRqChangePasswordArgs changePasswordArgs) {
         try {
             authService.changePassword(authorizationHeader, changePasswordArgs);
+        } catch (BaseException ex) {
+            throw ex;
         } catch (Exception ex) {
-            if (ex instanceof BaseException) {
-                throw ex;
-            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
@@ -96,10 +93,9 @@ public class AuthController {
             User user = authService.update(authorizationHeader,
                     updateArgs);
             return new ResponseEntity<>(authMapper.UserToUserDTO(user), HttpStatus.OK);
+        } catch (BaseException ex) {
+            throw ex;
         } catch (Exception ex) {
-            if (ex instanceof BaseException) {
-                throw ex;
-            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
@@ -110,10 +106,9 @@ public class AuthController {
         try {
             User user = authService.forgotPassword(forgotPwdArgs);
             return new ResponseEntity<>(authMapper.UserToUserDTO(user), HttpStatus.OK);
+        } catch (BaseException ex) {
+            throw ex;
         } catch (Exception ex) {
-            if (ex instanceof BaseException) {
-                throw ex;
-            }
             throw new RestExceptions.InternalServerError(ex.getMessage());
         }
     }
