@@ -22,11 +22,13 @@ public class OrderServiceImpl implements IOrderService {
     private final IOrderRepository orderRepository;
 
     @Override
-    public Order create(User user) {
+    public Order create(User user, List<OrderItem> orderItems) {
         Order order = new Order();
         order.setCreatedAt(new Date());
         order.setUpdatedAt(new Date());
         order.setBuyer(user);
+        orderRepository.save(order);
+        orderItems.forEach(orderItem -> orderItem.setOrder(order));
         return orderRepository.save(order);
     }
 

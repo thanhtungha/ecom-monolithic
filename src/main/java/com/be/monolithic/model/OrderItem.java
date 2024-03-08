@@ -4,20 +4,21 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GeneratedColumn;
+
+import java.util.Objects;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "order_product")
+@IdClass(OrderItemKey.class)
 public class OrderItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Order order;
+    @Id
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -25,5 +26,20 @@ public class OrderItem {
 
     public void increaseQuantity() {
         quantity++;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof OrderItem orderItem))
+            return false;
+        return quantity == orderItem.quantity && order.equals(
+                orderItem.order) && product.equals(orderItem.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(order, product, quantity);
     }
 }

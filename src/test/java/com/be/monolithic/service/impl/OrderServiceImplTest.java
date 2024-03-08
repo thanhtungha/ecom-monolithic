@@ -31,7 +31,18 @@ class OrderServiceImplTest extends AbstractContainerBaseTest {
     @Test
     @org.junit.jupiter.api.Order(0)
     void create() {
-        Order result = orderService.create(buyer);
+        List<OrderItem> orderItems = new ArrayList<>();
+        OrderItem orderItem1 = new OrderItem();
+        orderItem1.setProduct(testProduct1);
+        orderItem1.setQuantity(3);
+        orderItems.add(orderItem1);
+
+        OrderItem orderItem2 = new OrderItem();
+        orderItem2.setProduct(testProduct2);
+        orderItem2.setQuantity(5);
+        orderItems.add(orderItem2);
+
+        Order result = orderService.create(buyer, orderItems);
 
         Optional<Order> optional = orderRepository.findById(result.getId());
         optional.ifPresentOrElse(order -> {
@@ -46,13 +57,14 @@ class OrderServiceImplTest extends AbstractContainerBaseTest {
     void update() {
         List<OrderItem> orderItems = new ArrayList<>();
         OrderItem orderItem1 = new OrderItem();
-        orderItem1.setOrder(createdOrder);
         orderItem1.setProduct(testProduct1);
-        orderItem1.setQuantity(3);
+        orderItem1.setQuantity(1);
+        orderItems.add(orderItem1);
+
         OrderItem orderItem2 = new OrderItem();
-        orderItem2.setOrder(createdOrder);
         orderItem2.setProduct(testProduct2);
-        orderItem2.setQuantity(5);
+        orderItem2.setQuantity(4);
+        orderItems.add(orderItem2);
 
         Order result = orderService.update(buyer,
                 createdOrder.getId().toString(), orderItems);

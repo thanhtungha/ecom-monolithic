@@ -29,7 +29,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     @Test
     @Order(0)
     void register() throws Exception {
-        AuRqRegisterArgs registerArgs = new AuRqRegisterArgs("userName",
+        AuRqRegisterArgs registerArgs = new AuRqRegisterArgs("authUser",
                 "userPassword", "1234567890");
         String reqString = objectMapper.writeValueAsString(registerArgs);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
@@ -42,7 +42,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     @Test
     @Order(1)
     void login() throws Exception {
-        AuRqLoginArgs loginArgs = new AuRqLoginArgs("userName", "userPassword");
+        AuRqLoginArgs loginArgs = new AuRqLoginArgs("authUser", "userPassword");
         String reqString = objectMapper.writeValueAsString(loginArgs);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
                         BASE_API + "/login")
@@ -66,7 +66,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
         //check response
 
         //check db
-        Optional<User> optional = authRepository.findByUserName("userName");
+        Optional<User> optional = authRepository.findByUserName("authUser");
         optional.ifPresentOrElse(user -> {
             if (!user.getAccessToken().isEmpty()) {
                 fail("test case failed!");
@@ -91,7 +91,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
         //check response
 
         //check db
-        Optional<User> optional = authRepository.findByUserName("userName");
+        Optional<User> optional = authRepository.findByUserName("authUser");
         optional.ifPresentOrElse(user -> assertEquals(user.getUserPassword(),
                         changePasswordArgs.getNewPassword()),
                 () -> fail("test case failed!"));
@@ -114,7 +114,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
         //check response
 
         //check db
-        Optional<User> optional = authRepository.findByUserName("userName");
+        Optional<User> optional = authRepository.findByUserName("authUser");
         optional.ifPresentOrElse(user -> {
             assertEquals(user.getPhoneNumber(), updateArgs.getPhoneNumber());
             assertEquals(user.getAddress(), updateArgs.getAddress());
@@ -124,7 +124,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     @Test
     @Order(2)
     void forgotPassword() throws Exception {
-        AuRqForgotPwdArgs updateArgs = new AuRqForgotPwdArgs("userName");
+        AuRqForgotPwdArgs updateArgs = new AuRqForgotPwdArgs("authUser");
         String reqString = objectMapper.writeValueAsString(updateArgs);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
@@ -136,7 +136,7 @@ class AuthControllerTest extends AbstractContainerBaseTest {
     }
 
     String getAccessToken() {
-        Optional<User> optional = authRepository.findByUserName("userName");
+        Optional<User> optional = authRepository.findByUserName("authUser");
         if (optional.isEmpty()) {
             fail("test case failed!");
         }

@@ -6,15 +6,15 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-public class CartItemKey implements Serializable {
-    private UUID cart;
+public class OrderItemKey implements Serializable {
+    private UUID order;
     private UUID product;
 
-    public CartItemKey() {
+    public OrderItemKey() {
     }
 
-    public CartItemKey(UUID cart, UUID product) {
-        this.cart = cart;
+    public OrderItemKey(UUID order, UUID product) {
+        this.order = order;
         this.product = product;
     }
 }
