@@ -31,14 +31,13 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Order update(User buyer, String orderId,
-                        List<OrderItem> orderItems) {
-        Optional<Order> optional =
-                orderRepository.findByIdAndBuyer(UUID.fromString(orderId),
-                        buyer);
+    public Order update(User user, String orderId, List<OrderItem> orderItems) {
+        Optional<Order> optional = orderRepository.findByIdAndBuyer(
+                UUID.fromString(orderId), user);
         if (optional.isPresent()) {
             Order order = optional.get();
             order.setUpdatedAt(new Date());
+            orderItems.forEach(orderItem -> orderItem.setOrder(order));
             order.setItemList(orderItems);
             return orderRepository.save(order);
         } else {
@@ -48,9 +47,8 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public void cancelBuyingOrder(User buyer, String orderId) {
-        Optional<Order> optional =
-                orderRepository.findByIdAndBuyer(UUID.fromString(orderId),
-                        buyer);
+        Optional<Order> optional = orderRepository.findByIdAndBuyer(
+                UUID.fromString(orderId), buyer);
         optional.ifPresentOrElse(orderRepository::delete, () -> {
             throw new RestExceptions.NotFound("Order does not existed!");
         });
@@ -58,9 +56,8 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public Order getBuyingOrder(User buyer, String orderId) {
-        Optional<Order> storedModel =
-                orderRepository.findByIdAndBuyer(UUID.fromString(orderId),
-                        buyer);
+        Optional<Order> storedModel = orderRepository.findByIdAndBuyer(
+                UUID.fromString(orderId), buyer);
         if (storedModel.isEmpty()) {
             throw new RestExceptions.NotFound("Order does not existed!");
         }

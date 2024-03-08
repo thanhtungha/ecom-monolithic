@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GeneratedColumn;
 
 @Entity
 @Data
@@ -12,10 +13,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "order_product")
 public class OrderItem {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Order order;
-    @Id
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
