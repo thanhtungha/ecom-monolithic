@@ -40,53 +40,47 @@ public class CartController {
     @PostMapping(path = "/add-product")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> addProduct(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody CtRqProductArgs productArgs) {
-        throw new RestExceptions.NotImplemented();
-        //try {
-        //    User owner = authService.getUserInfo(authorizationHeader);
-        //    Product product = productService.getProduct(productArgs.getId());
-        //    Cart cart = cartService.addProduct(owner, product);
-        //    return new ResponseEntity<>(cartMapper.CartToDTO(cart),
-        //            HttpStatus.OK);
-        //} catch (Exception ex) {
-        //    if (ex instanceof BaseException) {
-        //        throw ex;
-        //    }
-        //    throw new RestExceptions.InternalServerError(ex.getMessage());
-        //}
+        try {
+            User owner = authService.getUser(authorizationHeader);
+            Product product = productService.getProduct(productArgs.getId());
+            Cart cart = cartService.addProduct(owner, product);
+            return new ResponseEntity<>(cartMapper.CartToDTO(cart),
+                    HttpStatus.OK);
+        } catch (BaseException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RestExceptions.InternalServerError(ex.getMessage());
+        }
     }
 
     @PostMapping(path = "/remove-product")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> removeProduct(@RequestHeader("Authorization") String authorizationHeader, @Valid @RequestBody CtRqProductArgs productArgs) {
-        throw new RestExceptions.NotImplemented();
-        //try {
-        //    User owner = authService.getUserInfo(authorizationHeader);
-        //    Product product = productService.getProduct(productArgs.getId());
-        //    Cart cart = cartService.removeProduct(owner, product);
-        //    return new ResponseEntity<>(cartMapper.CartToDTO(cart),
-        //            HttpStatus.OK);
-        //} catch (Exception ex) {
-        //    if (ex instanceof BaseException) {
-        //        throw ex;
-        //    }
-        //    throw new RestExceptions.InternalServerError(ex.getMessage());
-        //}
+        try {
+            User owner = authService.getUser(authorizationHeader);
+            Product product = productService.getProduct(productArgs.getId());
+            Cart cart = cartService.removeProduct(owner, product);
+            return new ResponseEntity<>(cartMapper.CartToDTO(cart),
+                    HttpStatus.OK);
+        } catch (BaseException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RestExceptions.InternalServerError(ex.getMessage());
+        }
     }
 
     @GetMapping(path = "/get-cart")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getCart(@RequestHeader("Authorization") String authorizationHeader) {
-        throw new RestExceptions.NotImplemented();
-        //try {
-        //    User owner = authService.getUserInfo(authorizationHeader);
-        //    Cart cart = cartService.getCart(owner);
-        //    return new ResponseEntity<>(cartMapper.CartToDTO(cart),
-        //            HttpStatus.OK);
-        //} catch (Exception ex) {
-        //    if (ex instanceof BaseException) {
-        //        throw ex;
-        //    }
-        //    throw new RestExceptions.InternalServerError(ex.getMessage());
-        //}
+        try {
+            User owner = authService.getUser(authorizationHeader);
+            Cart cart = cartService.getCart(owner);
+            return new ResponseEntity<>(cartMapper.CartToDTO(cart),
+                    HttpStatus.OK);
+        } catch (BaseException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RestExceptions.InternalServerError(ex.getMessage());
+        }
     }
 }

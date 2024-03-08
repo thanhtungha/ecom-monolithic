@@ -46,4 +46,22 @@ public class Product implements Serializable {
                 ", avg_rates=" + avg_rates +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Product product))
+            return false;
+        return Double.compare(product.price, price) == 0
+                && inventoryQuantity == product.inventoryQuantity
+                && Double.compare(product.avg_rates, avg_rates) == 0
+                && id.equals(product.id)
+                && productName.equals(product.productName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, productName, price, inventoryQuantity, avg_rates);
+    }
 }
