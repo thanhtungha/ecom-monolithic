@@ -3,7 +3,6 @@ spring:
     hibernate:
       ddl-auto: create-drop
   datasource:
-    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    url: jdbc:tc:mysql:5.7.34:///MonolithicEcommerce
-    username: test
+    url: jdbc:mysql://localhost:3306/TestEcom
+    username: testecom
     password: test

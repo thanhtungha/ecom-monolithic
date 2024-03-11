@@ -17,12 +17,12 @@ import org.testcontainers.containers.MySQLContainer;
 @SpringBootTest
 @AutoConfigureMockMvc
 public abstract class AbstractContainerBaseTest {
-    public static final MySQLContainer MY_SQL_CONTAINER;
-
-    static {
-        MY_SQL_CONTAINER = new MySQLContainer("mysql:latest");
-        MY_SQL_CONTAINER.start();
-    }
+    //public static final MySQLContainer MY_SQL_CONTAINER;
+    //
+    //static {
+    //    MY_SQL_CONTAINER = new MySQLContainer("mysql:latest");
+    //    MY_SQL_CONTAINER.start();
+    //}
 
     @Autowired
     public MockMvc mockMvc;
