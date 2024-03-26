@@ -1,16 +1,3 @@
-# Use a Maven image as a base image
-FROM maven:3.8.4-openjdk-17-slim AS build
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the Maven project files to the container
-COPY pom.xml .
-COPY src ./src
-
-# Build the Maven project
-RUN mvn clean package
-
 # Use an official OpenJDK runtime as a base image
 FROM amazoncorretto:17
 
