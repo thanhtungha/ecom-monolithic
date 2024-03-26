@@ -1,3 +1,16 @@
+# Use a Maven image as a base image
+FROM maven:3.9.6-amazoncorretto-17 AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the Maven project files to the container
+COPY pom.xml .
+COPY src ./src
+
+# Build the Maven project
+ENTRYPOINT ["mvn", "clean", "package"]
+
 # Use an official OpenJDK runtime as a base image
 FROM amazoncorretto:17
 
